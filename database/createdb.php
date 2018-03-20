@@ -1,5 +1,4 @@
 <?php
-    
 	require_once('database.php');
 	class CreateDb
 	{
@@ -24,7 +23,8 @@
 		
 		public function dropTables()
 		{
-			$sql = "DROP TABLE";
+			$sql = "DROP TABLE loans, drivers, users, 
+                    garages, locations, cars";
 
 			$dbConn = $this->db->getConnection();
 			if($dbConn->query($sql) === TRUE)
@@ -81,7 +81,7 @@
                     city VARCHAR(50) NOT NULL,
                     postCode int(4) NOT NULL,
                     PRIMARY KEY(userId),
-                    FORIEGN KEY(userId) REFERENCES userTable
+                    FOREIGN KEY(userId) REFERENCES users(userId)
                     );";
             $this->createTable($sql);
         }
@@ -96,60 +96,73 @@
                     );";
             $this->createTable($sql);
         }
-        public function loanTable()
+        public function loansTable()
         {
             $sql = "CREATE TABLE loans (
-                    loadId VARCHAR(10) NOT NULL,
+                    loanId VARCHAR(10) NOT NULL,
                     driver VARCHAR(50) NOT NULL,
                     car VARCHAR(10) NOT NULL,
-                    loanDate DATE NOT NULL,
-                    returnDate DATE,
+                    loanDate DATETIME NOT NULL,
+                    returnDate DATETIME,
                     PRIMARY KEY(loanId),
-                    FORIEGN KEY(driver) REFERENCES drivers(userId),
-                    FORIEGN KEY(car) REFERENCES cars(rego)
+                    FOREIGN KEY(driver) REFERENCES drivers(userId),
+                    FOREIGN KEY(car) REFERENCES cars(rego)
                     );";
             $this->createTable($sql);
         }
-        public function loactionsTable()
+        public function locationsTable()
         {
             $sql = "CREATE TABLE locations (
                     locationId INT(5) NOT NULL,
-                    longtitude DOUBLE(20) NOT NULL,
-                    latitude DOUBLE(20) NOT NULL,
+                    longtitude DOUBLE(20,6) NOT NULL,
+                    latitude DOUBLE(20,6) NOT NULL,
                     streetNum INT(5) NOT NULL,
                     street VARCHAR(50) NOT NULL,
-                    city VARCHARY(50) NOT NULL,
+                    city VARCHAR(50) NOT NULL,
                     postCode INT(4) NOT NULL,
                     car VARCHAR(10),
                     PRIMARY KEY(locationId),
-                    FORIEGN KEY(car) REFERENCES cars(rego)
+                    FOREIGN KEY(car) REFERENCES cars(rego)
                     );";
             $this->createTable($sql);
         }
         public function garagesTable()
         {
-            $sql = "CREATE TABLE garage (
+            $sql = "CREATE TABLE garages (
                     garageId INT(5) NOT NULL,
+                    location int(5) NOT NULL,
                     capacity INT(3) NOT NULL,
                     PRIMARY KEY(garageId),
-                    FORIEGN KEY(garageId) REFERENCES locations(locationId)
+                    FOREIGN KEY(location) REFERENCES locations(locationId)
                     );";
             $this->createTable($sql);
         }
+        public function loadAllTables()
+        {
+            $this->usersTable();
+            $this->driversTable();
+            $this->carsTable();
+            $this->loansTable();
+            $this->locationsTable();
+            $this->garagesTable();
+        }   
         public function addUser($id, $pass)
         {
             $sql = "INSERT INTO users(userId, password)
                     VALUES('".$id."', '".$pass."');";
             $this->addToTable($sql);
         }
-        public function addDriver($id, $fname, $lname, $licenseNum, $streetNum,                     $street, $city, $postCode)
+        public function addDriver($id, $pass, $fname, $lname, $licenseNum,
+                            $streetNum, $street, $city, $postCode)
         {
             $sql = "INSERT INTO drivers(userId, firstName, LastName, 
                     licenseNum, streetNum, street, city, postCode)
                     VALUES('".$id."', '".$fname."', '".$lname."', "
                     .$licenseNum.", ".$streetNum.", '" .$street ."', '"
                     .$city."', ".$postCde.");";
+            $this->addUser($id, $pass);
             $this->addToTable($sql);
+            
         }
         public function addAdmin($id, $pass)
         {
@@ -162,6 +175,32 @@
             $sql = "INSERT INTO cars(rego, make, model, year)
                     VALUES('".$rego."', '".$make."', '".$model."', "
                     .$year.");";
+            $this->addToTable($sql);
+        }
+        public function addLoan($loanId, $driver, $car, $loanDate, $returnDate)
+        {
+            $sql = "INSERT INTO loans(loanId, driver, car, loanDate, 
+                    returnDate) VALUES('".$loanId."', '".$driver."', '"
+                    .$car."',".$loanDate.", ".$returnDate.");";
+            $this->addToTable($sql);
+        }
+        public function addLocation($locationId, $longtitude, $latitude, 
+                        $streetNum, $street, $city, $postCode)
+        {
+            $sql = "INSERT INTO locations(locationId, longtitude, latitude,
+                    streetNum, street, city, postCode)
+                    VALUES('".$locationId."', ".$longtitude.", ".$latitude
+                    .", ".$streetNum.", '".$street."', '".$city."', "
+                    .$postCode.");";
+            $this->addToTable($sql);
+        }
+        public function addGarage($capacity, $locationId, $longtitude, 
+                            $latitude, $streetNum, $street, $city, $postCode)
+        {
+            $sql = "INSERT INTO garages(garageId, capacity)
+                    VALUES('".$locationId."', ".$capacity.");";
+            $this->addLocation($locationId, $longtitude, $latitude, 
+                    $sreetNum, $street, $city, $postCode);
             $this->addToTable($sql);
         }
     }                    
