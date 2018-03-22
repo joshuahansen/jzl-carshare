@@ -1,6 +1,6 @@
 <?php
-    require_once('createdb.php');
-    $create = CreateDb::getInstance();
+    require_once('databaseController.php');
+    $create = databaseController::getInstance();
     
     $create->dropTables();
     $create->loadAllTables();

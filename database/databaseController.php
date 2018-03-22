@@ -1,13 +1,13 @@
 <?php
-	require_once('database.php');
-	class CreateDb
+	require_once('databaseConnection.php');
+	class DatabaseController
 	{
 		private static $instance = null;
 		private $db;
 
 		private function __construct()
 		{
-			$this->db = Database::getInstance();
+			$this->db = DatabaseConnection::getInstance();
 		}
 		
 		private function __clone() { }
@@ -16,7 +16,7 @@
 		{
 			if(!self::$instance)
 			{
-				self::$instance = new CreateDb();
+				self::$instance = new DatabaseController();
 			}
 			return self::$instance;
 		}

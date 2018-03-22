@@ -1,5 +1,5 @@
 <?php
-	class Database
+	class DatabaseConnection
 	{
 		private static $instance = null;
 		private $conn;
@@ -25,7 +25,7 @@
 		{
 			if(!self::$instance)
 			{
-				self::$instance = new Database();
+				self::$instance = new DatabaseConnection();
 			}
 			
 			return self::$instance;
