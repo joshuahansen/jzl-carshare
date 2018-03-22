@@ -41,11 +41,11 @@
             $dbConn = $this->db->getConnection();
             if($dbConn->query($sql) === TRUE)
             {
-                echo "Table created successfully";
+                echo "Table created successfully</br>";
             }
             else
             {
-               echo "Error creating table: " .$dbConn->error;
+               echo "Error creating table: " .$dbConn->error ."</br>";
             }
         }
         public function addToTable($sql)
@@ -53,11 +53,11 @@
             $dbConn = $this->db->getConnection();
             if($dbConn->query($sql) === TRUE)
             {
-                echo "Table updated successfully";
+                echo "Table updated successfully</br>";
             }
             else
             {
-                echo "Error updating table: " .$dbConn->error;
+                echo "Error updating table: " .$dbConn->error ."</br>";
             }
         }
         public function usersTable()
@@ -130,7 +130,7 @@
         {
             $sql = "CREATE TABLE garages (
                     garageId INT(5) NOT NULL,
-                    location int(5) NOT NULL,
+                    location INT(5) NOT NULL,
                     capacity INT(3) NOT NULL,
                     PRIMARY KEY(garageId),
                     FOREIGN KEY(location) REFERENCES locations(locationId)
@@ -159,7 +159,7 @@
                     licenseNum, streetNum, street, city, postCode)
                     VALUES('".$id."', '".$fname."', '".$lname."', "
                     .$licenseNum.", ".$streetNum.", '" .$street ."', '"
-                    .$city."', ".$postCde.");";
+                    .$city."', ".$postCode.");";
             $this->addUser($id, $pass);
             $this->addToTable($sql);
             
@@ -194,13 +194,13 @@
                     .$postCode.");";
             $this->addToTable($sql);
         }
-        public function addGarage($capacity, $locationId, $longtitude, 
+        public function addGarage($garageId, $capacity, $locationId, $longtitude, 
                             $latitude, $streetNum, $street, $city, $postCode)
         {
-            $sql = "INSERT INTO garages(garageId, capacity)
-                    VALUES('".$locationId."', ".$capacity.");";
+            $sql = "INSERT INTO garages(garageId, location, capacity)
+                    VALUES('".$garageId."', '".$locationId."', ".$capacity.");";
             $this->addLocation($locationId, $longtitude, $latitude, 
-                    $sreetNum, $street, $city, $postCode);
+                    $streetNum, $street, $city, $postCode);
             $this->addToTable($sql);
         }
     }                    
