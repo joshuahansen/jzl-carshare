@@ -1,7 +1,7 @@
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <ul class="list-inline">
                     <li class="list-inline-item"><a href="#">Contact Us</a></li>
                     <p class="list-inline-item">|</p>
@@ -11,7 +11,7 @@
                 </ul>
                 <p>Copyright &copy; JZL Careshare - 2018</p>
             </div>
-            <div class="col-md-3"></div>
+            <div class="col-md-2"></div>
             <div class="col-md-5 flex">
                 <p>124 La Trobe St<br>Melbourne, VIC 3000</p>
                 <ul class="list-unstyled">
