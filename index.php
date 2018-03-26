@@ -6,16 +6,37 @@
 	switch($request_uri[0]) {
 		//Home page
 		case "/JZL-carshare/":
-            $template = new Template("view/homePage.php", "");
-            $template->display(); 
+            $page = new Template("view/homePage.php", "");
+            $page->display(); 
 			break;
+        case "/JZL-carchare/story":
+            $page = new Template("view/story.php", "");
+            $page->display();
+            break;
+        case "/JZL-carshare/cars"
+            $page = new Template("view/cars.php", "");
+            $page->display();
+            break;
+        case "/JZL-carshare/locations":
+            $page = new Template("view/locations.php", "");
+            $page->display();
+            break;
+        case "/JZL-carshare/loan.php":
+            $page = new Template("view/loan.php");
+            $page->display();
+            break;
+        case "/JZL-carshare/contact":
+            $page = new Template("view/contact.php");
+            $page->display();
+            break;
+        case "/JZL-carshare/login":
+            $page = new Template("view/login.php");
+            $page->display();
+            break;
 		case "/JZL-carshare/loaddb":
             echo "LOAD DATABASE\n";
 			require_once('database/defaultdb.php');
 			break;
-        case "/JZL-carshare/car":
-            echo "CAR PAGE";
-            break;
 		default:
             echo "NO PAGE";
 			//require_once('view/404.php');
