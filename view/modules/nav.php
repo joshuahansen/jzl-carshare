@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light navbar-expand-lg" id="nav">
     <div class="container">
-        <a class="navbar-brand" href="">JZL Carshare</a>
+        <a class="navbar-brand" href="/JZL-carshare/">JZL Carshare</a>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">

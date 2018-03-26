@@ -9,11 +9,11 @@
             $page = new Template("view/homePage.php", "");
             $page->display(); 
 			break;
-        case "/JZL-carchare/story":
+        case "/JZL-carshare/story":
             $page = new Template("view/story.php", "");
             $page->display();
             break;
-        case "/JZL-carshare/cars"
+        case "/JZL-carshare/cars":
             $page = new Template("view/cars.php", "");
             $page->display();
             break;
@@ -21,16 +21,16 @@
             $page = new Template("view/locations.php", "");
             $page->display();
             break;
-        case "/JZL-carshare/loan.php":
-            $page = new Template("view/loan.php");
+        case "/JZL-carshare/loan":
+            $page = new Template("view/loan.php", "");
             $page->display();
             break;
         case "/JZL-carshare/contact":
-            $page = new Template("view/contact.php");
+            $page = new Template("view/contact.php", "");
             $page->display();
             break;
         case "/JZL-carshare/login":
-            $page = new Template("view/login.php");
+            $page = new Template("view/login.php", "");
             $page->display();
             break;
 		case "/JZL-carshare/loaddb":
