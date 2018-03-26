@@ -1,12 +1,13 @@
 <?php
 	$request_uri = explode('?', $_SERVER['REQUEST_URI']);
 	//require_once('/srv/http/KynetonGolfClub/controller.php');
-    //require_once('view/template.php');
+    require_once('view/template.php');
     //$controller = Controller::getInstance();
 	switch($request_uri[0]) {
 		//Home page
 		case "/JZL-carshare/":
-            echo "HOME PAGE";
+            $template = new Template("view/homePage.php", "");
+            $template->display(); 
 			break;
 		case "/JZL-carshare/loaddb":
             echo "LOAD DATABASE\n";
