@@ -125,3 +125,11 @@ footer p {
 .location {
     cursor: pointer;
 }
+#car-page-img {
+    height: 100%;
+    background-image: url('/JZL-carshare/img/car_rental_silde.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 150px;
+}
