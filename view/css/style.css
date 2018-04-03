@@ -122,3 +122,6 @@ footer p {
 .flex ul {
     padding-left: 30px;
 }
+.location {
+    cursor: pointer;
+}
