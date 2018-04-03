@@ -60,6 +60,20 @@
                 echo "Error updating table: " .$dbConn->error ."</br>";
             }
         }
+        public function getData($sql)
+        {
+            $data = array();
+            $dbConn = $this->db->getConnection();
+            $results = $dbConn->query($sql);
+            if($results->num_rows > 0)
+            {
+                while($row = $results->fetch_assoc())
+                {
+                    array_push($data, $row);
+                }
+            }
+            return $data;
+        }
         public function usersTable()
         {
             $sql = "CREATE TABLE users (
