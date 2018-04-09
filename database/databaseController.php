@@ -54,11 +54,14 @@
             if($dbConn->query($sql) === TRUE)
             {
                 echo "Table updated successfully</br>";
+                return TRUE;
             }
             else
             {
                 echo "Error updating table: " .$dbConn->error ."</br>";
+                return FALSE;
             }
+            
         }
         public function getData($sql)
         {
@@ -164,7 +167,7 @@
         {
             $sql = "INSERT INTO users(userId, password)
                     VALUES('".$id."', '".$pass."');";
-            $this->addToTable($sql);
+            return $this->addToTable($sql);
         }
         public function addDriver($id, $pass, $fname, $lname, $licenseNum,
                             $streetNum, $street, $city, $postCode)
@@ -174,29 +177,37 @@
                     VALUES('".$id."', '".$fname."', '".$lname."', "
                     .$licenseNum.", ".$streetNum.", '" .$street ."', '"
                     .$city."', ".$postCode.");";
-            $this->addUser($id, $pass);
-            $this->addToTable($sql);
+            $user = $this->addUser($id, $pass);
+            $driver = $this->addToTable($sql);
+            if($user && $driver)
+            {
+                return TRUE;
+            }
+            else
+            {
+                return FALSE;
+            }
             
         }
         public function addAdmin($id, $pass)
         {
             $sql = "INSERT INTO users(userId, password)
                     VALUES('".$userId."', '".$password."');";
-            $this->addToTable($sql);
+            return $this->addToTable($sql);
         }
         public function addCar($rego, $make, $model, $year)
         {
             $sql = "INSERT INTO cars(rego, make, model, year)
                     VALUES('".$rego."', '".$make."', '".$model."', "
                     .$year.");";
-            $this->addToTable($sql);
+            return $this->addToTable($sql);
         }
         public function addLoan($loanId, $driver, $car, $loanDate, $returnDate)
         {
             $sql = "INSERT INTO loans(loanId, driver, car, loanDate, 
                     returnDate) VALUES('".$loanId."', '".$driver."', '"
                     .$car."',".$loanDate.", ".$returnDate.");";
-            $this->addToTable($sql);
+            return $this->addToTable($sql);
         }
         public function addLocation($locationId, $longtitude, $latitude, 
                         $streetNum, $street, $city, $postCode)
@@ -206,16 +217,24 @@
                     VALUES('".$locationId."', ".$longtitude.", ".$latitude
                     .", ".$streetNum.", '".$street."', '".$city."', "
                     .$postCode.");";
-            $this->addToTable($sql);
+            return $this->addToTable($sql);
         }
         public function addGarage($garageId, $capacity, $locationId, $longtitude, 
                             $latitude, $streetNum, $street, $city, $postCode)
         {
             $sql = "INSERT INTO garages(garageId, location, capacity)
                     VALUES('".$garageId."', '".$locationId."', ".$capacity.");";
-            $this->addLocation($locationId, $longtitude, $latitude, 
+            $location = $this->addLocation($locationId, $longtitude, $latitude, 
                     $streetNum, $street, $city, $postCode);
-            $this->addToTable($sql);
+            $garage = $this->addToTable($sql);
+            if($location && $garage)
+            {
+                return TRUE;
+            }
+            else
+            {
+                return FALSE;
+            }
         }
     }                    
 ?>
