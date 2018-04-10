@@ -9,31 +9,31 @@
 	switch($request_uri[0]) {
 		//Home page
 		case $parentDir:
-            $page = new Template("view/homePage.php", "");
+            $page = new Template("view/homePage.php");
             $page->display(); 
 			break;
         case $parentDir."story":
-            $page = new Template("view/story.php", "");
+            $page = new Template("view/story.php");
             $page->display();
             break;
         case $parentDir."cars":
-            $page = new Template("view/cars.php", "");
+            $page = new Template("view/cars.php");
             $page->display();
             break;
         case $parentDir."locations":
-            $page = new Template("view/locations.php", "");
+            $page = new Template("view/locations.php");
             $page->display();
             break;
         case $parentDir."loan":
-            $page = new Template("view/loan.php", "");
+            $page = new Template("view/loan.php");
             $page->display();
             break;
         case $parentDir."contact":
-            $page = new Template("view/contact.php", "");
+            $page = new Template("view/contact.php");
             $page->display();
             break;
         case $parentDir."login":
-            $page = new Template("view/login.php", "");
+            $page = new Template("view/login.php");
             $page->display();
             break;
 		case $parentDir."loaddb":
@@ -42,6 +42,5 @@
 			break;
 		default:
             echo "NO PAGE";
-			//require_once('view/404.php');
 	}
 ?>
