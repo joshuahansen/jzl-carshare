@@ -127,9 +127,9 @@ footer p {
 }
 #car-page-img {
     height: 100%;
-    background-image: url('/JZL-carshare/img/car_rental_silde.png');
+    background-image: url('/JZL-carshare/img/tesla-model-3-black.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    padding: 150px;
+    padding: 250px;
 }
