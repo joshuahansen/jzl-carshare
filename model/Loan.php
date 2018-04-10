@@ -1,67 +1,92 @@
 <?php
+
+$require_once("model/User.php");
+$require_once("model/Car.php");
+$require_once("model/Location.php");
+
 class Loan
 {
     private $loanId = null;
-    private $driver = null;
+    private $user = null;
     private $car = null;
-    private $cost = 0;
-
+    private $cost = 0.00;
+    private $paid = false;
     private $loanDate = null;
     private $returnDate = null;
+    private $loanLocation = null;
+    private $returnLocation = null;
 
-    private $pickupGarage = null;
-    private $returnGarage = null;
-
-    public function __construct($loanId, $driver, $car, $pickupGarage)
+    public function __construct($loanId, $user, $car, $cost, $paid,
+        $loanDate, $returnDate, $loanLocation, $returnLocation)
     {
-        $this->loanId = $loanId;
-        $this->driver = $driver;
-        $this->car = $car;
-        $this->pickupGarage = $pickupGarage;
-        $this->loanDate = date("d/m/Y");
+
     }
 
-    public function getDriver()
+    /* Getters. */
+
+    public function getLoanId()
     {
-        return $this->driver;
+
+    }
+
+    public function getUser()
+    {
+
     }
 
     public function getCar()
     {
-        return $this->car;
+
+    }
+
+    public function getCost()
+    {
+
+    }
+
+    public function getPaid()
+    {
+
     }
 
     public function getLoanDate()
     {
-        return $this->loanDate;
+
     }
 
-    public function getDueDate()
+    public function getReturnDate()
     {
 
     }
 
-    public function getPickupGarage()
+    public function getLoanLocation()
     {
 
     }
 
-    public function getReturnGarage()
+    public function getReturnLocation()
     {
 
     }
 
-    public function calculateCost()
+    /* Setters. */
+
+    public function setCost($cost)
     {
 
     }
 
-    public function extend($newDate)
+    public function setPaid($paid)
     {
 
     }
 
-    public function close()
+    public function setReturnDate($returnDate)
+    {
+
+    }
+
+    public function setReturnLocation($returnLocation)
     {
 
     }

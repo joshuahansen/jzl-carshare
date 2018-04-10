@@ -1,22 +1,48 @@
 <?php
-abstract class User
+class User
 {
-    private $userId = null;
-    private $password = null;
+    private $username = null;
+    private $license = null;
+    private $name = array();
+    private $address = array();
+    private $credit = 0.00;
 
-    public function __construct($id, $password)
+    public function __construct($username, $license, $name, $address, $credit)
     {
-        $this->id = $id;
-        $this->password = $password;
+
     }
 
-    public function getUserId()
+    /* Getters. */
+
+    public function getUsername()
     {
-        return $this->userId;
+
     }
 
-    public function getPassword()
+    public function getLicense()
     {
-        return $this->password;
+
+    }
+
+    public function getName()
+    {
+
+    }
+
+    public function getAddress()
+    {
+
+    }
+
+    public function getCredit()
+    {
+
+    }
+
+    /* Setters. */
+
+    public function setCredit($credit)
+    {
+
     }
 }

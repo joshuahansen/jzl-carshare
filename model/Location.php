@@ -1,48 +1,45 @@
 <?php
+
+$require_once("model/Car.php");
+
 class Location
 {
-    private $latitude = 0;
-    private $longitude = 0;
-    private $streetNumber = null;
-    private $streetName = null;
-    private $streetType = null;
-    private $townOrSuburb = null;
-    private $postcode = null;
-    private $state = null;
+    private $locationId = null;
+    private $coordinates = array();
+    private $address = array();
+    private $car = null;
 
-    public function __construct($latitude, $longitude, $streetNumber, $streetName,
-        $streetType, $townOrSuburb, $postcode)
+    public function __construct($locationId, $coordinates, $address, $car)
     {
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
-        $this->streetNumber = $streetNumber;
-        $this->streetName = $streetName;
-        $this->streetType = $streetType;
-        $this->townOrSuburb = $townOrSuburb;
-        $this->postcode = $postcode;
+
     }
 
-    public function getLatitude()
+    /* Getters. */
+
+    public function getLocationId()
     {
-        return $this->latitude;
+
     }
 
-    public function getLongitude()
+    public function getCoordinates()
     {
-        return $this->longitude;
+
     }
 
     public function getAddress()
     {
-        $address = null;
-        $address.=$this->streetNumber.=" ".=$this->streetName.=" ".=$this->streetType;
-        return $address;
+
     }
 
-    public function getFullAddress()
+    public function getCar()
     {
-        $address = $this->getAddress();
-        $address.=" ".=$this->townOrSuburb.=" ".=$this->postcode.=" ".=$this->state;
-        return $address;
+
+    }
+
+    /* Setters. */
+
+    public function setCar($car)
+    {
+
     }
 }
