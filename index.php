@@ -1,22 +1,19 @@
 <?php
+    session_start();
 	$request_uri = explode('?', $_SERVER['REQUEST_URI']);
     require_once('view/template.php');
     $parentDir = "/JZL-carshare/";
-    if(substr($request_uri[0], 0, 10) === "/~s3539788")
-    {
-        $parentDir = "/~s3539788/JZL-carshare/";
-    }
 	switch($request_uri[0]) {
 		//Home page
 		case $parentDir:
             $page = new Template("view/homePage.php");
             $page->display(); 
-			break;
+	    	break;
         case $parentDir."story":
             $page = new Template("view/story.php");
             $page->display();
             break;
-        case $parentDir."cars":
+       case $parentDir."cars":
             $page = new Template("view/cars.php");
             $page->display();
             break;
@@ -36,11 +33,23 @@
             $page = new Template("view/login.php");
             $page->display();
             break;
+        case $parentDir."dashboard":
+            $_SESSION['user'] = 's3589185'; 
+            if(isset($_SESSION['user']))
+            {
+                $page = new Template("view/dashboard.php");
+                $page->display();
+            }
+            else
+            {
+                header('Location: '.$parentDir.'login');
+            }
+            break;
 		case $parentDir."loaddb":
             echo "LOAD DATABASE\n";
 			require_once('database/defaultdb.php');
 			break;
 		default:
             echo "NO PAGE";
-	}
+    }
 ?>
