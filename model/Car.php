@@ -2,41 +2,29 @@
 class Car
 {
     private $registration = null;
-    private $location = null;
-    private $onLoan = null;
+    private $borrowed = false;
+
+    /* Getters. */
 
     public function __construct($registration)
     {
-        $this->registration = $registration;
+
     }
 
     public function getRegistration()
     {
-        return $this->registration;
+
     }
 
-    public function setRegistration($registration)
+    public function getBorrowed()
     {
-        $this->registration = $registration;
+
     }
 
-    public function getLocation()
-    {
-        return $this->location;
-    }
+    /* Setters. */
 
-    public function setLocation($location)
+    public function setBorrowed($borrowed)
     {
-        $this->location = $location;
-    }
 
-    public function getOnLoan()
-    {
-        return $this->onLoan;
-    }
-
-    public function setOnLoan($onLoan)
-    {
-        $this->onLoan = $onLoan;
     }
 }
