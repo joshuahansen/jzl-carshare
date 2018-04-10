@@ -1,10 +1,8 @@
 <?php
 	$request_uri = explode('?', $_SERVER['REQUEST_URI']);
-	//require_once('/srv/http/KynetonGolfClub/controller.php');
     require_once('view/template.php');
-    //$controller = Controller::getInstance();
     $parentDir = "/JZL-carshare/";
-    if(substr($request_uri[0], 0, 9) === "/~s3539788")
+    if(substr($request_uri[0], 0, 10) === "/~s3539788")
     {
         $parentDir = "/~s3539788/JZL-carshare/";
     }
