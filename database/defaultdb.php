@@ -1,5 +1,7 @@
 <?php
+    echo "load default database";
     require_once('databaseController.php');
+    echo "database controller loaded";
     $create = databaseController::getInstance();
     
     $create->dropTables();
@@ -19,22 +21,22 @@
                 56, 'Second Street', 'Melbourne', 3000);
     
     //Add Cars
-    //(rego, make, model, year)
-    $create->addCar('1db1a2', 'Holden', 'Trax', 2016);
-    $create->addCar('sde1d4', 'Ford', 'Focus', 2014);
-    $create->addCar('1sfr3s', 'Holden', 'Trax', 2016);
-    $create->addCar('1dst56', 'Ford', 'Focus', 2014);
-    $create->addCar('cd467f', 'Holden', 'Trax', 2016);
-    $create->addCar('dsfds4', 'Ford', 'Focus', 2014);
-    $create->addCar('bhf456', 'Holden', 'Trax', 2016);
-    $create->addCar('2x4s13', 'Ford', 'Focus', 2014);
-    $create->addCar('wbc123', 'Holden', 'Trax', 2016);
-    $create->addCar('tia321', 'Ford', 'Focus', 2014);
+    //(rego, borrowed[boolean default false])
+    $create->addCar('1db1a2');
+    $create->addCar('sde1d4');
+    $create->addCar('1sfr3s');
+    $create->addCar('1dst56');
+    $create->addCar('cd467f');
+    $create->addCar('dsfds4');
+    $create->addCar('bhf456');
+    $create->addCar('2x4s13');
+    $create->addCar('wbc123');
+    $create->addCar('tia321');
 
     //Add Garages
-    //(garageId, capacity, location, longtitude, latitude, streetNum, street, city, postCode)
-    $create->addGarage(01, 1, 1, -37.810250, 144.965552, 180, 'Lonsdale Street', 'Melbourne', 3000);
-    $create->addGarage(02, 1, 2, -37.815342, 144.951576, 163, 'Spencer Street', 'Melbourne', 3000);
-    $create->addGarage(03, 2, 3, -37.819271, 144.955889, 522, 'Flinders Lane', 'Melbourne', 3000);
-    $create->addGarage(04, 2, 4, -37.816206, 144.963175, 330,'Collins Street', 'Melbourne', 3000);
+    //(locationId, capacity, location, longtitude, latitude, streetNum, street, city, postCode, car)
+    $create->addLocation('01', -37.810250, 144.965552, 180, 'Lonsdale Street', 'Melbourne', 3000);
+    $create->addLocation('02', -37.815342, 144.951576, 163, 'Spencer Street', 'Melbourne', 3000);
+    $create->addLocation('03', -37.819271, 144.955889, 522, 'Flinders Lane', 'Melbourne', 3000);
+    $create->addLocation('04', -37.816206, 144.963175, 330,'Collins Street', 'Melbourne', 3000);
 ?>
