@@ -5,17 +5,14 @@
 		private $nav = "modules/nav.php";
 		private $footer = "modules/footer.php";
 		private $body;
-		private $img;
 
-		public function __construct($body, $img)
+		public function __construct($body)
 		{
 			$this->body = $body;
-			$this->img = $img;
 		}
 
 		public function display()
 		{
-            //TODO add template layout here
             echo "<!DOCTYPE html>";
             echo "<html>";
             require_once($this->head);
