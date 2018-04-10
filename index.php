@@ -3,37 +3,42 @@
 	//require_once('/srv/http/KynetonGolfClub/controller.php');
     require_once('view/template.php');
     //$controller = Controller::getInstance();
+    $parentDir = "/JZL-carshare/";
+    if(substr($request_uri[0], 0, 9) === "/~s3539788")
+    {
+        $parentDir = "/~s3539788/JZL-carshare/";
+    }
 	switch($request_uri[0]) {
 		//Home page
-		case "/JZL-carshare/":
+		case $parentDir:
             $page = new Template("view/homePage.php", "");
             $page->display(); 
 			break;
-        case "/JZL-carshare/story":
+        case $parentDir."story":
             $page = new Template("view/story.php", "");
             $page->display();
             break;
-        case "/JZL-carshare/cars":
+        case $parentDir."cars":
             $page = new Template("view/cars.php", "");
             $page->display();
             break;
-        case "/JZL-carshare/locations":
+        case $parentDir."locations":
             $page = new Template("view/locations.php", "");
             $page->display();
             break;
-        case "/JZL-carshare/loan":
+        case $parentDir."loan":
             $page = new Template("view/loan.php", "");
             $page->display();
             break;
-        case "/JZL-carshare/contact":
+        case $parentDir."contact":
             $page = new Template("view/contact.php", "");
             $page->display();
             break;
-        case "/JZL-carshare/login":
+        case $parentDir."login":
             $page = new Template("view/login.php", "");
             $page->display();
             break;
-		case "/JZL-carshare/loaddb":
+		case $parentDir."loaddb":
             echo "LOAD DATABASE\n";
 			require_once('database/defaultdb.php');
 			break;
