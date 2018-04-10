@@ -1,7 +1,5 @@
 <?php
-    echo "load default database";
     require_once('databaseController.php');
-    echo "database controller loaded";
     $create = databaseController::getInstance();
     
     $create->dropTables();
