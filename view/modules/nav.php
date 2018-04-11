@@ -20,7 +20,16 @@
                   <a class="nav-link" href="contact">Contact Us</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="login">Log In</a>
+                    <?php
+                        if(isset($_SESSION['user']))
+                        {
+                            echo '<a class="nav-link" href="logout">Log Out</a>';
+                        }
+                        else
+                        {
+                            echo '<a class="nav-link" href="login">Log In</a>';
+                        }
+                    ?>
                 </li>
             </ul>
         </div>
