@@ -45,6 +45,10 @@
                 header('Location: '.$parentDir.'login');
             }
             break;
+        case $parentDir."logout":
+            session_unset();
+            header('Location: '.$parentDir);
+            break;
 		case $parentDir."loaddb":
             echo "LOAD DATABASE\n";
 			require_once('database/defaultdb.php');
