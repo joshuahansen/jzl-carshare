@@ -122,9 +122,11 @@ footer p {
 .flex ul {
     padding-left: 30px;
 }
+
 .location {
     cursor: pointer;
 }
+
 #car-page-img {
     height: 100%;
     background-image: url('/JZL-carshare/img/tesla-model-3-black.jpg');
@@ -132,4 +134,323 @@ footer p {
     background-size: cover;
     background-repeat: no-repeat;
     padding: 250px;
+}
+
+.bg-primary {
+   background-color: white !important;
+}
+
+.learn-more-sec {
+    background-image: url('/JZL-carshare/img/google-map.png')
+}
+
+.learn-more {
+    color: black;
+    background-color: white;
+    border: 2px #2196F3 solid;
+}
+
+.learn-more-btn {
+    margin-bottom: 15px;
+    margin-left: 570px
+}
+
+.btn-primary {
+    color: white;
+    border-color: #2196F3;
+    background-color: #2196F3;
+}
+
+.text-primary {
+    color: #2196F3 !important; 
+}
+
+.btn-primary.focus, .btn-primary:focus {
+    color: white;
+    border-color: #1976D2;
+    background-color: #1976D2;
+}
+
+.btn-primary:hover {
+    color: white;
+    border-color: #1976D2;
+    background-color: #1976D2; 
+}
+
+.btn-primary.active, .btn-primary:active, .open > .btn-primary.dropdown-toggle {
+    color: white;
+    border-color: #1976D2;
+    background-color: #1976D2; 
+}
+
+.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover,
+.open > .btn-primary.dropdown-toggle.focus,
+.open > .btn-primary.dropdown-toggle:focus,
+.open > .btn-primary.dropdown-toggle:hover {
+    color: white;
+    border-color: #a4270d;
+    background-color: #c93110; 
+}
+
+.btn-primary.active, .btn-primary:active, 
+.open > .btn-primary.dropdown-toggle {
+    background-image: none; 
+}
+  
+.btn-primary.disabled.focus, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled].focus, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary.focus,
+fieldset[disabled] .btn-primary:focus,
+fieldset[disabled] .btn-primary:hover {
+    border-color: #2196F3;
+    background-color: #2196F3; 
+}
+
+.btn-primary .badge {
+    color: #2196F3;
+    background-color: white; 
+}
+
+.btn {
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif; 
+    padding: 15px 30px;
+}
+
+.btn-l {
+    margin-right: 20px;
+}
+
+.btn-default {
+    color: #222222;
+    border-color: white;
+    background-color: white; 
+}
+
+.btn-default.focus, .btn-default:focus {
+    color: #222222;
+    border-color: #bfbfbf;
+    background-color: #e6e6e6; 
+}
+
+.btn-default:hover {
+    color: #222222;
+    border-color: #e0e0e0;
+    background-color: #e6e6e6; 
+}
+
+.btn-default.active, .btn-default:active,
+.open > .btn-default.dropdown-toggle {
+    color: #222222;
+    border-color: #e0e0e0;
+    background-color: #e6e6e6; 
+}
+
+.btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover,
+.open > .btn-default.dropdown-toggle.focus,
+.open > .btn-default.dropdown-toggle:focus,
+.open > .btn-default.dropdown-toggle:hover {
+    color: #222222;
+    border-color: #bfbfbf;
+    background-color: #d4d4d4; 
+}
+
+.btn-default.active, .btn-default:active,
+.open > .btn-default.dropdown-toggle {
+    background-image: none; 
+}
+
+.btn-default.disabled.focus, .btn-default.disabled:focus, .btn-default.disabled:hover, .btn-default[disabled].focus, .btn-default[disabled]:focus, .btn-default[disabled]:hover,
+fieldset[disabled] .btn-default.focus,
+fieldset[disabled] .btn-default:focus,
+fieldset[disabled] .btn-default:hover {
+    border-color: white;
+    background-color: white; 
+}
+
+.btn-default .badge {
+    color: white;
+    background-color: #222222; 
+}
+
+.jumbo {
+    text-align: center;
+    color: black;
+    background-image: url('/JZL-carshare/img/tesla-model-3-white.jpg');
+    position: relative;
+    width: 100%;
+    min-height: 900px !important;
+    background-position: center;
+    background-size: cover;
+}
+
+.jumbo-content {
+    padding: 50px 10px 50px;
+}
+
+.jumbo-content-inner h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 50px;
+}
+
+.primary-hr {
+    margin: 30px auto;
+    max-width: 600px;
+    border-width: 3px;
+    border-color: #2196F3;
+}
+
+.jumbo-content-inner p {
+    font-size: 18px;
+    font-weight: 300;
+    margin-bottom: 50px;   
+}
+
+@media (min-width: 768px) {
+    
+    .jumbo {
+        height: 100%;
+        min-height: 600px;
+    }
+    
+    .jumbo-content {
+        position: absolute;
+        top: 40%;
+        padding: 0 50px;
+    }
+    
+    .jumbo-content-inner {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .jumbo-content-inner h1 {
+        font-size: 50px;
+    }
+    
+    .jumbo-content-inner p {
+        font-size: 18px;
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+section {
+    padding: 100px 0; 
+}
+
+.section-heading {
+    font-size: 30px;
+    padding: 10px 10px 0px 10px;
+}
+
+.service-box {
+    max-width: 400px;
+    margin: 50px auto 0; 
+}
+
+@media (min-width: 992px) {
+    .service-box {
+        margin: 20px auto 0; 
+    } 
+}
+
+.service-box p {
+    margin-bottom: 0; 
+}
+
+.service-box i {
+    margin-bottom: 10px;
+}
+
+.login-box {    
+    background: #f7f7f7;
+    border: 3px solid #F4F4F4;
+    padding-left: 15px;
+    margin-bottom: 25px;
+}
+
+.pword-box {
+    background: #f7f7f7;
+    border: 3px solid #F4F4F4;
+    padding-left: 15px;
+    margin-bottom: 5px;
+}
+
+.input-title {
+    color:rgba(164, 164, 164, 0.9);
+    padding-left:3px;
+    margin-bottom: 2px;
+}
+
+.form-signin a {
+    margin-bottom: 5px;
+}
+
+.login-title {
+    font-family: "myriad-pro",sans-serif;
+    font-style: normal;
+    font-weight: 100;
+    padding-top: 20px;
+}
+
+.card-container.card {
+    max-width: 350px;
+}
+
+.card {
+    background-color: #FFFFFF;
+    padding: 1px 25px 30px;
+    margin: 0 auto 25px;
+    margin-top: 15%x;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.loginhr {
+    width: 100%;
+}
+
+.form-signin #email,
+.form-signin #password {
+    direction: ltr;
+    height: 44px;
+    font-size: 16px;
+}
+
+.form-signin input[type=email],
+.form-signin input[type=password],
+.form-signin button {
+    width: 100%;
+    display: block;
+    z-index: 1;
+    position: relative;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin .form-control:focus {
+    border-color: rgb(104, 145, 162);
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+}
+
+.login-container {
+    margin-top: 200px;
+    margin-bottom: 200px;
+}
+
+.form-signin .btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
