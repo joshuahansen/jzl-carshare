@@ -12,7 +12,7 @@ class UserController
 
     public static function getInstance()
     {
-        if(!self::$insrance)
+        if(!self::$instance)
         {
             self::$instance = new UserController();
         }
@@ -79,7 +79,7 @@ class UserController
     /**
      * @author Zach Wingrave
      * Retrieves current user object from $_SESSION, if set.
-     * @return User; the currently logged in user object.
+     * @return User|boolean; the currently logged in user object.
      */
     public function getCurrentUser()
     {
