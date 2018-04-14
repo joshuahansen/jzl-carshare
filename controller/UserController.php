@@ -22,32 +22,47 @@ class UserController
     /**
      * @author Zach Wingrave
      * @param $username : String; a valid e-mail address.
+     * @param $password : String; password of the user for authentication.
      * @param $license : String; a valid driver's license number.
-     * @param $name : String[]; an associative array of Strings in the
-     *              following key pattern:
-     *                  "first" -> first name of the user.
-     *                  "last" -> last name of the user.
-     * @param $address : String[]; an associative array of Strings in the
-     *              following key pattern:
-     *                  "number" ->  street number e.g. "120".
-     *                  "name" -> street name e.g. "Carrington".
-     *                  "type" -> street type e.g. "St" or "Street".
-     *                  "suburb" -> suburb e.g. "Box Hill" (optional).
-     *                  "city" -> city e.g. "Melbourne".
-     *                  "postcode" -> valid postcode e.g. "3128".
+     * @param $firstName : String; first name of the user.
+     * @param $lastName: String; last name of the user.
+     * @param $streetNumber : String; street number e.g. "120".
+     * @param $streetName : String; street name e.g. "Carrington".
+     * @param $streetType : String; street type e.g. "St" or "Street".
+     * @param $suburb : String; suburb e.g. "Box Hill" (optional).
+     * @param $city : String; city e.g. "Melbourne".
+     * @param $postcode : String; postcode e.g. "3128".
      * @return boolean; true on a success, false on failure.
      */
-    public function register($username, $license, $name, $address)
+    public function register($username, $password, $license, $firstName, $lastName, $streetNumber,
+        $streetName, $streetType, $suburb, $city, $postcode)
     {
-        //if username and license are unique in db
-        if($bool = false)
-        {
-            $user = new User($username, $license, $name, $address, 0);
-            this->db->addUser($username, $license, $name, $address, 0);
-            $_SESSION["currentUser"] = $user;
-            return true;
-        }
-        return false;
+        /**
+         * @var $name : String[]; an associative array of Strings in the
+         *              following key pattern:
+         *                  "first" -> first name of the user.
+         *                  "last" -> last name of the user.
+         */
+        $name = array("first"=>$firstName, "last"=>$lastName);
+
+        /**
+         * * @param $address : String[]; an associative array of Strings in the
+         *              following key pattern:
+         *                  "number" ->  street number e.g. "120".
+         *                  "name" -> street name e.g. "Carrington".
+         *                  "type" -> street type e.g. "St" or "Street".
+         *                  "suburb" -> suburb e.g. "Box Hill" (optional).
+         *                  "city" -> city e.g. "Melbourne".
+         *                  "postcode" -> valid postcode e.g. "3128".
+         */
+        $address = array("number"=>$streetNumber, "name"=>$streetName, "type"=>$streetType,
+            "suburb"=>$suburb, "city"=>$city, "postcode"=>$postcode);
+
+        $user = new User($username, $license, $name, $address, 0);
+        $this->db->addUser($username, $password, $license, $name, $address, 0);
+        $_SESSION["currentUser"] = $user;
+
+        return true;
     }
 
     /**
@@ -58,15 +73,13 @@ class UserController
      */
     public function login($username, $password)
     {
-        //parameters received from form
-        //query database with parameters
-        //if match found, createUser($id)
-        //if no match found or error, return false
+        $data = $this->db->getUser($username);
 
-        $data = this->db->getUser($username);
         if($data != false)
         {
-            if(this->db->verifyUser($username, $password))
+            $correct = $this->db->verifyUser($username, $password);
+
+            if($correct)
             {
                 $user = new User($data["username"], $data["license"], $data["name"],
                     $data["address"], data["credit"]);
@@ -98,9 +111,6 @@ class UserController
      */
     public function getCurrentUser()
     {
-        //if set, return currentUser in $_SESSION
-        //if not set, return false to redirect to login screen
-
         if(isset($_SESSION["currentUser"]))
             return $_SESSION["currentUser"];
         return false;
