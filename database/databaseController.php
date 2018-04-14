@@ -252,6 +252,18 @@
                 .$returnLocation', $paid);";
             return $this->addToTable($sql);
         }
+        /**
+        * @author Joshua Hansen
+        * @param $locationId : String; Unique id for location.
+        * @param $longtitude : double; longtitude of location.
+        * @param $latitude : double; latitude of location.
+        * @param $streetNum : int; Street number for locations address
+        * @param $street : String; Street for address.
+        * @param $city : String; City of location.
+        * @param $postCode : int; post code of location.
+        * outputs 2 different sql statements depending if there is a car at the
+        * location. If car add reference. no car leave null.
+        */
         public function addLocation($locationId, $longtitude, $latitude, 
             $streetNum, $street, $city, $postCode, $car=NULL)
         {
@@ -281,11 +293,17 @@
             $sql = "SELECT * FROM users WHERE userId='$userId';";
             return $this->getData($sql);
         }
+        /**
+        * @author Joshua Hansen
+        * @param $userId : String; userId from login
+        * @param $pass : String; password from login
+        * @return boolean : returns true if username and password match
+        * uses has password_verify() to verify password with stored password in database
+        */
         public function verifyUser($userId, $pass)
         {
             $sql = "SELECT password FROM users WHERE userId='$userId';";
             $data = $this->getData($sql);
-            $hash = hash('sha512', $pass);
             return password_verify($pass, $data['password']);
         }
     }                    
