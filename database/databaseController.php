@@ -23,8 +23,8 @@
 		
 		public function dropTables()
 		{
-			$sql = "DROP TABLE loans, drivers, users, 
-                    garages, locations, cars";
+			$sql = "DROP TABLE loans, users,
+                 locations, cars";
 
 			$dbConn = $this->db->getConnection();
 			if($dbConn->query($sql) === TRUE)
@@ -74,22 +74,15 @@
                 {
                     array_push($data, $row);
                 }
+                return $data;
             }
-            return $data;
+            return FALSE;
         }
         public function usersTable()
         {
             $sql = "CREATE TABLE users (
                     userId VARCHAR(50) NOT NULL,
-                    password BINARY(64) NOT NULL,
-                    PRIMARY KEY(userId)
-                    );";
-            $this->createTable($sql);
-        }
-        public function driversTable()
-        {
-            $sql = "CREATE TABLE drivers (
-                    userId VARCHAR(50) NOT NULL,
+                    password VARCHAR(1000) NOT NULL,
                     firstName VARCHAR(50) NOT NULL,
                     lastName VARCHAR(50) NOT NULL,
                     licenseNum INT(10) NOT NULL,
@@ -97,8 +90,7 @@
                     street VARCHAR(50) NOT NULL,
                     city VARCHAR(50) NOT NULL,
                     postCode int(4) NOT NULL,
-                    PRIMARY KEY(userId),
-                    FOREIGN KEY(userId) REFERENCES users(userId)
+                    PRIMARY KEY(userId)
                     );";
             $this->createTable($sql);
         }
@@ -115,7 +107,7 @@
         {
             $sql = "CREATE TABLE loans (
                     loanId VARCHAR(10) NOT NULL,
-                    driver VARCHAR(50) NOT NULL,
+                    user VARCHAR(50) NOT NULL,
                     car VARCHAR(10) NOT NULL,
                     cost DOUBLE(5,2) NOT NULL,
                     loanDate DATETIME NOT NULL,
@@ -124,7 +116,7 @@
                     returnLocation VARCHAR(10),
                     paid BIT NOT NULL,
                     PRIMARY KEY(loanId),
-                    FOREIGN KEY(driver) REFERENCES drivers(userId),
+                    FOREIGN KEY(user) REFERENCES users(userId),
                     FOREIGN KEY(car) REFERENCES cars(rego),
                     FOREIGN KEY(loanLocation) REFERENCES locations(locationId),
                     FOREIGN KEY(returnLocation) REFERENCES locations(locationId)
@@ -150,47 +142,24 @@
         public function loadAllTables()
         {
             $this->usersTable();
-            $this->driversTable();
             $this->carsTable();
             $this->locationsTable();
             $this->loansTable();
         }   
-        public function addUser($id, $pass)
-        {
-            $sql = "INSERT INTO users(userId, password)
-                    VALUES('".$id."', '".$pass."');";
-            return $this->addToTable($sql);
-        }
-        public function addDriver($id, $pass, $fname, $lname, $licenseNum,
+        public function addUser($id, $pass, $fname, $lname, $licenseNum,
                             $streetNum, $street, $city, $postCode)
         {
-            $sql = "INSERT INTO drivers(userId, firstName, LastName, 
+            $hash = password_hash($pass, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO users(userId, password, firstName, LastName, 
                     licenseNum, streetNum, street, city, postCode)
-                    VALUES('".$id."', '".$fname."', '".$lname."', "
-                    .$licenseNum.", ".$streetNum.", '" .$street ."', '"
-                    .$city."', ".$postCode.");";
-            $user = $this->addUser($id, $pass);
-            $driver = $this->addToTable($sql);
-            if($user && $driver)
-            {
-                return TRUE;
-            }
-            else
-            {
-                return FALSE;
-            }
-            
-        }
-        public function addAdmin($id, $pass)
-        {
-            $sql = "INSERT INTO users(userId, password)
-                    VALUES('".$userId."', '".$password."');";
+                    VALUES('$id', '$hash', '$fname', '$lname', $licenseNum,
+                    $streetNum, '$street', '$city', $postCode);";
             return $this->addToTable($sql);
         }
         public function addCar($rego, $borrowed=0)
         {
             $sql = "INSERT INTO cars(rego, borrowed)
-                    VALUES('".$rego."', ".$borrowed.");";
+                    VALUES('$rego', $borrowed);";
             return $this->addToTable($sql);
         }
         public function addLoan($loanId, $driver, $car, $cost, $loanDate, 
@@ -198,9 +167,9 @@
         {
             $sql = "INSERT INTO loans(loanId, driver, car, cost, loanDate, 
                 returnDate, loanLocation, returnLocation, paid) 
-                VALUES('".$loanId."', '".$driver."', '".$car."',".$cost.", '"
-                .$loanDate."', '".$returnDate."', '".$loanLocation."', '"
-                .$returnLocation."', ".$paid.");";
+                VALUES('$loanId', '$driver', '$car', $cost, '
+                $loanDate', '$returnDate', '$loanLocation', '
+                .$returnLocation', $paid);";
             return $this->addToTable($sql);
         }
         public function addLocation($locationId, $longtitude, $latitude, 
@@ -210,19 +179,29 @@
             {
                 $sql = "INSERT INTO locations(locationId, longtitude, latitude,
                     streetNum, street, city, postCode)
-                    VALUES('".$locationId."', ".$longtitude.", ".$latitude
-                    .", ".$streetNum.", '".$street."', '".$city."', "
-                    .$postCode.");";
+                    VALUES('$locationId', $longtitude, $latitude,
+                     $streetNum, '.$street', '.$city', $postCode);";
             }
             else
             {
                 $sql = "INSERT INTO locations(locationId, longtitude, latitude,
                     streetNum, street, city, postCode, car)
-                    VALUES('".$locationId."', ".$longtitude.", ".$latitude
-                    .", ".$streetNum.", '".$street."', '".$city."', "
-                    .$postCode.", '".$car."');";
+                    VALUES('$locationId', $longtitude, .$latitude,
+                    $streetNum, '$street', '$city', $postCode, '.$car');";
             }
             return $this->addToTable($sql);
+        }
+        public function getUser($userId)
+        {
+            $sql = "SELECT * FROM users WHERE userId='$userId';";
+            return $this->getData($sql);
+        }
+        public function verifyUser($userId, $pass)
+        {
+            $sql = "SELECT password FROM users WHERE userId='$userId';";
+            $data = $this->getData($sql);
+            $hash = hash('sha512', $pass);
+            return password_verify($pass, $data['password']);
         }
     }                    
 ?>

@@ -5,17 +5,13 @@
     $create->dropTables();
     $create->loadAllTables();
 
-    //Admin account
-    //(userId, password)
-    $create->addUser('root', 'root');
-
     //Drivers
     //(userId, password, fname, lname, license, streetNum, street, city, postCode)
-    $create->addDriver('s3589185@student.rmit.edu.au', 'josh', 'Josh', 'Hansen', 934212311,
+    $create->addUser('s3589185@student.rmit.edu.au', 'josh', 'Josh', 'Hansen', 934212311,
                 1, 'High Street', 'Melbourne', 3000);
-    $create->addDriver('s3539788@student.rmit.edu.au', 'zach', 'Zach', 'Wingrave', 903232451,
+    $create->addUser('s3539788@student.rmit.edu.au', 'zach', 'Zach', 'Wingrave', 903232451,
                 13, 'Batman Avenue', 'Melbourne', 3000);
-    $create->addDriver('s3601235@student.rmit.edu.au', 'lohgan', 'Lohgan', 'Nash', 97881246,
+    $create->addUser('s3601235@student.rmit.edu.au', 'lohgan', 'Lohgan', 'Nash', 97881246,
                 56, 'Second Street', 'Melbourne', 3000);
     
     //Add Cars
