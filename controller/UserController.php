@@ -39,9 +39,14 @@ class UserController
      */
     public function register($username, $license, $name, $address)
     {
-        /* confirm unique values (username & license) */
-        /* update database */
-
+        //if username and license are unique in db
+        if($bool = false)
+        {
+            $user = new User($username, $license, $name, $address, 0);
+            this->db->addUser($username, $license, $name, $address, 0);
+            $_SESSION["currentUser"] = $user;
+            return true;
+        }
         return false;
     }
 
@@ -58,6 +63,16 @@ class UserController
         //if match found, createUser($id)
         //if no match found or error, return false
 
+        $data = this->db->getUser($username);
+        if($data != false)
+        {
+            if(this->db->verifyUser($username, $password))
+            {
+                $user = new User($data["username"], $data["license"], $data["name"],
+                    $data["address"], data["credit"]);
+                $_SESSION["currentUser"] = $user;
+            }
+        }
         return false;
     }
 
