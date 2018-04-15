@@ -1,4 +1,6 @@
 <?php
+require_once('database/databaseController.php');
+require_once('model/User.php');
 class UserController
 {
     private static $instance = null;
@@ -32,10 +34,10 @@ class UserController
      * @param $suburb : String; suburb e.g. "Box Hill" (optional).
      * @param $city : String; city e.g. "Melbourne".
      * @param $postcode : String; postcode e.g. "3128".
-     * @return boolean; true on a success, false on failure.
+     * @return boolean; TRUE on a success, FALSE on failure.
      */
-    public function register($username, $password, $license, $firstName, $lastName, $streetNumber,
-        $streetName, $streetType, $suburb, $city, $postcode)
+    public function register($username, $password, $license, $firstName, $lastName, 
+            $address, $city, $postcode)
     {
         /**
          * @var $name : String[]; an associative array of Strings in the
@@ -55,53 +57,56 @@ class UserController
          *                  "city" -> city e.g. "Melbourne".
          *                  "postcode" -> valid postcode e.g. "3128".
          */
-        $address = array("number"=>$streetNumber, "name"=>$streetName, "type"=>$streetType,
-            "suburb"=>$suburb, "city"=>$city, "postcode"=>$postcode);
+        $addressArray = array("address"=>$address, "city"=>$city, "postcode"=>$postcode);
 
-        $user = new User($username, $license, $name, $address, 0);
-        $this->db->addUser($username, $password, $license, $name, $address, 0);
+        $user = new User($username, $license, $name, $addressArray, 0);
+        $this->db->addUser($username, $password, $firstName, $lastName, $license, 
+            $address, $city, $postcode);
         $_SESSION["currentUser"] = $user;
 
-        return true;
+        return TRUE;
     }
 
     /**
      * @author Zach Wingrave
      * @param $username : String; a valid e-mail address.
      * @param $password : String; a plaintext password.
-     * @return boolean; true on a success, false on failure.
+     * @return boolean; TRUE on a success, FALSE on failure.
      */
     public function login($username, $password)
     {
         $data = $this->db->getUser($username);
-
-        if($data != false)
+        print_r($data);
+        if($data != FALSE)
         {
             $correct = $this->db->verifyUser($username, $password);
-
             if($correct)
             {
-                $user = new User($data["username"], $data["license"], $data["name"],
-                    $data["address"], data["credit"]);
+                $name = array("first"=>$data[0]['firstName'], "last"=>$data[0]['lastName']);
+                $address = array("address"=>$data[0]['address'], "city"=>$data[0]['city'], 
+                    "postcode"=>$data[0]['postcode']);
+                $user = new User($data[0]["userId"], $data[0]["licenseNum"], $name,
+                    $address, $data[0]["credit"]);
                 $_SESSION["currentUser"] = $user;
+                return TRUE;
             }
         }
-        return false;
+        return FALSE;
     }
 
     /**
      * @author Zach Wingrave
      * If $_SESSION is set, this function unsets it.
-     * @return boolean; true on a success, false on failure.
+     * @return boolean; TRUE on a success, FALSE on failure.
      */
     public function logout()
     {
         if(isset($_SESSION["currentUser"]))
         {
             unset($_SESSION["currentUser"]);
-            return true;
+            return TRUE;
         }
-        return false;
+        return FALSE;
     }
 
     /**
@@ -113,6 +118,6 @@ class UserController
     {
         if(isset($_SESSION["currentUser"]))
             return $_SESSION["currentUser"];
-        return false;
+        return FALSE;
     }
 }

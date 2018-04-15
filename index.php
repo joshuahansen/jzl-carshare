@@ -33,9 +33,14 @@
             $page = new Template("view/login.php");
             $page->display();
             break;
+        case $parentDir."verify":
+            require_once('view/verify.php');
+            break;
+        case $parentDir."register":
+            require_once('view/register.php');
+            break;
         case $parentDir."dashboard":
-            $_SESSION['user'] = 's3589185'; 
-            if(isset($_SESSION['user']))
+            if(isset($_SESSION['currentUser']))
             {
                 $page = new Template("view/dashboard.php");
                 $page->display();

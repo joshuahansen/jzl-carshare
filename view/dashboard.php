@@ -1,4 +1,6 @@
-<?php require_once('controller/UserController.php');?>
+<?php require_once('controller/UserController.php');
+    $userController = UserController::getInstance();
+?>
 <div class='container-fluid'>
     <div class='row'>
         <div class='col-sm-2 sidenav'>

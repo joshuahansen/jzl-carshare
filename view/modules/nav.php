@@ -21,7 +21,7 @@
                 </li>
                 <li class="nav-item">
                     <?php
-                        if(isset($_SESSION['user']))
+                        if(isset($_SESSION['currentUser']))
                         {
                             echo '<a class="nav-link" href="logout">Log Out</a>';
                         }
