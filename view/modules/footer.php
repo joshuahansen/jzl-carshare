@@ -16,11 +16,11 @@
                 <p>124 La Trobe St<br>Melbourne, VIC 3000</p>
                 <ul class="list-unstyled">
                     <li>
-                        <i class="fa fa-phone fa-fw"></i>
+                        <i class="fas fa-phone"></i>
                         (+61) 000 000 000
                     </li>
                     <li>
-                        <i class="fa fa-envelope-o fa-fw"></i>
+                        <i class="fas fa-envelope"></i>
                         <a href="mailto:">contact@jzl.com</a>
                     </li>
                 </ul>
