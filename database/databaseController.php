@@ -117,11 +117,11 @@
                     password VARCHAR(1000) NOT NULL,
                     firstName VARCHAR(50) NOT NULL,
                     lastName VARCHAR(50) NOT NULL,
-                    licenseNum INT(10) NOT NULL,
-                    streetNum INT(4) NOT NULL,
-                    street VARCHAR(50) NOT NULL,
+                    licenseNum VARCHAR(10) NOT NULL,
+                    address VARCHAR(100) NOT NULL,
                     city VARCHAR(50) NOT NULL,
-                    postCode int(4) NOT NULL,
+                    postcode int(4) NOT NULL,
+                    credit DOUBLE(10,2) NOT NULL,
                     PRIMARY KEY(userId)
                     );";
             $this->createTable($sql);
@@ -173,8 +173,7 @@
                     locationId VARCHAR(10) NOT NULL,
                     longtitude DOUBLE(20,6) NOT NULL,
                     latitude DOUBLE(20,6) NOT NULL,
-                    streetNum INT(5) NOT NULL,
-                    street VARCHAR(50) NOT NULL,
+                    address VARCHAR(100) NOT NULL,
                     city VARCHAR(50) NOT NULL,
                     postCode INT(4) NOT NULL,
                     car VARCHAR(10),
@@ -203,18 +202,21 @@
         * @param $licenseNum : int; users license number.
         * @param $steetNum : int; street number for address.
         * @param $street : String; street name for address.
+        * @param $type : String; type of street for address.
+        * @param $suburb : String; suburb for address.
         * @param $city : String; city for address.
-        * @param $postCode : int; post code for address.
+        * @param $postcode : int; postcode for address.
+        * @param $credit : double; credit user has. default $0.
         * @return boolean : return true if user successfully added.
         */
         public function addUser($id, $pass, $fname, $lname, $licenseNum,
-                            $streetNum, $street, $city, $postCode)
+                $address, $city, $postcode, $credit=0)
         {
             $hash = password_hash($pass, PASSWORD_DEFAULT);
             $sql = "INSERT INTO users(userId, password, firstName, LastName, 
-                    licenseNum, streetNum, street, city, postCode)
-                    VALUES('$id', '$hash', '$fname', '$lname', $licenseNum,
-                    $streetNum, '$street', '$city', $postCode);";
+                    licenseNum, address, city, postcode, credit)
+                    VALUES('$id', '$hash', '$fname', '$lname', '$licenseNum',
+                    '$address', '$city', $postcode, $credit);";
             return $this->addToTable($sql);
         }
         /**
@@ -265,21 +267,21 @@
         * location. If car add reference. no car leave null.
         */
         public function addLocation($locationId, $longtitude, $latitude, 
-            $streetNum, $street, $city, $postCode, $car=NULL)
+            $address, $city, $postCode, $car=NULL)
         {
             if($car === NULL)
             {
                 $sql = "INSERT INTO locations(locationId, longtitude, latitude,
-                    streetNum, street, city, postCode)
+                    address, city, postCode)
                     VALUES('$locationId', $longtitude, $latitude,
-                     $streetNum, '$street', '$city', $postCode);";
+                     '$address', '$city', $postCode);";
             }
             else
             {
                 $sql = "INSERT INTO locations(locationId, longtitude, latitude,
-                    streetNum, street, city, postCode, car)
+                    address, city, postCode, car)
                     VALUES('$locationId', $longtitude, .$latitude,
-                    $streetNum, '$street', '$city', $postCode, '.$car');";
+                    '$address', '$city', $postCode, '.$car');";
             }
             return $this->addToTable($sql);
         }
@@ -304,7 +306,7 @@
         {
             $sql = "SELECT password FROM users WHERE userId='$userId';";
             $data = $this->getData($sql);
-            return password_verify($pass, $data['password']);
+            return password_verify($pass, $data[0]['password']);
         }
     }                    
 ?>
