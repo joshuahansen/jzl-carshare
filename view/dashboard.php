@@ -1,15 +1,16 @@
 <?php require_once('controller/UserController.php');
+    require_once('model/User.php');
     $userController = UserController::getInstance();
 ?>
 <div class='container-fluid'>
     <div class='row'>
         <div class='col-sm-2 sidenav'>
-            <p>Welcome <?php //echo $userController->getCurrentUser()->getName();?></p>
+            <p>Welcome <?php echo unserialize($userController->getCurrentUser())->getName()['first']?></p>
             <ul class='nav nav-pills nav-stacked'>
-                <li class='active'><a href='#'>Home</a></li>
-                <li><a href='#'>Profile</a></li>
-                <li><a href='#'>Loan History</a></li>
-                <li><a href='#'>Current Loan</a></li>
+                <li class='active nav-item'><a class='nav-link' href='#'>Home</a></li>
+                <li class='nav-item'><a class='nav-link' href='#'>Profile</a></li>
+                <li class='nav-item'><a class='nav-link' href='#'>Loan History</a></li>
+                <li class='nav-item'><a class='nav-link' href='#'>Current Loan</a></li>
             </ul>
             </br>
             <div class='input-group'>

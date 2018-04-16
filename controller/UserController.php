@@ -87,7 +87,7 @@ class UserController
                     "postcode"=>$data[0]['postcode']);
                 $user = new User($data[0]["userId"], $data[0]["licenseNum"], $name,
                     $address, $data[0]["credit"]);
-                $_SESSION["currentUser"] = $user;
+                $_SESSION["currentUser"] = serialize($user);
                 return TRUE;
             }
         }
