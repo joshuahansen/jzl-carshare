@@ -19,7 +19,7 @@
             echo "<div class='col-sm-6 location' onclick='animateMarker(".$location['longtitude'].", "
                 .$location['latitude'].")'>";
             echo "<h4>".$location['city']."</h4>";
-            echo "<p>".$location['streetNum']." ".$location['street'].", ".$location['postCode']."</p>";
+            echo "<p>".$location['address'].", ".$location['postCode']."</p>";
             echo "</div>";
             ++$count;
         }
