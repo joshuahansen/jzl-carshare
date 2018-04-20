@@ -1,4 +1,5 @@
 <?php
+require_once('database/databaseController.php');
 class AdminController
 {
     private static $instance = null;

@@ -1,6 +1,6 @@
 <?php
 
-require_once("model/Car.php");
+require_once("Car.php");
 
 class Location
 {

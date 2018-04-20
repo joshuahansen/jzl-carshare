@@ -1,9 +1,9 @@
 <?php
 
-require_once("model/User.php");
-require_once("model/Car.php");
-require_once("model/Location.php");
-require_once("model/Promotion.php");
+require_once("User.php");
+require_once("Car.php");
+require_once("Location.php");
+require_once("Promotion.php");
 
 class Loan
 {
