@@ -1,31 +1,39 @@
 <?php
-class User
+class User extends Agent
 {
-    private $username = null;
     private $license = null;
     private $name = array();
-    private $address = array();
+    private $address = null;
+    private $suburb = null;
+    private $postcode = null;
     private $credit = 0.00;
 
-    public function __construct($username, $license, $name, $address, $credit)
+    public function __construct($username, $license, $firstName, $lastName, $address, $suburb, $postcode, $credit=0.00)
     {
-        $this->username = $username;
+        parent::__construct($username);
         $this->license = $license;
-        $this->name = $name;
+        $this->name = ["first" => $firstName, "last" => $lastName];
         $this->address = $address;
-        $this->credit = $credit;        
+        $this->suburb = $suburb;
+        $this->postcode = $postcode;
+        $this->credit = $credit;
     }
 
     /* Getters. */
 
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
     public function getLicense()
     {
         return $this->license;
+    }
+
+    public function getFirstName()
+    {
+        return $this->name["first"];
+    }
+
+    public function getLastName()
+    {
+        return $this->name["last"];
     }
 
     public function getName()
@@ -36,6 +44,16 @@ class User
     public function getAddress()
     {
         return $this->address;
+    }
+
+    public function getSuburb()
+    {
+        return $this->suburb;
+    }
+
+    public function getPostCode()
+    {
+        return $this->postcode;
     }
 
     public function getCredit()
