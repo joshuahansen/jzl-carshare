@@ -47,6 +47,18 @@
             var activeInfoWindow;
             var locations = <?php echo json_encode($locationController->getLocations("Melbourne"));?>;
             var cars = <?php echo json_encode($carController->getAllCars());?>;
+            function searchCars(rego)
+            {
+                for(var i = 0; i < cars.length; ++i)
+                {
+                    console.log("searching cars");
+                    if(cars[i]['rego'] == rego)
+                    {
+                        return cars[i];
+                    }
+                }
+                return false;
+            }
             function getUserPosition()
             {
                /* if(navigator.geolocation)
@@ -78,15 +90,44 @@
                 for(var i = 0; i < locations.length; ++i)
                 {
                     var locat = locations[i];
-                    var car = "Location free to drop off car";
+                    console.log(locat['address']);
+                    var rego;
+                    var carInfo = false;
                     if(locat['car'] != null)
                     {
-                        car = locat['car'];
+                        rego = locat['car'];
+                        console.log(rego);
+                        carInfo = searchCars(rego);
+                    }
+                    if(carInfo)
+                    {
+                        console.log("get car img");
+                        var carImg;
+                        switch(carInfo['make']) {
+                            case "Model 3":
+                                carImg = 'img/model3.jpg';
+                                break;
+                            case "Model X":
+                                carImg = 'img/modelX.png';
+                                break;
+                            case "Model S":
+                                carImg = 'img/modelS.jpg';
+                                break;
+                        }
+                        var infoContent = "<h5>"+locat['address']+"</h5>"
+                            +"<img src='"+carImg+"' style='max-width:95px;max-height:100px;float:right;margin:0px;'>"
+                            +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>"+carInfo['make']+"</p>"
+                            +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loanModal' onclick='fillForm("
+                            +locat['locationId']+")'>Loan</button>";
+                    }
+                    else
+                    {
+                        var infoContent = "<h5>"+locat['address']+"</h5>"
+                            +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>Available to Return Car</p>"
+                            +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loanModal' onclick='fillForm("+locat['locationId']+")'>Loan</button>";
                     }
                     var markerPos = new google.maps.LatLng(locat['longtitude'],locat['latitude']);
                     var marker = new google.maps.Marker({position: markerPos});
-                    var infoContent = "<h5>"+locat['address']+"</h5><p>"+locat['city']+", "+ locat['postcode'] +"</p><p>"+car+"</p><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loanModal' onclick='fillForm("+locat['locationId']+")'>Loan</button>";
-                    console.log(locat['address']);
                     var infoWindow = new google.maps.InfoWindow();
 
                     google.maps.event.addListener(marker,'click', (function(marker, infoContent, infoWindow){
