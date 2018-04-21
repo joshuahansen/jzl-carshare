@@ -1,24 +1,26 @@
 <?php require_once('controller/UserController.php');
     require_once('controller/LocationController.php');
+    require_once('controller/CarController.php');
     require_once('model/User.php');
     $userController = UserController::getInstance();
     $locationController = LocationController::getInstance();
+    $carController = CarController::getInstance();
 ?>
 <div class='container-fluid'>
     <div class='row'>
         <div class='col-sm-2 sidenav'>
             <p>Welcome <?php echo unserialize($userController->getCurrentUser())->getName()['first']?></p>
             <ul class='nav nav-pills nav-stacked'>
-                <li class='active nav-item'><a class='nav-link' href='#'>Home</a></li>
+                <li class='nav-item'><a class='nav-link' href='dashboard'>Home</a></li>
                 <li class='nav-item'><a class='nav-link' href='#'>Profile</a></li>
                 <li class='nav-item'><a class='nav-link' href='#'>Loan History</a></li>
                 <li class='nav-item'><a class='nav-link' href='#'>Current Loan</a></li>
             </ul>
             </br>
             <div class='input-group'>
-                <input type='text' class='form-control' placeholder='Search Locations..'>
+                <input type='text' class='form-control' placeholder='Search Locations'>
                 <span class='input-group-btn'>
-                    <button class='btn btn-primary btn-default' type='button'>
+                    <button class='btn btn-primary' type='button'>
                         <i class="fas fa-search"></i>
                     </button>
                 </span>
@@ -40,19 +42,21 @@
             <div id='info' style='display:none;'>Info Box</div>
         </div>
         <div class='col-sm-2'></div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXolLNh8zGpDN3_YE38vEwPMmtBMBxXLw"></script>
         <script>
+            var activeInfoWindow;
+            var locations = <?php echo json_encode($locationController->getLocations("Melbourne"));?>;
+            var cars = <?php echo json_encode($carController->getAllCars());?>;
             function getUserPosition()
             {
                /* if(navigator.geolocation)
                 {
                     var position = navigator.geolocation.getCurrentPosition(function (position){
-                        console.log( position.coords);
                         return position.coords;
                     });
-                    console.log(position);
                     var lat = position.latitiude;
                     var lon = position.longtitude;
-                    return mapCenter = new google.maps.LaddtLng(lat, lon);
+                    return mapCenter = new google.maps.LatLng(lat, lon);
                 }
                 else*/
                 {
@@ -61,51 +65,110 @@
             }
             function addUserPosition(map, mapCenter)
             {
-                        var marker = new google.maps.Marker({position: mapCenter});
+                        var customMarker = 'img/map-markers/dt.jpeg'
+                        var marker = new google.maps.Marker({
+                                position: mapCenter,
+                                icon: customMarker
+                        });
+                        marker.setAnimation(google.maps.Animation.BOUNCE);
                         marker.setMap(map);
-                        var infoContent = "<h3>Current Location</h3>";
-                        var infoWindow = new google.maps.InfoWindow({
-                                content: infoContent
-                        });
-                        marker.addListener('mouseover', function () {
-                            $("#info").show();
-                        });
             }
             function addLocations(map)
             {
-                var locations = <?php echo json_encode($locationController->getLocations("Melbourne"));?>;
                 for(var i = 0; i < locations.length; ++i)
                 {
                     var locat = locations[i];
-                    console.log(locat); 
+                    var car = "Location free to drop off car";
+                    if(locat['car'] != null)
+                    {
+                        car = locat['car'];
+                    }
                     var markerPos = new google.maps.LatLng(locat['longtitude'],locat['latitude']);
                     var marker = new google.maps.Marker({position: markerPos});
-                    var infoContent = "<h3>"+locat['address']+"</h3>";
+                    var infoContent = "<h5>"+locat['address']+"</h5><p>"+locat['city']+", "+ locat['postcode'] +"</p><p>"+car+"</p><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loanModal' onclick='fillForm("+locat['locationId']+")'>Loan</button>";
                     console.log(locat['address']);
-                    var infoWindow = new google.maps.InfoWindow({
-                            content: infoContent
-                    });
-                    marker.addListener('mouseover', displayLocationDetails(locat));
+                    var infoWindow = new google.maps.InfoWindow();
+
+                    google.maps.event.addListener(marker,'click', (function(marker, infoContent, infoWindow){
+                        return function() {
+                            if(activeInfoWindow)
+                            {
+                                activeInfoWindow.close();
+                            }
+                            infoWindow.setContent(infoContent);
+                            infoWindow.open(map, marker);
+                            activeInfoWindow = infoWindow;
+                        };
+                    })(marker, infoContent, infoWindow));
                     marker.setMap(map);
                 }
             }
-            function displayLocationDetails(locat)
+            function fillForm(locat)
             {
+                var currentLocation;
+                var currentCar;
+                for(var i = 0; i < locations.length; ++i)
+                {
+                    if(locations[i]['locationId'] == locat)
+                    {
+                        currentLocation = locations[i];
+                        break;
+                    }
+                }
+                if(currentLocation['car'])
+                {
+                    for(var i = 0; i < cars.length; ++i)
+                    {
+                        console.log("searching cars");
+                        if(cars[i]['rego'] == currentLocation['car'])
+                        {
+                            currentCar = cars[i];
+                            break;
+                        }
+                    }
+                }
+                
+                $("#address").val(currentLocation['address']+", " + currentLocation['city'] + ", " +
+                                currentLocation['postcode']);
+                if(currentCar)
+                {
+                    $("#car").val(currentCar['make']);
+                    $("#rego").val(currentCar['rego']);
+                    $("#cost").val(currentCar['cost']);
+                }
+                else
+                {
+                    $("#car").val("");
+                    $("#rego").val("");
+                    $("#cost").val("");
+                }
+                
+                var now = new Date();
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                var hours = now.getHours();
+                var minutes = now.getMinutes();
+
+                var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+                $("#loanDate").val(today);
+                $("#loanTime").val(hours+":"+minutes);
+                $("#returnDate").attr('min', today);
             }
             function myMap() {
                 var mapCanvas = document.getElementById('googleMap');
                 var mapCenter = getUserPosition();
-                var mapOptions = {center: mapCenter, zoom:12};
+                var mapOptions = {center: mapCenter, zoom:15};
                 var map = new google.maps.Map(mapCanvas,mapOptions);
+                
 
                 addUserPosition(map, mapCenter);
                 addLocations(map);
             }
+            myMap();
         </script>
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXolLNh8zGpDN3_YE38vEwPMmtBMBxXLw&callback=myMap"></script>
     </div>
-    <button type='button' class='btn btn-primary btn-default' data-toggle='modal' data-target='#loanModal'>Loan</button>
 </div>
 <div class="modal fade" id="loanModal" tabindex="-1" role="dialog" aria-labelledby="loanModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -122,9 +185,15 @@
                         <label for='address'>Location Address</label>
                         <input type='text' class='form-control' id='address' name='address' disabled>
                     </div>
-                    <div class='form-group'>
-                        <label for='car'>Car</label>
-                        <input type='text' class='form-control' id='car' name='car' disabled>
+                    <div class='row'>
+                        <div class='col-sm-6 form-group'>
+                            <label for='car'>Car</label>
+                            <input type='text' class='form-control' id='car' name='car' disabled>
+                        </div>
+                        <div class='col-sm-6 form-group'>
+                            <label for='rego'>Registration</label>
+                            <input type='text' class='form-control' id='rego' name='rego' disabled>
+                        </div>
                     </div>
                     <div class='form-group'>
                         <label for='cost'>Cost</label>
