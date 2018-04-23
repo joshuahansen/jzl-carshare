@@ -9,7 +9,7 @@
 <div class='container-fluid'>
     <div class='row'>
         <div class='col-sm-2 sidenav'>
-            <p>Welcome <?php echo unserialize($userController->getCurrentUser())->getName()['first']?></p>
+            <p>Welcome <?php echo $userController->getCurrentUser()->getFirstName()?></p>
             <ul class='nav nav-pills nav-stacked'>
                 <li class='nav-item'><a class='nav-link' href='dashboard'>Home</a></li>
                 <li class='nav-item'><a class='nav-link' href='#'>Profile</a></li>
@@ -77,7 +77,7 @@
             }
             function addUserPosition(map, mapCenter)
             {
-                        var customMarker = 'img/map-markers/dt.jpeg'
+                        var customMarker = 'img/map-markers/blue.png'
                         var marker = new google.maps.Marker({
                                 position: mapCenter,
                                 icon: customMarker
@@ -189,9 +189,10 @@
                 var month = ("0" + (now.getMonth() + 1)).slice(-2);
                 var hours = now.getHours();
                 var minutes = now.getMinutes();
+                minutes = (minutes<10 ? '0' : '') + minutes;
 
                 var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-
+                console.log(hours+":"+minutes);
                 $("#loanDate").val(today);
                 $("#loanTime").val(hours+":"+minutes);
                 $("#returnDate").attr('min', today);

@@ -2,6 +2,7 @@
 
 require_once('database/databaseController.php');
 require_once('model/User.php');
+require_once('controller/AgentController.php');
 
 class UserController extends AgentController
 {
@@ -36,10 +37,10 @@ class UserController extends AgentController
      * @return boolean; TRUE on a success, FALSE on failure.
      */
     public function register($username, $password, $license, $firstName, $lastName, 
-            $address, $suburb, $postcode)
+            $address, $city, $postcode)
     {
-        $user = new User($username, $license, $firstName, $lastName, $address, $suburb, $postcode);
-        $this->db->addUser($username, $password, $firstName, $lastName, $license, $address, $suburb, $postcode);
+        $user = new User($username, $license, $firstName, $lastName, $address, $city, $postcode);
+        $this->db->addUser($username, $password, $firstName, $lastName, $license, $address, $city, $postcode);
         $_SESSION["currentUser"] = serialize($user);
         return TRUE;
     }
@@ -60,8 +61,7 @@ class UserController extends AgentController
                 $name = array("first" => $data[0]['firstName'], "last" => $data[0]['lastName']);
                 $address = array("address" => $data[0]['address'], "city" => $data[0]['city'],
                     "postcode" => $data[0]['postcode']);
-                $user = new User($data[0]["userId"], $data[0]["licenseNum"], $name[0], $name[1],
-                    $address[0], $address[1], $address[2], $data[0]["credit"]);  // FIX MONDAY
+                $user = new User($data[0]["userId"], $data[0]["licenseNum"], $name, $address, $data[0]["credit"]);
                 $_SESSION["currentUser"] = serialize($user);
                 return TRUE;
             }
