@@ -62,7 +62,7 @@ class UserController
         $user = new User($username, $license, $name, $addressArray, 0);
         $this->db->addUser($username, $password, $firstName, $lastName, $license, 
             $address, $city, $postcode);
-        $_SESSION["currentUser"] = $user;
+        $_SESSION["currentUser"] = serialize($user);
 
         return TRUE;
     }
