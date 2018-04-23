@@ -134,6 +134,8 @@
         {
             $sql = "CREATE TABLE cars (
                     rego VARCHAR(10) NOT NULL,
+                    make VARCHAR(20) NOT NULL,
+                    cost DOUBLE(6,2) NOT NULL,
                     borrowed BIT NOT NULL,
                     PRIMARY KEY(rego)
                     );";
@@ -175,7 +177,7 @@
                     latitude DOUBLE(20,6) NOT NULL,
                     address VARCHAR(100) NOT NULL,
                     city VARCHAR(50) NOT NULL,
-                    postCode INT(4) NOT NULL,
+                    postcode INT(4) NOT NULL,
                     car VARCHAR(10),
                     PRIMARY KEY(locationId),
                     FOREIGN KEY(car) REFERENCES cars(rego)
@@ -225,10 +227,10 @@
         * @param $borrowed : bit; default = 0 - not borrowed, 1 - borrowed
         * @return boolean : true on successful add
         */
-        public function addCar($rego, $borrowed=0)
+        public function addCar($rego, $make, $cost=0.00, $borrowed=0)
         {
-            $sql = "INSERT INTO cars(rego, borrowed)
-                    VALUES('$rego', $borrowed);";
+            $sql = "INSERT INTO cars(rego, make, cost, borrowed)
+                    VALUES('$rego', '$make', $cost, $borrowed);";
             return $this->addToTable($sql);
         }
         /**
@@ -280,8 +282,8 @@
             {
                 $sql = "INSERT INTO locations(locationId, longtitude, latitude,
                     address, city, postCode, car)
-                    VALUES('$locationId', $longtitude, .$latitude,
-                    '$address', '$city', $postCode, '.$car');";
+                    VALUES('$locationId', $longtitude, $latitude,
+                    '$address', '$city', $postCode, '$car');";
             }
             return $this->addToTable($sql);
         }

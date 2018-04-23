@@ -20,6 +20,7 @@ class Loan
     private $promotion = null;
 
     public function __construct($loanId, $user, $car, $cost, $paid, $loanDate, $loanLocation, $estimatedTime, $promotion=null)
+
     {
         $this->loanId = $loanId;
         $this->user = $user;
