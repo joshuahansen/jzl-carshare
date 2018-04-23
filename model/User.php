@@ -3,19 +3,15 @@ class User extends Agent
 {
     private $license = null;
     private $name = array();
-    private $address = null;
-    private $suburb = null;
-    private $postcode = null;
+    private $address = array();
     private $credit = 0.00;
 
-    public function __construct($username, $license, $firstName, $lastName, $address, $suburb, $postcode, $credit=0.00)
+    public function __construct($username, $license, $name, $address, $credit=0.00)
     {
         parent::__construct($username);
         $this->license = $license;
-        $this->name = ["first" => $firstName, "last" => $lastName];
+        $this->name = $name;
         $this->address = $address;
-        $this->suburb = $suburb;
-        $this->postcode = $postcode;
         $this->credit = $credit;
     }
 
@@ -46,14 +42,19 @@ class User extends Agent
         return $this->address;
     }
 
-    public function getSuburb()
+    public function getStreet()
     {
-        return $this->suburb;
+        return $this->address["street"];
+    }
+
+    public function getCity()
+    {
+        return $this->address["city"];
     }
 
     public function getPostCode()
     {
-        return $this->postcode;
+        return $this->address["postcode"];
     }
 
     public function getCredit()
