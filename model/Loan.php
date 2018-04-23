@@ -1,8 +1,9 @@
 <?php
 
-$require_once("model/User.php");
-$require_once("model/Car.php");
-$require_once("model/Location.php");
+require_once("User.php");
+require_once("Car.php");
+require_once("Location.php");
+require_once("Promotion.php");
 
 class Loan
 {
@@ -15,10 +16,11 @@ class Loan
     private $returnDate = null;
     private $loanLocation = null;
     private $returnLocation = null;
-    private $expectedReturnDate = null;
+    private $estimatedTime = null;
+    private $promotion = null;
 
-    public function __construct($loanId, $user, $car, $cost=0.00, $paid=false, $loanDate,
-        $returnDate=null, $loanLocation, $returnLocation=null, $expectedReturnDate=null)
+    public function __construct($loanId, $user, $car, $cost, $paid, $loanDate, $loanLocation, $estimatedTime, $promotion=null)
+
     {
         $this->loanId = $loanId;
         $this->user = $user;
@@ -26,78 +28,82 @@ class Loan
         $this->cost = $cost;
         $this->paid = $paid;
         $this->loanDate = $loanDate;
-        $this->returnDate = $returnDate;
         $this->loanLocation = $loanLocation;
-        $this->returnLocation = $returnLocation;
-        $this->expectedReturnDate = $expectedReturnDate;
+        $this->estimatedTime = $estimatedTime;
+        $this->promotion = $promotion;
     }
 
     /* Getters. */
 
     public function getLoanId()
     {
-
+        return $this->loanId;
     }
 
     public function getUser()
     {
-
+        return $this->user;
     }
 
     public function getCar()
     {
-
+        return $this->car;
     }
 
     public function getCost()
     {
-
+        return $this->cost;
     }
 
     public function getPaid()
     {
-
+        return $this->paid;
     }
 
     public function getLoanDate()
     {
-
+        return $this->loanDate;
     }
 
     public function getReturnDate()
     {
-
+        return $this->returnDate;
     }
 
     public function getLoanLocation()
     {
-
+        return $this->loanLocation;
     }
 
     public function getReturnLocation()
     {
+        return $this->returnLocation;
+    }
 
+    public function getEstimateTime()
+    {
+        return $this->estimatedTime;
     }
 
     /* Setters. */
 
     public function setCost($cost)
     {
-
+        $this->cost = $cost;
     }
 
     public function setPaid($paid)
     {
-
+        $this->paid = $paid;
     }
 
     public function setReturnDate($returnDate)
     {
-
+        $this->returnDate = $returnDate;
     }
 
     public function setReturnLocation($returnLocation)
     {
-
+        $this->returnLocation = $returnLocation;
     }
 }
