@@ -15,11 +15,21 @@ class Loan
     private $returnDate = null;
     private $loanLocation = null;
     private $returnLocation = null;
+    private $expectedReturnDate = null;
 
-    public function __construct($loanId, $user, $car, $cost, $paid,
-        $loanDate, $returnDate, $loanLocation, $returnLocation)
+    public function __construct($loanId, $user, $car, $cost=0.00, $paid=false, $loanDate,
+        $returnDate=null, $loanLocation, $returnLocation=null, $expectedReturnDate=null)
     {
-
+        $this->loanId = $loanId;
+        $this->user = $user;
+        $this->car = $car;
+        $this->cost = $cost;
+        $this->paid = $paid;
+        $this->loanDate = $loanDate;
+        $this->returnDate = $returnDate;
+        $this->loanLocation = $loanLocation;
+        $this->returnLocation = $returnLocation;
+        $this->expectedReturnDate = $expectedReturnDate;
     }
 
     /* Getters. */
