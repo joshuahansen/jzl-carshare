@@ -15,3 +15,4 @@ abstract class Agent
         return $this->username;
     }
 }
+?>

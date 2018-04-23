@@ -9,7 +9,7 @@
 <div class='container-fluid'>
     <div class='row'>
         <div class='col-sm-2 sidenav'>
-            <p>Welcome <?php echo unserialize($userController->getCurrentUser())->getName()['first']?></p>
+            <p>Welcome <?php echo $userController->getCurrentUser()->getFirstName()?></p>
             <ul class='nav nav-pills nav-stacked'>
                 <li class='nav-item'><a class='nav-link' href='dashboard'>Home</a></li>
                 <li class='nav-item'><a class='nav-link' href='#'>Profile</a></li>

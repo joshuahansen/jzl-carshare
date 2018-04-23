@@ -46,3 +46,4 @@ class Location
         $this->car = $car;
     }
 }
+?>

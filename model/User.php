@@ -1,4 +1,5 @@
 <?php
+require_once('model/Agent.php');
 class User extends Agent
 {
     private $license = null;
@@ -68,3 +69,4 @@ class User extends Agent
         $this->credit = $credit;
     }
 }
+?>
