@@ -129,7 +129,8 @@ footer p {
 
 #car-page-img {
     height: 100%;
-    background-image: url('/JZL-carshare/img/tesla-model-3-black.jpg');
+    min-height: 600px !important;
+    background-image: url('/JZL-carshare/img/tesla-fleet.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -289,7 +290,12 @@ fieldset[disabled] .btn-default:hover {
     padding: 50px 10px 50px;
 }
 
+.jumbo-content-inner p {
+    color: white;
+}
+
 .jumbo-content-inner h1 {
+    color: white;
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 50px;
@@ -453,4 +459,14 @@ section {
 .form-signin .btn {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.cars {
+    height: 200px;
+    width: 300px;
+    margin-bottom: 35px;
+}
+
+.cars-col {
+    margin-left: 60px;
 }

@@ -14,7 +14,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="loan">Loan</a>
+                  <a class="nav-link" href="dashboard">Loan</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="contact">Contact Us</a>

@@ -1,9 +1,9 @@
 <header class="jumbo">
     <div class="jumbo-content">
         <div class="jumbo-content-inner">
-            <h1 id="jumbo-heading">Welcome to JZL Careshare</h1>
+            <h1 id="jumbo-heading">Welcome to JZL Carshare</h1>
             <hr class="primary-hr">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a faucibus erat. Proin neque erat, aliquet et egestas quis, porta et libero. Phasellus vehicula massa magna, quis lobortis tellus tincidunt sed.</p>
+            <p>Have you ever wanted to travel to exciting new places and go on the ultimate road trip? Or do you just need a suitable vechicle for a day?  At JZL Carshare we provide a variety of vehicles you can loan for whatever you need.</p>
             <a class="btn btn-primary btn-l" href="#">Find Out More</a>
             <a class="btn btn-primary" href="#">Contact Us</a>
         </div>
