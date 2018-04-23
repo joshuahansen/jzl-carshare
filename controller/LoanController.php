@@ -25,28 +25,34 @@ class LoanController
         return self::$instance;
     }
 
-    public function createLoan($location, $loanDate, $loanTime, $expectedDate=null, $expectedTime)
+    public function createLoan($location, $loanDateTime, $expectedDateTime, $promotion)
     {
-        $loanDateTime = null;
-        $expectedDateTime = null;
         $loanId = $this->generateLoanId();
         $user = unserialize($_SESSION['currentUser']);
+
         $car = $location->getCar();
+        $cost = $car->getCost();
         $location->setCar(null);
-        $loan = new Loan($loanId, $user, $car, $loanDateTime, $location, $expectedDateTime);
-        $this->dbController->addLoan($loanId, $user->getUsername(), $car-getRegistration(), 0, $loanDateTime,
-            null, $location->getLocationId(), null, False);
+
+        $loan = new Loan($loanId, $user, $car, $cost, FALSE, $loanDateTime, null,
+            $location, null, $expectedDateTime, $promotion);
+        $this->dbController->addLoan($loanId, $user->getUsername(), $car-getRegistration(), $cost, $loanDateTime,
+            null, $location->getLocationId(), null, FALSE);
         $_SESSION['currentLoan'] = serialize($loan);
+
+
     }
 
-    public function returnLoan($returnDate, $returnLocation)
+    public function returnLoan($returnDateTime, $returnLocation)
     {
         $loan = $this.getCurrentLoan();
         $returnLocation->setCar($loan.getCar());
-        $loan->setReturnDate($returnDate);
+        $loan->setReturnDate($returnDateTime);
         $loan->setReturnLocation($returnLocation);
         $loan->setPaid(True);
-        unset($_SESSION['currentLoan']);
+        if(isset($_SESSION["currentLoan"]))
+            unset($_SESSION['currentLoan']);
+        return TRUE;
     }
     public function getPastLoans()
     {

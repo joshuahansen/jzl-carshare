@@ -12,24 +12,27 @@ class Loan
     private $car = null;
     private $cost = 0.00;
     private $paid = false;
-    private $loanDate = null;
-    private $returnDate = null;
+    private $loanDateTime = null;
+    private $returnDateTime = null;
     private $loanLocation = null;
     private $returnLocation = null;
-    private $estimatedTime = null;
+    private $expectedDateTime = null;
     private $promotion = null;
+    private $lockbox = null;
 
-    public function __construct($loanId, $user, $car, $cost, $paid, $loanDate, $loanLocation, $estimatedTime, $promotion=null)
-
+    public function __construct($loanId, $user, $car, $cost, $paid, $loanDateTime,
+        $returnDateTime, $loanLocation, $returnLocation, $expectedDateTime, $promotion)
     {
         $this->loanId = $loanId;
         $this->user = $user;
         $this->car = $car;
         $this->cost = $cost;
         $this->paid = $paid;
-        $this->loanDate = $loanDate;
+        $this->loanDateTime = $loanDateTime;
+        $this->returnDateTime = $returnDateTime;
         $this->loanLocation = $loanLocation;
-        $this->estimatedTime = $estimatedTime;
+        $this->returnLocation = $returnLocation;
+        $this->expectedDateTime = $expectedDateTime;
         $this->promotion = $promotion;
     }
 
@@ -60,14 +63,14 @@ class Loan
         return $this->paid;
     }
 
-    public function getLoanDate()
+    public function getLoanDateTime()
     {
-        return $this->loanDate;
+        return $this->loanDateTime;
     }
 
-    public function getReturnDate()
+    public function getReturnDateTime()
     {
-        return $this->returnDate;
+        return $this->returnDateTime;
     }
 
     public function getLoanLocation()
@@ -80,9 +83,9 @@ class Loan
         return $this->returnLocation;
     }
 
-    public function getEstimateTime()
+    public function getExpectedDateTime()
     {
-        return $this->estimatedTime;
+        return $this->expectedDateTime;
     }
 
     /* Setters. */
@@ -97,9 +100,9 @@ class Loan
         $this->paid = $paid;
     }
 
-    public function setReturnDate($returnDate)
+    public function setReturnDateTime($returnDateTime)
     {
-        $this->returnDate = $returnDate;
+        $this->returnDateTime = $returnDateTime;
     }
 
     public function setReturnLocation($returnLocation)
