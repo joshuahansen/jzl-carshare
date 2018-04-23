@@ -1,5 +1,6 @@
 <?php
 require_once('database/databaseController.php');
+
 /**
 * @author Joshua Hansen
 * Controller for the car class.

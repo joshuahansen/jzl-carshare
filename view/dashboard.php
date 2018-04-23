@@ -77,7 +77,7 @@
             }
             function addUserPosition(map, mapCenter)
             {
-                        var customMarker = 'img/map-markers/dt.jpeg'
+                        var customMarker = 'img/map-markers/blue.png'
                         var marker = new google.maps.Marker({
                                 position: mapCenter,
                                 icon: customMarker
