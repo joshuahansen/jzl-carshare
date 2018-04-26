@@ -54,6 +54,14 @@
             session_unset();
             header('Location: '.$parentDir);
             break;
+        case $parentDir."current-loan":
+            $page = new Template("view/currentLoan.php");
+            $page->display();   
+            break;
+        case $parentDir."create-loan":
+            $page = new Template("view/createLoan.php");
+            $page->display();   
+            break;
 		case $parentDir."loaddb":
             echo "LOAD DATABASE\n";
 			require_once('database/defaultdb.php');
