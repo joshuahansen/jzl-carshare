@@ -7,31 +7,38 @@
     $carController = CarController::getInstance();
 ?>
 <div class='container-fluid'>
-    <p>Welcome <?php echo $userController->getCurrentUser()->getFirstName()?></p>
-    <div class='input-group col-sm-6'>
-        <input type='text' class='form-control' placeholder='Search Locations'>
-            <span class='input-group-btn'>
-                <button class='btn btn-primary' type='button'>
-                    <i class="fas fa-search"></i>
-                </button>
-            </span>
-    </div>
-    <div class='col-sm-6'>
-        <label class='control-label' for='searchRadius'>Search Radius:</label>
-        <select class='form-control' id='searchRadius'>
-            <option value='none' default>None</option>
-            <option value='1'>1km</option>
-            <option value='2'>2km</option>
-            <option value='5'>5km</option>
-            <option value='10'>10km</option>
-            <option value='15'>15km</option>
-        </select>
+    <div class='row search-bar'>
+        <div class='col-sm-2'>
+            <p class='text-center'>Welcome <?php echo $userController->getCurrentUser()->getFirstName()?></p>
+        </div>
+        <div class='input-group col-sm-4'>
+            <input type='text' class='form-control' id='textSearch' placeholder='Search Locations'>
+                <span class='input-group-btn'>
+                    <button class='btn btn-primary' type='button'>
+                        <i class="fas fa-search"></i>
+                    </button>
+                </span>
+        </div>
+        <div class='col-sm-2 text-right'>
+            <label class='control-label' for='searchRadius'>Search Radius:</label>
+        </div>
+        <div class='col-sm-3'>
+            <select class='form-control' id='searchRadius'>
+                <option value='none' default>None</option>
+                <option value='1'>1km</option>
+                <option value='2'>2km</option>
+                <option value='5'>5km</option>
+                <option value='10'>10km</option>
+                <option value='15'>15km</option>
+            </select>
+        </div>
+        <div class='col-sm-1'></div>
     </div>
 </div>
-<div class='container-fluid' id="googleMap" style="height:750px; width:100%">
+<div class='container-fluid' id="googleMap" style="height:600px; width:100%">
             <div id='info' style='display:none;'>Info Box</div>
 </div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXolLNh8zGpDN3_YE38vEwPMmtBMBxXLw"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQiJqF_IzXo0IU_ntxbeA63_nAS77xnjA&libraries=places"></script>
         <script>
             var activeInfoWindow;
             var locations = <?php echo json_encode($locationController->getLocations("Melbourne"));?>;
@@ -50,18 +57,16 @@
             }
             function getUserPosition()
             {
-               /* if(navigator.geolocation)
+                if(navigator.geolocation)
                 {
-                    var position = navigator.geolocation.getCurrentPosition(function (position){
-                        return position.coords;
+                    var pos;
+                    navigator.geolocation.getCurrentPosition(pos = function(position) {
+                        var lat = pos. coords.latitude;
+                        var lon = pos.coords.longitude;
+                         mapCenter = new google.maps.LatLng(lat, lon);
+                    }, function(err) {
+                         mapCenter = new google.maps.LatLng(-37.818470, 144.953579);
                     });
-                    var lat = position.latitiude;
-                    var lon = position.longtitude;
-                    return mapCenter = new google.maps.LatLng(lat, lon);
-                }
-                else*/
-                {
-                    return mapCenter = new google.maps.LatLng(-37.818470, 144.953579);
                 }
             }
             function addUserPosition(map, mapCenter)
@@ -189,17 +194,75 @@
                 $("#loanTime").val(hours+":"+minutes);
                 $("#returnDate").attr('min', today);
             }
-            function myMap() {
+            function myMap(position) {
+                var coords  = position.coords
                 var mapCanvas = document.getElementById('googleMap');
-                var mapCenter = getUserPosition();
+                var mapCenter = new google.maps.LatLng(coords.latitude, coords.longitude);
                 var mapOptions = {center: mapCenter, zoom:15};
                 var map = new google.maps.Map(mapCanvas,mapOptions);
                 
 
                 addUserPosition(map, mapCenter);
                 addLocations(map);
+                
+                //link search box
+                var input = document.getElementById('textSearch');
+                var searchBox = new google.maps.places.SearchBox(input);
+           //     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                map.addListener('bounds_changed', function() {
+                    searchBox.setBounds(map.getBounds());
+                });
+                
+                var markers = [];
+                // Listen for the event fired when the user selects a prediction and retrieve
+                // more details for that place.
+                searchBox.addListener('places_changed', function() {
+                    var places = searchBox.getPlaces();
+
+                    if (places.length == 0) {
+                        return;
+                    }
+
+                    // Clear out the old markers.
+                    markers.forEach(function(marker) {
+                        marker.setMap(null);
+                    });
+                    markers = [];
+
+                    // For each place, get the icon, name and location.
+                    var bounds = new google.maps.LatLngBounds();
+                    places.forEach(function(place) {
+                        if (!place.geometry) {
+                            console.log("Returned place contains no geometry");
+                            return;
+                        }
+                        var icon = {
+                            url: place.icon,
+                            size: new google.maps.Size(71, 71),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(17, 34),
+                            scaledSize: new google.maps.Size(25, 25)
+                        };
+
+                        // Create a marker for each place.
+                        markers.push(new google.maps.Marker({
+                            map: map,
+                            icon: icon,
+                            title: place.name,
+                            position: place.geometry.location
+                        }));
+
+                        if (place.geometry.viewport) {
+                            // Only geocodes have viewport.
+                            bounds.union(place.geometry.viewport);
+                        } else {
+                            bounds.extend(place.geometry.location);
+                        }
+                    });
+                    map.fitBounds(bounds);
+                });
             }
-            myMap();
+            navigator.geolocation.getCurrentPosition(myMap);
         </script>
 
 <div class="modal fade" id="loanModal" tabindex="-1" role="dialog" aria-labelledby="loanModal" aria-hidden="true">
