@@ -7,41 +7,30 @@
     $carController = CarController::getInstance();
 ?>
 <div class='container-fluid'>
-    <div class='row'>
-        <div class='col-sm-2 sidenav'>
-            <p>Welcome <?php echo $userController->getCurrentUser()->getFirstName()?></p>
-            <ul class='nav nav-pills nav-stacked'>
-                <li class='nav-item'><a class='nav-link' href='dashboard'>Home</a></li>
-                <li class='nav-item'><a class='nav-link' href='#'>Profile</a></li>
-                <li class='nav-item'><a class='nav-link' href='#'>Loan History</a></li>
-                <li class='nav-item'><a class='nav-link' href='#'>Current Loan</a></li>
-            </ul>
-            </br>
-            <div class='input-group'>
-                <input type='text' class='form-control' placeholder='Search Locations'>
-                <span class='input-group-btn'>
-                    <button class='btn btn-primary' type='button'>
-                        <i class="fas fa-search"></i>
-                    </button>
-                </span>
-            </div>
-            </br>
-            <div>
-                <label class='control-label' for='searchRadius'>Search Radius:</label>
-                <select class='form-control' id='searchRadius'>
-                    <option value='none' default>None</option>
-                    <option value='1'>1km</option>
-                    <option value='2'>2km</option>
-                    <option value='5'>5km</option>
-                    <option value='10'>10km</option>
-                    <option value='15'>15km</option>
-                </select>
-            </div>
-        </div>
-        <div class='col-sm-8' id="googleMap" style="height:500px; width:100%">
+    <p>Welcome <?php echo $userController->getCurrentUser()->getFirstName()?></p>
+    <div class='input-group col-sm-6'>
+        <input type='text' class='form-control' placeholder='Search Locations'>
+            <span class='input-group-btn'>
+                <button class='btn btn-primary' type='button'>
+                    <i class="fas fa-search"></i>
+                </button>
+            </span>
+    </div>
+    <div class='col-sm-6'>
+        <label class='control-label' for='searchRadius'>Search Radius:</label>
+        <select class='form-control' id='searchRadius'>
+            <option value='none' default>None</option>
+            <option value='1'>1km</option>
+            <option value='2'>2km</option>
+            <option value='5'>5km</option>
+            <option value='10'>10km</option>
+            <option value='15'>15km</option>
+        </select>
+    </div>
+</div>
+<div class='container-fluid' id="googleMap" style="height:750px; width:100%">
             <div id='info' style='display:none;'>Info Box</div>
-        </div>
-        <div class='col-sm-2'></div>
+</div>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXolLNh8zGpDN3_YE38vEwPMmtBMBxXLw"></script>
         <script>
             var activeInfoWindow;
@@ -171,6 +160,9 @@
                 
                 $("#address").val(currentLocation['address']+", " + currentLocation['city'] + ", " +
                                 currentLocation['postcode']);
+                $("#lat").val(currentLocation['latitude']);
+                $("#long").val(currentLocation['longtitude']);
+                $("#locationId").val(currentLocation['locationId']);
                 if(currentCar)
                 {
                     $("#car").val(currentCar['make']);
@@ -210,8 +202,6 @@
             myMap();
         </script>
 
-    </div>
-</div>
 <div class="modal fade" id="loanModal" tabindex="-1" role="dialog" aria-labelledby="loanModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -222,24 +212,27 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form name='loan' action='loan' method='post'>
+                <form name='loan' action='create-loan' method='post'>
                     <div class='form-group'>
                         <label for='address'>Location Address</label>
-                        <input type='text' class='form-control' id='address' name='address' disabled>
+                        <input type='text' class='form-control' id='address' name='address' readonly>
+                        <input type='hidden' class='form-control' id='lat' name='lat' readonly>
+                        <input type='hidden' class='form-control' id='long' name='long' readonly>
+                        <input type='hidden' class='form-control' id='locationId' name='locationId' readonly>
                     </div>
                     <div class='row'>
                         <div class='col-sm-6 form-group'>
                             <label for='car'>Car</label>
-                            <input type='text' class='form-control' id='car' name='car' disabled>
+                            <input type='text' class='form-control' id='car' name='car' readonly>
                         </div>
                         <div class='col-sm-6 form-group'>
                             <label for='rego'>Registration</label>
-                            <input type='text' class='form-control' id='rego' name='rego' disabled>
+                            <input type='text' class='form-control' id='rego' name='rego' readonly>
                         </div>
                     </div>
                     <div class='form-group'>
                         <label for='cost'>Cost</label>
-                        <input type='text' class='form-control' id='cost' name='cost' disabled>
+                        <input type='text' class='form-control' id='cost' name='cost' readonly>
                     </div>
                     <div class='form-group'>
                         <label for='loanDate'>Start Date</label>
