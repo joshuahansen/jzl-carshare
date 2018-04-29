@@ -68,4 +68,25 @@ class UserController extends AgentController
         }
         return FALSE;
     }
+
+    /**
+     * @author Zach Wingrave
+     * @return bool returns an array of loan objects on a success, FALSE on failure.
+     */
+    public function getPastLoans()
+    {
+        $username = $this->getCurrentUser()->getUsername();
+        $sql = "SELECT * FROM loans WHERE user=".$username;
+        $pastLoansData = $this->db->getData($sql);
+        $pastLoans = array();
+        foreach($pastLoansData as $loan)
+        {
+            $loan = new Loan($pastLoansData[0], $pastLoansData[1], $pastLoansData[2], $pastLoansData[3],
+                $pastLoansData[4], $pastLoansData[5], $pastLoansData[6], $pastLoansData[7], $pastLoansData[8]);
+            array_push($pastLoans, $loan);
+        }
+        if($pastLoans == null)
+            return FALSE;
+        return $pastLoans;
+    }
 }
