@@ -59,7 +59,12 @@ class LoanController
 
     public function generateLoanId()
     {
-        return "000000";
+        return md5(rand(), false);
+    }
+    
+    public function generateLockbox()
+    {
+        return mt_rand(1000,9999);
     }
 
     public function getCurrentLoan()

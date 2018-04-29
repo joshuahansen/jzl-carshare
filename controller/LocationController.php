@@ -35,4 +35,9 @@ class LocationController
         $sql = "SELECT * FROM locations WHERE city='".$city."';";
         return $this->dbController->getData($sql);
     }
+    
+    public function generateLocationID()
+    {
+        return md5(uniqid(rand(), false));
+    }
 }
