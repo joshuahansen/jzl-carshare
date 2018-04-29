@@ -3,6 +3,7 @@ require_once('database/databaseController.php');
 
 require_once('model/User.php');
 require_once('model/Car.php');
+require_once('model/Loan.php');
 require_once('model/Location.php');
 class LoanController
 {
@@ -25,7 +26,8 @@ class LoanController
         return self::$instance;
     }
 
-    public function createLoan($location, $loanDateTime, $expectedDateTime, $promotion)
+
+    public function createLoan($location, $loanDateTime, $expectedDateTime=null, $promotion=null)
     {
         $loanId = $this->generateLoanId();
         $user = unserialize($_SESSION['currentUser']);
@@ -34,10 +36,9 @@ class LoanController
         $cost = $car->getCost();
         $location->setCar(null);
 
-        $loan = new Loan($loanId, $user, $car, $cost, FALSE, $loanDateTime, null,
-            $location, null, $expectedDateTime, $promotion);
-        $this->dbController->addLoan($loanId, $user->getUsername(), $car-getRegistration(), $cost, $loanDateTime,
-            null, $location->getLocationId(), null, FALSE);
+        $loan = new Loan($loanId, $user, $car, 0.00, FALSE, $loanDateTime, null, $location, $expectedDateTime, $promotion);
+        $this->dbController->addLoan($loanId, $user->getUsername(), $car-getRegistration(), 0, $loanDateTime,
+            null, $location->getLocationId(), null, False);
         $_SESSION['currentLoan'] = serialize($loan);
 
 
@@ -49,14 +50,11 @@ class LoanController
         $returnLocation->setCar($loan.getCar());
         $loan->setReturnDate($returnDateTime);
         $loan->setReturnLocation($returnLocation);
+        //pay loan, call getDiscountRate and car->getCost
         $loan->setPaid(True);
         if(isset($_SESSION["currentLoan"]))
             unset($_SESSION['currentLoan']);
         return TRUE;
-    }
-    public function getPastLoans()
-    {
-        //foobar
     }
 
     public function generateLoanId()
@@ -69,5 +67,10 @@ class LoanController
         if(isset($_SESSION["currentLoan"]))
             return unserialize($_SESSION["currentLoan"]);
         return FALSE;
+    }
+
+    public function getDiscountRate($promotion)
+    {
+        //get discount rate from database using promotion code
     }
 }
