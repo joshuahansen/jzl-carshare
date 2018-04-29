@@ -210,6 +210,7 @@
                     strokeOpacity: 0.62,
                     strokeWeight: 1
                     });
+                    map.fitBounds(circle.getBounds());
                 }
                 
                 //link search box
