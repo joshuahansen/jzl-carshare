@@ -18,6 +18,8 @@ class Loan
     private $returnLocation = null;
     private $expectedDateTime = null;
     private $promotion = null;
+    private $lockbox = null;
+
 
     public function __construct($loanId, $user, $car, $cost, $paid, $loanDateTime, $returnDateTime, $loanLocation, $expectedDateTime=null, $promotion=null)
     {
