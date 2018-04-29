@@ -25,11 +25,12 @@
         <div class='col-sm-3'>
             <select class='form-control' id='searchRadius'>
                 <option value='none' default>None</option>
-                <option value='1'>1km</option>
-                <option value='2'>2km</option>
-                <option value='5'>5km</option>
-                <option value='10'>10km</option>
-                <option value='15'>15km</option>
+                <option value='500'>500m</option>
+                <option value='1000'>1km</option>
+                <option value='2000'>2km</option>
+                <option value='5000'>5km</option>
+                <option value='10000'>10km</option>
+                <option value='15000'>15km</option>
             </select>
         </div>
         <div class='col-sm-1'></div>
@@ -38,7 +39,7 @@
 <div class='container-fluid' id="googleMap" style="height:600px; width:100%">
             <div id='info' style='display:none;'>Info Box</div>
 </div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQiJqF_IzXo0IU_ntxbeA63_nAS77xnjA&libraries=places"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQiJqF_IzXo0IU_ntxbeA63_nAS77xnjA&libraries=places,geometry"></script>
         <script>
             var activeInfoWindow;
             var locations = <?php echo json_encode($locationController->getLocations("Melbourne"));?>;
@@ -47,27 +48,12 @@
             {
                 for(var i = 0; i < cars.length; ++i)
                 {
-                    console.log("searching cars");
                     if(cars[i]['rego'] == rego)
                     {
                         return cars[i];
                     }
                 }
                 return false;
-            }
-            function getUserPosition()
-            {
-                if(navigator.geolocation)
-                {
-                    var pos;
-                    navigator.geolocation.getCurrentPosition(pos = function(position) {
-                        var lat = pos. coords.latitude;
-                        var lon = pos.coords.longitude;
-                         mapCenter = new google.maps.LatLng(lat, lon);
-                    }, function(err) {
-                         mapCenter = new google.maps.LatLng(-37.818470, 144.953579);
-                    });
-                }
             }
             function addUserPosition(map, mapCenter)
             {
@@ -79,63 +65,69 @@
                         marker.setAnimation(google.maps.Animation.BOUNCE);
                         marker.setMap(map);
             }
-            function addLocations(map)
+            function calcDistance(userPos, locationPos)
+            {
+                return google.maps.geometry.spherical.computeDistanceBetween(userPos, locationPos);
+            }
+            function addLocations(map, userPos)
             {
                 for(var i = 0; i < locations.length; ++i)
                 {
                     var locat = locations[i];
-                    console.log(locat['address']);
-                    var rego;
-                    var carInfo = false;
-                    if(locat['car'] != null)
+                    var locationLatLng = new google.maps.LatLng(locat['longtitude'], locat['latitude']);
+                    var searchRadius = $("#searchRadius").val()
+                    if (searchRadius == "none" || calcDistance(userPos, locationLatLng) <= searchRadius)
                     {
-                        rego = locat['car'];
-                        console.log(rego);
-                        carInfo = searchCars(rego);
-                    }
-                    if(carInfo)
-                    {
-                        console.log("get car img");
-                        var carImg;
-                        switch(carInfo['make']) {
-                            case "Model 3":
-                                carImg = 'img/model3.jpg';
-                                break;
-                            case "Model X":
-                                carImg = 'img/modelX.png';
-                                break;
-                            case "Model S":
-                                carImg = 'img/modelS.jpg';
-                                break;
+                        var rego;
+                        var carInfo = false;
+                        if(locat['car'] != null)
+                        {
+                            rego = locat['car'];
+                            carInfo = searchCars(rego);
                         }
-                        var infoContent = "<h5>"+locat['address']+"</h5>"
-                            +"<img src='"+carImg+"' style='max-width:95px;max-height:100px;float:right;margin:0px;'>"
-                            +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>"+carInfo['make']+"</p>"
-                            +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loanModal' onclick='fillForm("
-                            +locat['locationId']+")'>Loan</button>";
-                    }
-                    else
-                    {
-                        var infoContent = "<h5>"+locat['address']+"</h5>"
-                            +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>Available to Return Car</p>"
-                            +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loanModal' onclick='fillForm("+locat['locationId']+")'>Loan</button>";
-                    }
-                    var markerPos = new google.maps.LatLng(locat['longtitude'],locat['latitude']);
-                    var marker = new google.maps.Marker({position: markerPos});
-                    var infoWindow = new google.maps.InfoWindow();
-
-                    google.maps.event.addListener(marker,'click', (function(marker, infoContent, infoWindow){
-                        return function() {
-                            if(activeInfoWindow)
-                            {
-                                activeInfoWindow.close();
+                        if(carInfo)
+                        {
+                            var carImg;
+                            switch(carInfo['make']) {
+                                case "Model 3":
+                                    carImg = 'img/model3.jpg';
+                                    break;
+                                case "Model X":
+                                    carImg = 'img/modelX.png';
+                                    break;
+                                case "Model S":
+                                    carImg = 'img/modelS.jpg';
+                                    break;
                             }
-                            infoWindow.setContent(infoContent);
-                            infoWindow.open(map, marker);
-                            activeInfoWindow = infoWindow;
-                        };
-                    })(marker, infoContent, infoWindow));
-                    marker.setMap(map);
+                            var infoContent = "<h5>"+locat['address']+"</h5>"
+                                +"<img src='"+carImg+"' style='max-width:95px;max-height:100px;float:right;margin:0px;'>"
+                                +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>"+carInfo['make']+"</p>"
+                                +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loanModal' onclick='fillForm("
+                                +locat['locationId']+")'>Loan</button>";
+                        }
+                        else
+                        {
+                            var infoContent = "<h5>"+locat['address']+"</h5>"
+                                +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>Available to Return Car</p>"
+                                +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loanModal' onclick='fillForm("+locat['locationId']+")'>Loan</button>";
+                        }
+                        var markerPos = new google.maps.LatLng(locat['longtitude'],locat['latitude']);
+                        var marker = new google.maps.Marker({position: markerPos});
+                        var infoWindow = new google.maps.InfoWindow();
+
+                        google.maps.event.addListener(marker,'click', (function(marker, infoContent, infoWindow){
+                            return function() {
+                                if(activeInfoWindow)
+                                {
+                                    activeInfoWindow.close();
+                                }
+                                infoWindow.setContent(infoContent);
+                                infoWindow.open(map, marker);
+                                activeInfoWindow = infoWindow;
+                            };
+                        })(marker, infoContent, infoWindow));
+                        marker.setMap(map);
+                    }
                 }
             }
             function fillForm(locat)
@@ -154,7 +146,6 @@
                 {
                     for(var i = 0; i < cars.length; ++i)
                     {
-                        console.log("searching cars");
                         if(cars[i]['rego'] == currentLocation['car'])
                         {
                             currentCar = cars[i];
@@ -189,7 +180,6 @@
                 minutes = (minutes<10 ? '0' : '') + minutes;
 
                 var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-                console.log(hours+":"+minutes);
                 $("#loanDate").val(today);
                 $("#loanTime").val(hours+":"+minutes);
                 $("#returnDate").attr('min', today);
@@ -201,9 +191,26 @@
                 var mapOptions = {center: mapCenter, zoom:15};
                 var map = new google.maps.Map(mapCanvas,mapOptions);
                 
-
                 addUserPosition(map, mapCenter);
-                addLocations(map);
+                addLocations(map, mapCenter);
+    
+                var searchRadius = $("#searchRadius").val();
+                if(searchRadius != "none")
+                {
+                    circle = new google.maps.Circle({
+                    center: mapCenter,
+                    clickable: false,
+                    draggable: false,
+                    editable: false,
+                    fillColor: '#004de8',
+                    fillOpacity: 0.27,
+                    map: map,
+                    radius: parseInt(searchRadius),
+                    strokeColor: '#004de8',
+                    strokeOpacity: 0.62,
+                    strokeWeight: 1
+                    });
+                }
                 
                 //link search box
                 var input = document.getElementById('textSearch');
@@ -233,7 +240,6 @@
                     var bounds = new google.maps.LatLngBounds();
                     places.forEach(function(place) {
                         if (!place.geometry) {
-                            console.log("Returned place contains no geometry");
                             return;
                         }
                         var icon = {
@@ -263,6 +269,9 @@
                 });
             }
             navigator.geolocation.getCurrentPosition(myMap);
+            $("#searchRadius").change(function () {
+                navigator.geolocation.getCurrentPosition(myMap);
+            });
         </script>
 
 <div class="modal fade" id="loanModal" tabindex="-1" role="dialog" aria-labelledby="loanModal" aria-hidden="true">
