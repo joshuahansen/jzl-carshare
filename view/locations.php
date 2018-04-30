@@ -59,6 +59,6 @@ function animateMarker(lon, lat)
 }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXolLNh8zGpDN3_YE38vEwPMmtBMBxXLw&callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQiJqF_IzXo0IU_ntxbeA63_nAS77xnjA&callback=myMap"></script>
 </div>
     
