@@ -202,11 +202,11 @@
                     clickable: false,
                     draggable: false,
                     editable: false,
-                    fillColor: '#004de8',
-                    fillOpacity: 0.27,
+                    fillColor: '#2196F3',
+                    fillOpacity: 0.17,
                     map: map,
                     radius: parseInt(searchRadius),
-                    strokeColor: '#004de8',
+                    strokeColor: '#1976D2',
                     strokeOpacity: 0.62,
                     strokeWeight: 1
                     });
