@@ -36,7 +36,7 @@ class LoanController
         $cost = $car->getCost();
         $location->setCar(null);
 
-        $loan = new Loan($loanId, $user, $car, 0.00, FALSE, $loanDateTime, null, $location, $expectedDateTime, $promotion);
+        $loan = new Loan($loanId, $user, $car, $cost, FALSE, $loanDateTime, null, $location, $expectedDateTime, $promotion);
         $this->dbController->addLoan($loanId, $user->getUsername(), $car-getRegistration(), 0, $loanDateTime,
             null, $location->getLocationId(), null, False);
         $_SESSION['currentLoan'] = serialize($loan);
