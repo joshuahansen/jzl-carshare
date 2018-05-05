@@ -37,7 +37,7 @@
         */	
 		public function dropTables()
 		{
-			$sql = "DROP TABLE loans, users, agents, promotions,
+			$sql = "DROP TABLE loans, promotions, users, agents,
                  locations, cars";
 
 			$dbConn = $this->db->getConnection();
@@ -348,6 +348,17 @@
             $sql = "SELECT password FROM agents WHERE id='$userId';";
             $data = $this->getData($sql);
             return password_verify($pass, $data[0]['password']);
+        }
+        /**
+        * @author Joshua Hansen
+        * @param $code : String; promotion code.
+        * @param $discountRate : decimal; discount rate for promotion code
+        * @return boolean; TRUE if table is updated succesfully
+        */
+        public function addNewPromotion($code, $discountRate)
+        {
+            $sql = "INSERT INTO promotions(code, discountRate) VALUES('$code', '$discountRate');";
+            return $this->addToTable($sql);
         }
     }                    
 ?>
