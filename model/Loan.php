@@ -20,7 +20,6 @@ class Loan
     private $promotion = null;
     private $lockbox = null;
 
-
     public function __construct($loanId, $user, $car, $cost, $paid, $loanDateTime, $returnDateTime, $loanLocation, $expectedDateTime=null, $promotion=null)
     {
         $this->loanId = $loanId;
@@ -33,6 +32,7 @@ class Loan
         $this->loanLocation = $loanLocation;
         $this->expectedDateTime = $expectedDateTime;
         $this->promotion = $promotion;
+        $this->lockbox = $this->generateLockbox();
     }
 
     /* Getters. */
@@ -87,6 +87,11 @@ class Loan
         return $this->expectedDateTime;
     }
 
+    public function getLockbox()
+    {
+        return $this->lockbox;
+    }
+
     /* Setters. */
 
     public function setCost($cost)
@@ -107,5 +112,10 @@ class Loan
     public function setReturnLocation($returnLocation)
     {
         $this->returnLocation = $returnLocation;
+    }
+
+    public function generateLockbox()
+    {
+        return "1234";
     }
 }
