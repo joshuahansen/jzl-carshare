@@ -5,7 +5,9 @@ class User extends Agent
     private $license = null;
     private $name = array();
     private $address = array();
+    private $promotions = array();
     private $credit = 0.00;
+
 
     public function __construct($username, $license, $name, $address, $credit=0.00)
     {
@@ -58,6 +60,11 @@ class User extends Agent
         return $this->address["postcode"];
     }
 
+    public function getPromotions()
+    {
+        return $this->promotions;
+    }
+
     public function getCredit()
     {
         return $this->credit;
@@ -68,6 +75,20 @@ class User extends Agent
     public function setCredit($credit)
     {
         $this->credit = $credit;
+    }
+
+    public function addPromotion($code)
+    {
+        //check if code already present in $promotions, if not add promotion.
+        //if so,
+        return FALSE;
+    }
+
+    public function usePromotion($code)
+    {
+        //if code exists in $promotions, return discount rate.
+        //else,
+        return 0;
     }
 }
 ?>
