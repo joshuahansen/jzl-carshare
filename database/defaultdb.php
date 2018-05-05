@@ -33,6 +33,10 @@
     $create->addLocation('02', -37.815342, 144.951576, '163 Spencer Street', 'Melbourne', 3000, 'dsfds4');
     $create->addLocation('03', -37.819271, 144.955889, '522 Flinders Lane', 'Melbourne', 3000, '2x4s13');
     $create->addLocation('04', -37.816206, 144.963175, '330 Collins Street', 'Melbourne', 3000);
+    
+    $create->addLocation('05', -37.582009, 144.693304, 'Cnr Mitchells Ln & Wilsons Ln', 'Sunbury', 3429);
+    $create->addLocation('06', -37.579491, 144.726540, 'Horne St', 'Sunbury', 3429, 'bhf456');
+    $create->addLocation('07', -37.578964, 144.731396, '12 Oshanassy Street', 'Sunbury', 3429);
 
     //Promotion Codes generated to be insterted into their own table once fixed -->
     $create->addNewPromotion('YXASCLILUL', 0.05);

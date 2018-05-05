@@ -37,11 +37,10 @@ class LoanController
         $location->setCar(null);
 
         $loan = new Loan($loanId, $user, $car, $cost, FALSE, $loanDateTime, null, $location, $expectedDateTime, $promotion);
-        $this->dbController->addLoan($loanId, $user->getUsername(), $car-getRegistration(), 0, $loanDateTime,
-            null, $location->getLocationId(), null, False);
+        $this->dbController->addLoan($loanId, $user->getUsername(), $car->getRegistration(), 0, 
+            $loanDateTime->format('Y-m-d H:i:s'), null, $location->getLocationId(), NULL);
+      
         $_SESSION['currentLoan'] = serialize($loan);
-
-
     }
 
     public function returnLoan($returnDateTime, $returnLocation)
