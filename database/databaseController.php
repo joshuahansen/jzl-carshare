@@ -169,7 +169,7 @@
                     loanDate DATETIME NOT NULL,
                     returnDate DATETIME,
                     loanLocation VARCHAR(10) NOT NULL,
-                    returnLocation VARCHAR(10),
+                    returnLocation VARCHAR(10) NULL,
                     expectedDate DATETIME,
                     promotion VARCHAR(10),
                     PRIMARY KEY(loanId),
@@ -288,11 +288,20 @@
         public function addLoan($loanId, $driver, $car, $cost, $loanDate, 
             $returnDate, $loanLocation, $returnLocation, $paid=0)
         {
-            $sql = "INSERT INTO loans(loanId, driver, car, cost, loanDate, 
-                returnDate, loanLocation, returnLocation, paid) 
-                VALUES('$loanId', '$driver', '$car', $cost, '
-                $loanDate', '$returnDate', '$loanLocation', '
-                .$returnLocation', $paid);";
+            if($returnLocation == NULL)
+            {
+                $sql = "INSERT INTO loans(loanId, user, car, cost, loanDate, 
+                    returnDate, loanLocation, returnLocation, paid) 
+                    VALUES('$loanId', '$driver', '$car', $cost, '$loanDate', 
+                    '$returnDate', '$loanLocation', NULL, $paid);";
+            }
+            else            
+            {
+                $sql = "INSERT INTO loans(loanId, user, car, cost, loanDate, 
+                    returnDate, loanLocation, returnLocation, paid) 
+                    VALUES('$loanId', '$driver', '$car', $cost, '$loanDate', 
+                    '$returnDate', '$loanLocation', '$returnLocation', $paid);";
+            }
             return $this->addToTable($sql);
         }
         /**

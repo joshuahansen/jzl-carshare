@@ -39,10 +39,13 @@
 <div class='container-fluid' id="googleMap" style="height:600px; width:100%">
             <div id='info' style='display:none;'>Info Box</div>
 </div>
+<?php
+    print_r($_SESSION['currentLoan']);
+?>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQiJqF_IzXo0IU_ntxbeA63_nAS77xnjA&libraries=places,geometry"></script>
         <script>
             var activeInfoWindow;
-            var locations = <?php echo json_encode($locationController->getLocations("Melbourne"));?>;
+            var locations = <?php echo json_encode($locationController->getAllLocations());?>;
             var cars = <?php echo json_encode($carController->getAllCars());?>;
             function searchCars(rego)
             {
@@ -80,12 +83,15 @@
                     {
                         var rego;
                         var carInfo = false;
+                        var currentLoan = <?php if(isset($_SESSION['currentLoan'])){ echo "true";} else {echo "false";};?>;
                         if(locat['car'] != null)
                         {
+                            console.log("NO LOAN SEARCH CARS FOR LOACATION");
                             rego = locat['car'];
+                            console.log("REGO: " + rego);
                             carInfo = searchCars(rego);
                         }
-                        if(carInfo)
+                        if(carInfo && !currentLoan)
                         {
                             var carImg;
                             switch(carInfo['make']) {
@@ -104,13 +110,6 @@
                                 +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>"+carInfo['make']+"</p>"
                                 +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loanModal' onclick='fillForm("
                                 +locat['locationId']+")'>Loan</button>";
-                        }
-                        else
-                        {
-                            var infoContent = "<h5>"+locat['address']+"</h5>"
-                                +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>Available to Return Car</p>"
-                                +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loanModal' onclick='fillForm("+locat['locationId']+")'>Loan</button>";
-                        }
                         var markerPos = new google.maps.LatLng(locat['longtitude'],locat['latitude']);
                         var marker = new google.maps.Marker({position: markerPos});
                         var infoWindow = new google.maps.InfoWindow();
@@ -127,6 +126,29 @@
                             };
                         })(marker, infoContent, infoWindow));
                         marker.setMap(map);
+                        }
+                        else if(currentLoan && !carInfo)
+                        {
+                            var infoContent = "<h5>"+locat['address']+"</h5>"
+                                +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>Available to Return Car</p>"
+                                +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#returnModal' onclick='fillReturnForm("+locat['locationId']+")'>Return</button>";
+                        var markerPos = new google.maps.LatLng(locat['longtitude'],locat['latitude']);
+                        var marker = new google.maps.Marker({position: markerPos});
+                        var infoWindow = new google.maps.InfoWindow();
+
+                        google.maps.event.addListener(marker,'click', (function(marker, infoContent, infoWindow){
+                            return function() {
+                                if(activeInfoWindow)
+                                {
+                                    activeInfoWindow.close();
+                                }
+                                infoWindow.setContent(infoContent);
+                                infoWindow.open(map, marker);
+                                activeInfoWindow = infoWindow;
+                            };
+                        })(marker, infoContent, infoWindow));
+                        marker.setMap(map);
+                        }
                     }
                 }
             }
@@ -183,6 +205,11 @@
                 $("#loanDate").val(today);
                 $("#loanTime").val(hours+":"+minutes);
                 $("#returnDate").attr('min', today);
+            }
+            function fillReturnForm(locat)
+            {
+                currentLoan = <?php echo json_encode($_SESSION['currentLoan']);?>;
+                console.log(currentLoan);
             }
             function myMap(position) {
                 var coords  = position.coords
@@ -316,12 +343,12 @@
                         <input type='time' class='form-control' id='loanTime' name='loanTime'>
                     </div>
                     <div class='form-group'>
-                        <label for='returnDate'>Expected Return Date</label>
-                        <input type='date' class='form-control' id='returnDate' name='returnDate'>
+                        <label for='expectedReturnDate'>Expected Return Date</label>
+                        <input type='date' class='form-control' id='expectedReturnDate' name='expectedReturnDate'>
                     </div>
                     <div class='form-group'>
-                        <label for='returnTime'>Return Time</label>
-                        <input type='time' class='form-control' id='returnTime' name='returnTime'>
+                        <label for='expectedReturnTime'>Expected Return Time</label>
+                        <input type='time' class='form-control' id='expectedReturnTime' name='expectedReturnTime'>
                     </div>
                     <button type='submit' class='btn btn-primary btn-lg'>Loan</button>
                 </form>
