@@ -37,7 +37,7 @@
         */	
 		public function dropTables()
 		{
-			$sql = "DROP TABLE loans, users,
+			$sql = "DROP TABLE loans, promotions, users, agents,
                  locations, cars";
 
 			$dbConn = $this->db->getConnection();
@@ -106,6 +106,19 @@
             }
             return FALSE;
         }
+    
+        /** @author Joshua Hansen
+        * Definition for Agent table
+        */
+        public function agentsTable()
+        {
+            $sql = "CREATE TABLE agents (
+                id VARCHAR(50) NOT NULL,
+                password VARCHAR(1000) NOT NULL,
+                PRIMARY KEY(id)
+            );";
+            $this->createTable($sql);
+        }
         /**
         * @author Joshua Hansen
         * Definition for users table
@@ -114,7 +127,6 @@
         {
             $sql = "CREATE TABLE users (
                     userId VARCHAR(50) NOT NULL,
-                    password VARCHAR(1000) NOT NULL,
                     firstName VARCHAR(50) NOT NULL,
                     lastName VARCHAR(50) NOT NULL,
                     licenseNum VARCHAR(10) NOT NULL,
@@ -122,6 +134,7 @@
                     city VARCHAR(50) NOT NULL,
                     postcode int(4) NOT NULL,
                     credit DOUBLE(10,2) NOT NULL,
+                    FOREIGN KEY(userId) REFERENCES agents(id),
                     PRIMARY KEY(userId)
                     );";
             $this->createTable($sql);
@@ -152,16 +165,19 @@
                     user VARCHAR(50) NOT NULL,
                     car VARCHAR(10) NOT NULL,
                     cost DOUBLE(5,2) NOT NULL,
+                    paid BIT NOT NULL,
                     loanDate DATETIME NOT NULL,
                     returnDate DATETIME,
                     loanLocation VARCHAR(10) NOT NULL,
                     returnLocation VARCHAR(10),
-                    paid BIT NOT NULL,
+                    expectedDate DATETIME,
+                    promotion VARCHAR(10),
                     PRIMARY KEY(loanId),
                     FOREIGN KEY(user) REFERENCES users(userId),
                     FOREIGN KEY(car) REFERENCES cars(rego),
                     FOREIGN KEY(loanLocation) REFERENCES locations(locationId),
-                    FOREIGN KEY(returnLocation) REFERENCES locations(locationId)
+                    FOREIGN KEY(returnLocation) REFERENCES locations(locationId),
+                    FOREIGN KEY(promotion) REFERENCES promotions(code)
                     );";
             $this->createTable($sql);
         }
@@ -183,6 +199,21 @@
                     FOREIGN KEY(car) REFERENCES cars(rego)
                     );";
             $this->createTable($sql);
+        }
+        /**
+        * @author Joshua Hansen
+        * Definition for promotion table
+        */
+        public function promotionsTable()
+        {
+            $sql = "CREATE TABLE promotions (
+                code VARCHAR(10) NOT NULL,
+                discountRate DECIMAL NOT NULL,
+                user VARCHAR(50),
+                PRIMARY KEY(code),
+                FOREIGN KEY(user) REFERENCES users(userId)
+            );";
+            $this->createTable($sql);
         } 
         /**
         * @author Joshua Hansen
@@ -190,9 +221,11 @@
         */
         public function loadAllTables()
         {
+            $this->agentsTable();
             $this->usersTable();
             $this->carsTable();
             $this->locationsTable();
+            $this->promotionsTable();
             $this->loansTable();
         }
         /**
@@ -215,11 +248,17 @@
                 $address, $city, $postcode, $credit=0)
         {
             $hash = password_hash($pass, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users(userId, password, firstName, LastName, 
+            $sql = "INSERT INTO agents(id, password) VALUES ('$id', '$hash');";
+            if($this->addToTable($sql))
+            {
+                $sql = "INSERT INTO users(userId, firstName, LastName, 
                     licenseNum, address, city, postcode, credit)
-                    VALUES('$id', '$hash', '$fname', '$lname', '$licenseNum',
+                    VALUES('$id', '$fname', '$lname', '$licenseNum',
                     '$address', '$city', $postcode, $credit);";
-            return $this->addToTable($sql);
+                return $this->addToTable($sql);
+            }
+            else
+                return FALSE;
         }
         /**
         * @author Joshua Hansen
@@ -306,9 +345,20 @@
         */
         public function verifyUser($userId, $pass)
         {
-            $sql = "SELECT password FROM users WHERE userId='$userId';";
+            $sql = "SELECT password FROM agents WHERE id='$userId';";
             $data = $this->getData($sql);
             return password_verify($pass, $data[0]['password']);
+        }
+        /**
+        * @author Joshua Hansen
+        * @param $code : String; promotion code.
+        * @param $discountRate : decimal; discount rate for promotion code
+        * @return boolean; TRUE if table is updated succesfully
+        */
+        public function addNewPromotion($code, $discountRate)
+        {
+            $sql = "INSERT INTO promotions(code, discountRate) VALUES('$code', '$discountRate');";
+            return $this->addToTable($sql);
         }
     }                    
 ?>
