@@ -35,6 +35,15 @@ class LocationController
         $sql = "SELECT * FROM locations WHERE city='".$city."';";
         return $this->dbController->getData($sql);
     }
+    /**
+    * @author Joshua Hansen
+    * @return array; return an array of all locations
+    */
+    public function getAllLocations()
+    {
+        $sql = "SELECT * FROM locations;";
+        return $this->dbController->getData($sql);
+    }
     
     public function generateLocationID()
     {
