@@ -36,7 +36,7 @@
         <div class='col-sm-1'></div>
     </div>
 </div>
-<div class='container-fluid' id="googleMap" style="height:600px; width:100%">
+<div class='container-fluid' id="googleMap" style="height:700px; width:100%">
             <div id='info' style='display:none;'>Info Box</div>
 </div>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQiJqF_IzXo0IU_ntxbeA63_nAS77xnjA&libraries=places,geometry"></script>
