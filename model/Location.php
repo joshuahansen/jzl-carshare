@@ -31,7 +31,7 @@ class Location
 
     public function getAddress()
     {
-        return $this->address;
+        return $this->address[0];
     }
 
     public function getCar()

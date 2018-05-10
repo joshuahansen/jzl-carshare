@@ -474,3 +474,44 @@ section {
 .search-bar {
     margin: 30px;
     padding 20px;
+}
+
+.clp {
+    margin: 0px;
+    padding: 0px;
+}
+
+.lockbox {
+    height: 100px;
+    width: 300px;
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: #2196F3;
+}
+
+.lockbox p {
+    font-size: 60px;
+    text-align: center;
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+    color: white;
+}
+
+.totalcost {
+    margin-top: 20px;
+    height: 300px;
+    width: 300px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+}
+
+.totalcost p {
+    font-size: 18px;
+    padding: 10px;
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+    color: black;
+}
+
+.myh4 {
+    padding-bottom: 10px;
+}
