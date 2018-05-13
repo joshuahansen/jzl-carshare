@@ -269,11 +269,11 @@
         $("#loanTime").val(hours+":"+minutes);
         $("#returnDate").attr('min', today);
     }
-    function fillReturnForm(locat)
-    {
-        currentLoan = <?php echo json_encode($_SESSION['currentLoan']);?>;
-        console.log(currentLoan);
-    }
+//    function fillReturnForm(locat)
+//    {
+//        currentLoan = <? //php echo json_encode($_SESSION['currentLoan']);?>;
+//        console.log(currentLoan);
+//    }
     function myMap(position) {
         var coords  = position.coords
         var mapCanvas = document.getElementById('googleMap');
