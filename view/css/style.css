@@ -515,3 +515,33 @@ section {
 .myh4 {
     padding-bottom: 10px;
 }
+
+.admin-sec {
+    padding: 50px;
+}
+
+.admin-con {
+    max-width: 1300px !important
+}
+
+.statistics {
+    margin-top: 20px;
+    height: 440px;
+    width: 300px;
+    border: 1px #d7d7d7 solid;;
+    border-radius: 10px;
+    background-color: white;
+    margin-top: 30px;
+}
+
+.statistics p {
+    font-size: 18px;
+    padding: 10px;
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+    color: #495057;
+}
+
+.statistics tr {
+    margin-top 5px;
+    margin-bottom: 5px;
+}
