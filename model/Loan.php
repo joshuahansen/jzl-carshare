@@ -116,6 +116,6 @@ class Loan
 
     public function generateLockbox()
     {
-        return "1234";
+        return mt_rand(1000, 9999);
     }
 }
