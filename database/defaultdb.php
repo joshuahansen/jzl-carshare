@@ -15,17 +15,17 @@
                 '56 Second Street', 'Melbourne', 3000);
     
     //Add Cars
-    //(rego, borrowed[boolean default false])
-    $create->addCar('1db1a2', 'Model 3');
-    $create->addCar('sde1d4', 'Model 3');
-    $create->addCar('1sfr3s', 'Model 3');
-    $create->addCar('1dst56', 'Model 3');
-    $create->addCar('cd467f', 'Model 3');
-    $create->addCar('dsfds4', 'Model X');
-    $create->addCar('bhf456', 'Model X');
-    $create->addCar('2x4s13', 'Model S');
-    $create->addCar('wbc123', 'Model S');
-    $create->addCar('tia321', 'Model S');
+    //(rego, make, cost, borrowed[boolean default false])
+    $create->addCar('1db1a2', 'Model 3', 10);
+    $create->addCar('sde1d4', 'Model 3', 10);
+    $create->addCar('1sfr3s', 'Model 3', 10);
+    $create->addCar('1dst56', 'Model 3', 10);
+    $create->addCar('cd467f', 'Model 3', 10);
+    $create->addCar('dsfds4', 'Model X', 15);
+    $create->addCar('bhf456', 'Model X', 15);
+    $create->addCar('2x4s13', 'Model S', 13);
+    $create->addCar('wbc123', 'Model S', 13);
+    $create->addCar('tia321', 'Model S', 13);
 
     //Add Garages
     //(locationId, capacity, location, longtitude, latitude, streetNum, street, city, postCode, car)

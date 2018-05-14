@@ -45,8 +45,8 @@ class LoanController
 
     public function returnLoan($returnDateTime, $returnLocation)
     {
-        $loan = $this.getCurrentLoan();
-        $returnLocation->setCar($loan.getCar());
+        $loan = $this->getCurrentLoan();
+        $returnLocation->setCar($loan->getCar());
         $loan->setReturnDate($returnDateTime);
         $loan->setReturnLocation($returnLocation);
         //pay loan, call getDiscountRate and car->getCost
@@ -76,5 +76,14 @@ class LoanController
     public function getDiscountRate($promotion)
     {
         //get discount rate from database using promotion code
+    }
+    
+    public function getEstimatedCost()
+    {
+        $loan = $this->getCurrentLoan();
+        $diff = $loan->getLoanDateTime()->diff($loan->getExpectedDateTime());
+        $hours = $diff->format('H');
+        $mins = $diff->format('i');
+        return ($loan->getCost()*$hours) +  ($loan->getCost()*($mins/60));
     }
 }
