@@ -33,108 +33,110 @@
     $create->addLocation('02', -37.815342, 144.951576, '163 Spencer Street', 'Melbourne', 3000, 'dsfds4');
     $create->addLocation('03', -37.819271, 144.955889, '522 Flinders Lane', 'Melbourne', 3000, '2x4s13');
     $create->addLocation('04', -37.816206, 144.963175, '330 Collins Street', 'Melbourne', 3000);
-?>
+    
+    $create->addLocation('05', -37.582009, 144.693304, 'Cnr Mitchells Ln & Wilsons Ln', 'Sunbury', 3429);
+    $create->addLocation('06', -37.579491, 144.726540, 'Horne St', 'Sunbury', 3429, 'bhf456');
+    $create->addLocation('07', -37.578964, 144.731396, '12 Oshanassy Street', 'Sunbury', 3429);
 
-<!-- Promotion Codes generated to be insterted into their own table once fixed -->
-<!--
-YXASCLILUL
-8WG6ZV4JEC
-PCVSEZ86S8
-PE7CL264S5
-N0NDY5JCKX
-L29DU1COPX
-OE6UYO7V21
-IPEZCCRW2D
-A8SJ9P4JIM
-XX9XXVAA6J
-K6F8SKO64R
-OJIQCCNS0I
-W64UGOZY31
-B7WZAH3P6V
-ZSY6W4FVR5
-S6G628DGY1
-0ORVJ6WK1W
-HQX9P8X0XF
-NSKYCX8HEJ
-RAHDX7E0KN
-R548POASLZ
-U7IKLKLBMI
-RQWOO773KV
-0OXHSFDIA9
-QWEV0D5U89
-ZV63YBP7BG
-76ESB5UQ9H
-JIHALMGZV1
-VS2M7AP4QK
-AL3ZK8XH1Y
-XN906B1ZUZ
-MIZU9A3JM7
-WXH7WKEXY7
-8U7NJNX82Y
-MIVRDZDC7X
-X7Q392O1LR
-8XFCM50KC1
-PJ6C95CJI7
-Y393BZ6D37
-JZ5O6RQZ5H
-0C6JDPRDNE
-YKDIC8AJQF
-2CC1AQJ1TN
-TH7C9L5BMH
-CF63DT37BL
-YA7H1C61W8
-NFG6O1PVCF
-XQGZSWRRKG
-0PBWHB4YHU
-VPXQJE6719
-Y1HWAEGX4Q
-YOXFCKQP8D
-UHFA56RKMC
-UOPY1MMABV
-Z8XCIQIJ4F
-7IUOMSXWLP
-FJX2FHKQGR
-HM83CX242E
-KSHUR9XM98
-PBT7U3O5IM
-W7EXHAIDKT
-EQAM9BSKWW
-RCK2ZO5ZAN
-43L8JOOS6P
-JKG6O6JKM3
-QTBEAPT1S9
-2L6IWUESJQ
-GD3JYLX9CK
-1NGBGBKLPT
-LAKHYUOSB9
-88VS6Z520Z
-N9Z9YHQTBT
-ZMB3G7LSP5
-5X1F9RF762
-C93C71HCXK
-6ITI507JAM
-BXMI2YO407
-UCW8JQ7Z5N
-HHGHRVCH61
-PF2G8398V5
-YI3WTLXDDY
-KKSSNH6GZZ
-KM92ZQTYYB
-UPRQ5EKI04
-QR9DY2BYDW
-DBMJQWN05R
-3P2GJ922X4
-0MLTQYOXYD
-CXJRZMKKYM
-81AIPTBKN2
-XUT9QEF7VP
-VA520GRPCS
-IDYNXEDI60
-D5EAFPU2O8
-ILEVF029JN
-U28QLB9QLJ
-0XR9UK9Z1Y
-OCIB1TCOYZ
-GT6DM2E4V6
-5VRYSX2JAG
--->
+    //Promotion Codes generated to be insterted into their own table once fixed -->
+    $create->addNewPromotion('YXASCLILUL', 0.05);
+    $create->addNewPromotion('8WG6ZV4JEC', 0.05);
+    $create->addNewPromotion('PCVSEZ86S8', 0.05);
+    $create->addNewPromotion('PE7CL264S5', 0.05);
+    $create->addNewPromotion('N0NDY5JCKX', 0.05);
+    $create->addNewPromotion('L29DU1COPX', 0.05);
+    $create->addNewPromotion('OE6UYO7V21', 0.05);
+    $create->addNewPromotion('IPEZCCRW2D', 0.05);
+    $create->addNewPromotion('A8SJ9P4JIM', 0.05);
+    $create->addNewPromotion('XX9XXVAA6J', 0.05);
+    $create->addNewPromotion('K6F8SKO64R', 0.05);
+    $create->addNewPromotion('OJIQCCNS0I', 0.05);
+    $create->addNewPromotion('W64UGOZY31', 0.05);
+    $create->addNewPromotion('B7WZAH3P6V', 0.05);
+    $create->addNewPromotion('ZSY6W4FVR5', 0.05);
+    $create->addNewPromotion('S6G628DGY1', 0.05);
+    $create->addNewPromotion('0ORVJ6WK1W', 0.05);
+    $create->addNewPromotion('HQX9P8X0XF', 0.05);
+    $create->addNewPromotion('NSKYCX8HEJ', 0.05);
+    $create->addNewPromotion('RAHDX7E0KN', 0.05);
+    $create->addNewPromotion('R548POASLZ', 0.05);
+    $create->addNewPromotion('U7IKLKLBMI', 0.05);
+    $create->addNewPromotion('RQWOO773KV', 0.05);
+    $create->addNewPromotion('0OXHSFDIA9', 0.05);
+    $create->addNewPromotion('QWEV0D5U89', 0.05);
+    $create->addNewPromotion('ZV63YBP7BG', 0.05);
+    $create->addNewPromotion('76ESB5UQ9H', 0.05);
+    $create->addNewPromotion('JIHALMGZV1', 0.05);
+    $create->addNewPromotion('VS2M7AP4QK', 0.05);
+    $create->addNewPromotion('AL3ZK8XH1Y', 0.05);
+    $create->addNewPromotion('XN906B1ZUZ', 0.05);
+    $create->addNewPromotion('MIZU9A3JM7', 0.05);
+    $create->addNewPromotion('WXH7WKEXY7', 0.05);
+    $create->addNewPromotion('8U7NJNX82Y', 0.05);
+    $create->addNewPromotion('MIVRDZDC7X', 0.05);
+    $create->addNewPromotion('X7Q392O1LR', 0.05);
+    $create->addNewPromotion('8XFCM50KC1', 0.05);
+    $create->addNewPromotion('PJ6C95CJI7', 0.05);
+    $create->addNewPromotion('Y393BZ6D37', 0.05);
+    $create->addNewPromotion('JZ5O6RQZ5H', 0.05);
+    $create->addNewPromotion('0C6JDPRDNE', 0.05);
+    $create->addNewPromotion('YKDIC8AJQF', 0.05);
+    $create->addNewPromotion('2CC1AQJ1TN', 0.05);
+    $create->addNewPromotion('TH7C9L5BMH', 0.05);
+    $create->addNewPromotion('CF63DT37BL', 0.05);
+    $create->addNewPromotion('YA7H1C61W8', 0.05);
+    $create->addNewPromotion('NFG6O1PVCF', 0.05);
+    $create->addNewPromotion('XQGZSWRRKG', 0.05);
+    $create->addNewPromotion('0PBWHB4YHU', 0.05);
+    $create->addNewPromotion('VPXQJE6719', 0.05);
+    $create->addNewPromotion('Y1HWAEGX4Q', 0.05);
+    $create->addNewPromotion('YOXFCKQP8D', 0.05);
+    $create->addNewPromotion('UHFA56RKMC', 0.05);
+    $create->addNewPromotion('UOPY1MMABV', 0.05);
+    $create->addNewPromotion('Z8XCIQIJ4F', 0.05);
+    $create->addNewPromotion('7IUOMSXWLP', 0.05);
+    $create->addNewPromotion('FJX2FHKQGR', 0.05);
+    $create->addNewPromotion('HM83CX242E', 0.05);
+    $create->addNewPromotion('KSHUR9XM98', 0.05);
+    $create->addNewPromotion('PBT7U3O5IM', 0.05);
+    $create->addNewPromotion('W7EXHAIDKT', 0.05);
+    $create->addNewPromotion('EQAM9BSKWW', 0.05);
+    $create->addNewPromotion('RCK2ZO5ZAN', 0.05);
+    $create->addNewPromotion('43L8JOOS6P', 0.05);
+    $create->addNewPromotion('JKG6O6JKM3', 0.05);
+    $create->addNewPromotion('QTBEAPT1S9', 0.05);
+    $create->addNewPromotion('2L6IWUESJQ', 0.05);
+    $create->addNewPromotion('GD3JYLX9CK', 0.05);
+    $create->addNewPromotion('1NGBGBKLPT', 0.05);
+    $create->addNewPromotion('LAKHYUOSB9', 0.05);
+    $create->addNewPromotion('88VS6Z520Z', 0.05);
+    $create->addNewPromotion('N9Z9YHQTBT', 0.05);
+    $create->addNewPromotion('ZMB3G7LSP5', 0.05);
+    $create->addNewPromotion('5X1F9RF762', 0.05);
+    $create->addNewPromotion('C93C71HCXK', 0.05);
+    $create->addNewPromotion('6ITI507JAM', 0.05);
+    $create->addNewPromotion('BXMI2YO407', 0.05);
+    $create->addNewPromotion('UCW8JQ7Z5N', 0.05);
+    $create->addNewPromotion('HHGHRVCH61', 0.05);
+    $create->addNewPromotion('PF2G8398V5', 0.05);
+    $create->addNewPromotion('YI3WTLXDDY', 0.05);
+    $create->addNewPromotion('KKSSNH6GZZ', 0.05);
+    $create->addNewPromotion('KM92ZQTYYB', 0.05);
+    $create->addNewPromotion('UPRQ5EKI04', 0.05);
+    $create->addNewPromotion('QR9DY2BYDW', 0.05);
+    $create->addNewPromotion('DBMJQWN05R', 0.05);
+    $create->addNewPromotion('3P2GJ922X4', 0.05);
+    $create->addNewPromotion('0MLTQYOXYD', 0.05);
+    $create->addNewPromotion('CXJRZMKKYM', 0.05);
+    $create->addNewPromotion('81AIPTBKN2', 0.05);
+    $create->addNewPromotion('XUT9QEF7VP', 0.05);
+    $create->addNewPromotion('VA520GRPCS', 0.05);
+    $create->addNewPromotion('IDYNXEDI60', 0.05);
+    $create->addNewPromotion('D5EAFPU2O8', 0.05);
+    $create->addNewPromotion('ILEVF029JN', 0.05);
+    $create->addNewPromotion('U28QLB9QLJ', 0.05);
+    $create->addNewPromotion('0XR9UK9Z1Y', 0.05);
+    $create->addNewPromotion('OCIB1TCOYZ', 0.05);
+    $create->addNewPromotion('GT6DM2E4V6', 0.05);
+    $create->addNewPromotion('5VRYSX2JAG', 0.05);
+?>

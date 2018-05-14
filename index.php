@@ -66,6 +66,10 @@
             echo "LOAD DATABASE\n";
 			require_once('database/defaultdb.php');
 			break;
+        case $parentDir."admindb":
+            $page = new Template("view/admindb.php");
+            $page->display();
+            break;
 		default:
             echo "NO PAGE";
     }
