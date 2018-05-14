@@ -38,7 +38,7 @@
         <div class='col-sm-1'></div>
     </div>
 </div>
-<div class='container-fluid' id="googleMap" style="height:600px; width:100%">
+<div class='container-fluid' id="googleMap" style="height:700px; width:100%">
             <div id='info' style='display:none;'>Info Box</div>
 </div>
 
@@ -192,14 +192,24 @@
                 }
                 else if(currentLoan && !carInfo)
                 {
-                    var infoContent = "<h5>"+locat['address']+"</h5>"
-                        +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>Available to Return Car</p>"
-                        +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#returnModal' onclick='fillReturnForm("+locat['locationId']+")'>Return</button>";
-                var markerPos = new google.maps.LatLng(locat['longtitude'],locat['latitude']);
-                var marker = new google.maps.Marker({position: markerPos});
-                var infoWindow = new google.maps.InfoWindow();
+                    booked = false;
+                    if(!booked)
+                    {
+                        var infoContent = "<h5>"+locat['address']+"</h5>"
+                            +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>Available to Return Car. Book location</p>"
+                            +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#bookModal' onclick='fillBookForm("+locat['locationId']+")'>Book</button>";
+                    }
+                    else
+                    {
+                        var infoContent = "<h5>"+locat['address']+"</h5>"
+                            +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>Available to Return Car</p>"
+                            +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#returnModal' onclick='fillReturnForm("+locat['locationId']+")'>Return</button>";
+                    }
+                    var markerPos = new google.maps.LatLng(locat['longtitude'],locat['latitude']);
+                    var marker = new google.maps.Marker({position: markerPos});
+                    var infoWindow = new google.maps.InfoWindow();
 
-                google.maps.event.addListener(marker,'click', (function(marker, infoContent, infoWindow){
+                    google.maps.event.addListener(marker,'click', (function(marker, infoContent, infoWindow){
                     return function() {
                         if(activeInfoWindow)
                         {
@@ -209,8 +219,8 @@
                         infoWindow.open(map, marker);
                         activeInfoWindow = infoWindow;
                     };
-                })(marker, infoContent, infoWindow));
-                marker.setMap(map);
+                    })(marker, infoContent, infoWindow));
+                    marker.setMap(map);
                 }
             }
         }
@@ -269,11 +279,41 @@
         $("#loanTime").val(hours+":"+minutes);
         $("#returnDate").attr('min', today);
     }
-//    function fillReturnForm(locat)
-//    {
-//        currentLoan = <? //php echo json_encode($_SESSION['currentLoan']);?>;
-//        console.log(currentLoan);
-//    }
+    function fillBookForm(locat)
+    {
+        var currentLocation;
+        for(var i = 0; i < locations.length; ++i)
+        {
+            if(locations[i]['locationId'] == locat)
+            {
+                currentLocation = locations[i];
+                break;
+            }
+        }
+
+        $("#book-address").val(currentLocation['address']+", " + currentLocation['city'] + ", " +
+                        currentLocation['postcode']);
+        $("#book-lat").val(currentLocation['latitude']);
+        $("#book-long").val(currentLocation['longtitude']);
+        $("#book-locationId").val(currentLocation['locationId']);
+
+/*        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        minutes = (minutes<10 ? '0' : '') + minutes;
+
+        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+        $("#loanDate").val(today);
+        $("#loanTime").val(hours+":"+minutes);
+        $("#returnDate").attr('min', today);*/
+    }
+    function fillReturnForm(locat)
+    {
+        currentLoan = <?php echo json_encode($_SESSION['currentLoan']);?>;
+        console.log(currentLoan);
+    }
     function myMap(position) {
         var coords  = position.coords
         var mapCanvas = document.getElementById('googleMap');
@@ -414,6 +454,93 @@
                         <input type='time' class='form-control' id='expectedReturnTime' name='expectedReturnTime'>
                     </div>
                     <button type='submit' class='btn btn-primary btn-lg'>Loan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="bookModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                 <h2 class="text-center">Book this Location to return car</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="close">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <p>Location booking lasts 1 hour. After that time the location becomes free for other users to book and return</p>
+                <form name='loan' action='book-location' method='post'>
+                    <div class='form-group'>
+                        <label for='address'>Location Address</label>
+                        <input type='text' class='form-control' id='book-address' name='address' readonly>
+                        <input type='hidden' class='form-control' id='book-lat' name='lat' readonly>
+                        <input type='hidden' class='form-control' id='book-long' name='long' readonly>
+                        <input type='hidden' class='form-control' id='book-locationId' name='locationId' readonly>
+                    </div>
+                    <button type='submit' class='btn btn-primary btn-lg'>Book Return</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="returnModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                 <h2 class="text-center">Return Car</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="close">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name='loan' action='return-loan' method='post'>
+                    <div class='form-group'>
+                        <label for='address'>Location Address</label>
+                        <input type='text' class='form-control' id='address' name='address' readonly>
+                        <input type='hidden' class='form-control' id='lat' name='lat' readonly>
+                        <input type='hidden' class='form-control' id='long' name='long' readonly>
+                        <input type='hidden' class='form-control' id='locationId' name='locationId' readonly>
+                    </div>
+                    <div class='row'>
+                        <div class='col-sm-6 form-group'>
+                            <label for='car'>Car</label>
+                            <input type='text' class='form-control' id='car' name='car' readonly>
+                        </div>
+                        <div class='col-sm-6 form-group'>
+                            <label for='rego'>Registration</label>
+                            <input type='text' class='form-control' id='rego' name='rego' readonly>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <label for='cost'>Cost</label>
+                        <input type='text' class='form-control' id='cost' name='cost' readonly>
+                    </div>
+                    <div class='form-group'>
+                        <label for='loanDate'>Start Date</label>
+                        <input type='date' class='form-control' id='loanDate' name='loanDate'>
+                    </div>
+                    <div class='form-group'>
+                        <label for='loanTime'>Start Time</label>
+                        <input type='time' class='form-control' id='loanTime' name='loanTime'>
+                    </div>
+                    <div class='form-group'>
+                        <label for='expectedReturnDate'>Expected Return Date</label>
+                        <input type='date' class='form-control' id='expectedReturnDate' name='expectedReturnDate'>
+                    </div>
+                    <div class='form-group'>
+                        <label for='expectedReturnTime'>Expected Return Time</label>
+                        <input type='time' class='form-control' id='expectedReturnTime' name='expectedReturnTime'>
+                    </div>
+                    <div class='form-group'>
+                        <label for='returnDate'>Return Date</label>
+                        <input type='date' class='form-control' id='returnDate' name='returnDate'>
+                    </div>
+                    <div class='form-group'>
+                        <label for='returnTime'>Return Time</label>
+                        <input type='time' class='form-control' id='returnTime' name='returnTime'>
+                    </div>
+                    <button type='submit' class='btn btn-primary btn-lg'>Return</button>
                 </form>
             </div>
         </div>
