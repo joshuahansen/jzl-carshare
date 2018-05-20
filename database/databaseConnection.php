@@ -11,9 +11,9 @@
 		private $conn;
 
 		private $host = 'localhost';
-		private $userName = 'jzl-carshare';
-		private $pass = 'root';
-		private $dbname = 'jzl-carshare';
+		private $userName = 'jzlcarshare';
+		private $pass = 'jzlcarshare';
+		private $dbname = 'jzlcarshare';
 
         /**
         * @author Joshua Hansen
