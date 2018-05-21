@@ -10,8 +10,15 @@
     $location = new Location($locationId, $coordinates, $address, $car);
     $loanTime = $_POST['loanTime'].':00';
     $loanDateTime = new DateTime($_POST['loanDate']." ".$loanTime);
-    $expereturnTime = $_POST['expectedReturnTime'].':00';
-    $expectedDateTime = new DateTime($_POST['expectedReturnDate']." ".$expectedTime);
+    if(($_POST['expectedReturnDate'] != null) && ($_POST['expectedReturnTime'] != null))
+    {
+        $dateTimeString = $_POST['expectedReturnDate']." ".$_POST['expectedReturnTime'].":00";
+        $expectedDateTime = new DateTime($dateTimeString);
+    }
+    else
+    {
+        $expectedDateTime = Null;
+    }
     
     $loanController->createLoan($location, $loanDateTime, $expectedDateTime);
     
@@ -55,7 +62,7 @@
 
                             <tr>
                                 <th scope="row">Expected Return:</th>
-                                <td> <?php echo $loanController->getCurrentLoan()->getReturnDateTime() ?> </td>
+                                <td> <?php $edt = $loanController->getCurrentLoan()->getExpectedDateTime(); if($edt != Null){echo $edt->format('d/m/Y H:i');}?> </td>
                             </tr>          
                         </tbody>     
                     </table>            
@@ -77,10 +84,12 @@
             </div>
         </div>
         <div class='container'>
-        <div class='col-sm-4'></div>
-        <div class='col-sm-4 text-center'>
-            <a class='btn btn-primary' href='dashboard'>Return to Dashboard</a>
+        <div class='row'>
+            <div class='col-lg-1'></div>
+            <div class='col-lg-10 text-left'>
+                <a class='btn btn-primary' href='dashboard'>Return to Dashboard</a>
+            </div>
+            <div class='col-lg-1'></div>
         </div>
-        <div class='col-sm-4'></div>
     </section>
 <?php } ?>

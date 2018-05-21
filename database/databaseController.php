@@ -37,8 +37,8 @@
         */	
 		public function dropTables()
 		{
-			$sql = "DROP TABLE loans, promotions, users, agents,
-                 locations, cars";
+			$sql = "DROP TABLE loans, locations, promotions, users, agents,
+                  cars";
 
 			$dbConn = $this->db->getConnection();
 			if($dbConn->query($sql) === TRUE)
@@ -195,8 +195,11 @@
                     city VARCHAR(50) NOT NULL,
                     postcode INT(4) NOT NULL,
                     car VARCHAR(10),
+                    booked VARCHAR(50),
+                    bookedTime DATETIME,
                     PRIMARY KEY(locationId),
-                    FOREIGN KEY(car) REFERENCES cars(rego)
+                    FOREIGN KEY(car) REFERENCES cars(rego),
+                    FOREIGN KEY(booked) REFERENCES users(userId)
                     );";
             $this->createTable($sql);
         }
@@ -286,21 +289,21 @@
         * @return boolean : true on successful add
         */
         public function addLoan($loanId, $driver, $car, $cost, $loanDate, 
-            $returnDate, $loanLocation, $returnLocation, $paid=0)
+            $expectedDate, $loanLocation, $paid=0)
         {
-            if($returnLocation == NULL)
+            if($expectedDate == NULL)
             {
                 $sql = "INSERT INTO loans(loanId, user, car, cost, loanDate, 
-                    returnDate, loanLocation, returnLocation, paid) 
+                    expectedDate, loanLocation, paid) 
                     VALUES('$loanId', '$driver', '$car', $cost, '$loanDate', 
-                    '$returnDate', '$loanLocation', NULL, $paid);";
+                    NULL, '$loanLocation', $paid);";
             }
             else            
             {
                 $sql = "INSERT INTO loans(loanId, user, car, cost, loanDate, 
-                    returnDate, loanLocation, returnLocation, paid) 
+                    expectedDate, loanLocation, paid) 
                     VALUES('$loanId', '$driver', '$car', $cost, '$loanDate', 
-                    '$returnDate', '$loanLocation', '$returnLocation', $paid);";
+                    '$expectedDate', '$loanLocation', $paid);";
             }
             return $this->addToTable($sql);
         }
@@ -368,6 +371,26 @@
         {
             $sql = "INSERT INTO promotions(code, discountRate) VALUES('$code', '$discountRate');";
             return $this->addToTable($sql);
+        }
+        public function removeCarFromLocation($location)
+        {
+            $sql = "UPDATE locations SET car=NULL WHERE locationId='$locationId';";
+            return $this->addToTable($sql);
+        }
+        public function deleteCar($rego)
+        {
+            $sql = "DELETE FROM cars WHERE rego='$rego';";
+            return $this->addToTable($sql);
+        }
+        public function deleteLocation($location)
+        {
+            $sql = "DELETE FROM locations WHERE locationId='$location';";
+            return $this->addToTable($sql);
+        }
+        public function getCurrentLoan($user)
+        {
+            $sql = "SELECT * FROM loans WHERE user='$user' AND returnDate=NULL;";
+            return $this->getData($sql);
         }
     }                    
 ?>

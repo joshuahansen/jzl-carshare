@@ -63,6 +63,15 @@ class UserController extends AgentController
                     "postcode" => $data[0]['postcode']);
                 $user = new User($data[0]["userId"], $data[0]["licenseNum"], $name, $address, $data[0]["credit"]);
                 $_SESSION["currentUser"] = serialize($user);
+                $loan = $this->db->getCurrentLoan($username);
+                if($loan != NULL)
+                {
+                    print_r($loan);
+                    $currentLoan = new Loan($loan[0], $loan[1], $loan[2], $loan[3], $loan[4],
+                        $loan[5], $loan[6], $loan[7], $loan[8]);
+                
+                    $_SESSION["currentLoan"] = serialize($currentLoan);
+                }
                 return TRUE;
             }
         }

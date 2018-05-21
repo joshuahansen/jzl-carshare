@@ -20,7 +20,7 @@ class Loan
     private $promotion = null;
     private $lockbox = null;
 
-    public function __construct($loanId, $user, $car, $cost, $paid, $loanDateTime, $returnDateTime, $loanLocation, $expectedDateTime=null, $promotion=null)
+    public function __construct($loanId, $user, $car, $cost, $paid, $loanDateTime, $returnDateTime, $loanLocation, $expectedDateTime, $promotion)
     {
         $this->loanId = $loanId;
         $this->user = $user;

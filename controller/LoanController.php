@@ -35,10 +35,16 @@ class LoanController
         $car = $location->getCar();
         $cost = $car->getCost();
         $location->setCar(null);
-
         $loan = new Loan($loanId, $user, $car, $cost, FALSE, $loanDateTime, null, $location, $expectedDateTime, $promotion);
-        $this->dbController->addLoan($loanId, $user->getUsername(), $car->getRegistration(), 0, 
-            $loanDateTime->format('Y-m-d H:i:s'), null, $location->getLocationId(), NULL);
+        if($expectedDateTime != Null)
+        {
+            $expectedDateTime = $expectedDateTime->format('Y-m-d H:i:s');
+        }
+
+        $this->dbController->addLoan($loanId, $user->getUsername(), $car->getRegistration(), 
+            $car->getCost(), $loanDateTime->format('Y-m-d H:i:s'), 
+            $expectedDateTime, $location->getLocationId());
+        $this->dbController->removeCarFromLocation($location);
       
         $_SESSION['currentLoan'] = serialize($loan);
     }
@@ -81,9 +87,16 @@ class LoanController
     public function getEstimatedCost()
     {
         $loan = $this->getCurrentLoan();
-        $diff = $loan->getLoanDateTime()->diff($loan->getExpectedDateTime());
-        $hours = $diff->format('H');
-        $mins = $diff->format('i');
-        return ($loan->getCost()*$hours) +  ($loan->getCost()*($mins/60));
+        if( $loan->getExpectedDateTime() === Null)
+        {
+            return 0;
+        }
+        else
+        {
+            $diff = $loan->getLoanDateTime()->diff($loan->getExpectedDateTime());
+            $hours = $diff->format('H');
+            $mins = $diff->format('i');
+            return ($loan->getCost()*$hours) +  ($loan->getCost()*($mins/60));
+        }
     }
 }

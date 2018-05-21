@@ -83,7 +83,7 @@
 
                             <tr>
                                 <th scope="row">Expected Return:</th>
-                                <td> <?php echo $loanController->getCurrentLoan()->getReturnDateTime() ?> </td>
+                                <td> <?php $edt = $loanController->getCurrentLoan()->getExpectedDateTime(); if($edt != Null){echo $edt->format('d/m/Y H:i');}?> </td>
                             </tr>          
                         </tbody>     
                     </table>            
