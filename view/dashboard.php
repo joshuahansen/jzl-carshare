@@ -421,7 +421,7 @@
                         <input type='text' class='form-control' id='address' name='address' readonly>
                         <input type='hidden' class='form-control' id='lat' name='lat' readonly>
                         <input type='hidden' class='form-control' id='long' name='long' readonly>
-                        <input type='hidden' class='form-control' id='locationId' name='locationId' readonly>
+                        <input type='text' class='form-control' id='locationId' name='locationId' readonly>
                     </div>
                     <div class='row'>
                         <div class='col-sm-6 form-group'>

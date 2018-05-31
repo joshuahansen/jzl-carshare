@@ -8,10 +8,10 @@ class Car
 
     /* Getters. */
 
-    public function __construct($registration, $make, $cost)
+    public function __construct($registration, $make, $cost, $borrowed=False)
     {
         $this->registration = $registration;
-        $this->borrowed = false;
+        $this->borrowed = $borrowed;
         $this->make = $make;
         $this->cost = $cost;
     }
