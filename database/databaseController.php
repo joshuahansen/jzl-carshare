@@ -375,6 +375,7 @@
         public function removeCarFromLocation($location)
         {
             $sql = "UPDATE locations SET car=NULL WHERE locationId='$locationId';";
+            echo $sql;
             return $this->addToTable($sql);
         }
         public function deleteCar($rego)
