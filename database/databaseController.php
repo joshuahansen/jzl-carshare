@@ -149,7 +149,7 @@
                     rego VARCHAR(10) NOT NULL,
                     make VARCHAR(20) NOT NULL,
                     cost DOUBLE(6,2) NOT NULL,
-                    borrowed BIT NOT NULL,
+                    borrowed SMALLINT NOT NULL,
                     PRIMARY KEY(rego)
                     );";
             $this->createTable($sql);
@@ -165,7 +165,7 @@
                     user VARCHAR(50) NOT NULL,
                     car VARCHAR(10) NOT NULL,
                     cost DOUBLE(5,2) NOT NULL,
-                    paid BIT NOT NULL,
+                    paid SMALLINT NOT NULL,
                     loanDate DATETIME NOT NULL,
                     returnDate DATETIME,
                     loanLocation VARCHAR(10) NOT NULL,
@@ -374,8 +374,8 @@
         }
         public function removeCarFromLocation($location)
         {
+            $locationId = $location->getLocationId();
             $sql = "UPDATE locations SET car=NULL WHERE locationId='$locationId';";
-            echo $sql;
             return $this->addToTable($sql);
         }
         public function deleteCar($rego)
@@ -390,8 +390,18 @@
         }
         public function getCurrentLoan($user)
         {
-            $sql = "SELECT * FROM loans WHERE user='$user' AND returnDate=NULL;";
-            return $this->getData($sql);
+            $sql = "SELECT * FROM loans WHERE user='$user'";
+            return $this->getData($sql)[0];
+        }
+        public function getLocation($locationId)
+        {
+            $sql = "SELECT * FROM locations WHERE locationId='$locationId';";
+            return $this->getData($sql)[0];
+        }
+        public function getCar($rego)
+        {
+            $sql = "SELECT * FROM cars WHERE rego='$rego';";
+            return $this->getData($sql)[0];
         }
     }                    
 ?>
