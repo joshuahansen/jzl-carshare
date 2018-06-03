@@ -3,6 +3,7 @@
 require_once('database/databaseController.php');
 require_once('model/User.php');
 require_once('controller/AgentController.php');
+require_once('model/Loan.php');
 
 class UserController extends AgentController
 {
@@ -54,7 +55,6 @@ class UserController extends AgentController
     public function login($username, $password)
     {
         $data = $this->db->getUser($username);
-        print_r($data);
         if ($data != FALSE) {
             $correct = $this->db->verifyUser($username, $password);
             if ($correct) {
@@ -66,10 +66,27 @@ class UserController extends AgentController
                 $loan = $this->db->getCurrentLoan($username);
                 if($loan != NULL)
                 {
-                    print_r($loan);
-                    $currentLoan = new Loan($loan[0], $loan[1], $loan[2], $loan[3], $loan[4],
-                        $loan[5], $loan[6], $loan[7], $loan[8]);
-                
+                    $carData = $this->db->getCar($loan['car']);
+                    $car = new Car($carData['rego'], $carData['make'], $carData['cost'], $carData['borrowed']);
+                    $locatData = $this->db->getLocation($loan['loanLocation']);
+                    $location = new Location($locatData['locationId'], 
+                        array($locatData['longtitude'], $locatData['latitude']),
+                        array($locatData['address'], $locatData['city'], $locatDate['postcode']),
+                         $car);
+                    
+                    $loanDate = new DateTime($loan['loanDate']);
+                    if($loan['returnDate'] != NULL)
+                        $returnDate = new DateTime($loan['returnDate']);
+                    else
+                        $returnDate = NULL;
+                    if($loan['expectedDate'] != NULL)
+                        $expectedDate = new DateTime($loan['expectedDate']);
+                    else
+                        $expectedDate = NULL;
+                    
+                     $currentLoan = new Loan($loan['loanId'], $loan['user'], $car, 
+                        $loan['cost'], $loan['paid'], $loanDate, $returnDate, 
+                        $location, $expectedDate, $loan['promotion']);
                     $_SESSION["currentLoan"] = serialize($currentLoan);
                 }
                 return TRUE;

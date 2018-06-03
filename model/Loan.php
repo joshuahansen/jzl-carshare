@@ -22,6 +22,7 @@ class Loan
 
     public function __construct($loanId, $user, $car, $cost, $paid, $loanDateTime, $returnDateTime, $loanLocation, $expectedDateTime, $promotion)
     {
+        echo "Make Loan";
         $this->loanId = $loanId;
         $this->user = $user;
         $this->car = $car;
