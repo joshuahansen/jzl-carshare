@@ -403,5 +403,11 @@
             $sql = "SELECT * FROM cars WHERE rego='$rego';";
             return $this->getData($sql)[0];
         }
+        public function bookLocation($location, $loan)
+        {
+            $sql = "UPDATE locations SET booked='$loan' AND bookedTime=NOW()
+                    WHERE locationId='$location';";
+            return $this->addToTable($sql);
+        }
     }                    
 ?>
