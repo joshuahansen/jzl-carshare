@@ -393,5 +393,11 @@
             $sql = "SELECT * FROM loans WHERE user='$user' AND returnDate=NULL;";
             return $this->getData($sql);
         }
+        public function bookLocation($location, $loan)
+        {
+            $sql = "UPDATE locations SET booked='$loan' AND bookedTime=NOW()
+                    WHERE locationId='$location';";
+            return $this->addToTable($sql);
+        }
     }                    
 ?>
