@@ -62,6 +62,10 @@
             $page = new Template("view/createLoan.php");
             $page->display();   
             break;
+        case $parentDir."book-location":
+            $page = new Template("view/book-location.php");
+            $page->display();
+            break;
 		case $parentDir."loaddb":
             echo "LOAD DATABASE\n";
 			require_once('database/defaultdb.php');
