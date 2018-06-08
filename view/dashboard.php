@@ -192,7 +192,10 @@
                 }
                 else if(currentLoan && !carInfo)
                 {
-                    booked = false;
+                    if(locat['booked'] == null)
+                        booked = false;
+                    else
+                        booked = true;
                     if(!booked)
                     {
                         var infoContent = "<h5>"+locat['address']+"</h5>"
@@ -473,10 +476,8 @@
                 <form name='loan' action='book-location' method='post'>
                     <div class='form-group'>
                         <label for='address'>Location Address</label>
-                        <input type='text' class='form-control' id='book-address' name='address' readonly>
-                        <input type='hidden' class='form-control' id='book-lat' name='lat' readonly>
-                        <input type='hidden' class='form-control' id='book-long' name='long' readonly>
-                        <input type='hidden' class='form-control' id='book-locationId' name='locationId' readonly>
+                        <input type='text' class='form-control' id='book-address' name='book-address' readonly>
+                        <input type='text' class='form-control' id='book-locationId' name='book-locationId' readonly>
                     </div>
                     <button type='submit' class='btn btn-primary btn-lg'>Book Return</button>
                 </form>

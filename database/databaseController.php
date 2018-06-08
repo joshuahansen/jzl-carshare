@@ -198,8 +198,7 @@
                     booked VARCHAR(50),
                     bookedTime DATETIME,
                     PRIMARY KEY(locationId),
-                    FOREIGN KEY(car) REFERENCES cars(rego),
-                    FOREIGN KEY(booked) REFERENCES users(userId)
+                    FOREIGN KEY(car) REFERENCES cars(rego)
                     );";
             $this->createTable($sql);
         }
@@ -407,6 +406,7 @@
         {
             $sql = "UPDATE locations SET booked='$loan' AND bookedTime=NOW()
                     WHERE locationId='$location';";
+            echo $sql;
             return $this->addToTable($sql);
         }
     }                    

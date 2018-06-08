@@ -5,12 +5,10 @@
     $databaseController = DatabaseController::getInstance();
 
     $currentLoan = $loanController->getCurrentLoan();
-
     $loanId = $currentLoan->getLoanId();
+    echo $loanId."</br>";
     $locationId = $_POST['book-locationId'];
-
     $booked = $databaseController->bookLocation($locationId, $loanId);
-
     if($booked)
     {
         echo "location booked";
