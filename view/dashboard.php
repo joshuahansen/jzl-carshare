@@ -300,22 +300,76 @@
         $("#book-long").val(currentLocation['longtitude']);
         $("#book-locationId").val(currentLocation['locationId']);
 
-/*        var now = new Date();
-        var day = ("0" + now.getDate()).slice(-2);
-        var month = ("0" + (now.getMonth() + 1)).slice(-2);
-        var hours = now.getHours();
-        var minutes = now.getMinutes();
-        minutes = (minutes<10 ? '0' : '') + minutes;
-
-        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-        $("#loanDate").val(today);
-        $("#loanTime").val(hours+":"+minutes);
-        $("#returnDate").attr('min', today);*/
     }
     function fillReturnForm(locat)
     {
-        currentLoan = <?php echo json_encode($_SESSION['currentLoan']);?>;
-        console.log(currentLoan);
+        const TO_HOURS = 3600000;
+        var loans = <?php echo json_encode($loanController->getAllLoans());?>;
+        var currentLoanId = <?php echo json_encode($loanController->getCurrentLoanId());?>;
+        console.log(currentLoanId);
+        console.log(loans);
+        var currentLoan;
+        for(var i = 0; i < loans.length; ++i)
+        {
+            if(loans[i]['loanId'] == currentLoanId)
+            {
+                currentLoan = loans[i];
+                break;
+            }
+        }
+
+        var currentLocation;
+        for(var i = 0; i < locations.length; ++i)
+        {
+            if(locations[i]['locationId'] == locat)
+            {
+                currentLocation = locations[i];
+                break;
+            }
+        }
+        var currentCar;
+        for(var i = 0; i < cars.length; ++i)
+        {
+            if(cars[i]['rego'] == currentLoan['car'])
+            {
+                currentCar = cars[i];
+                break;
+            }
+        }
+
+        $("#return-address").val(currentLocation['address']+", " + currentLocation['city'] + ", " +
+                        currentLocation['postcode']);
+        $("#return-locationId").val(currentLocation['locationId']);
+        
+        $("#return-car").val(currentCar['make']);
+        $("#return-rego").val(currentCar['rego']);
+        
+        var loanDateTime = new Date(currentLoan["loanDate"]);
+
+        console.log(loanDateTime);
+        var day = ("0" + loanDateTime.getDate()).slice(-2);
+        var month = ("0" + (loanDateTime.getMonth() + 1)).slice(-2);
+        var hours = loanDateTime.getHours();
+        var minutes = loanDateTime.getMinutes();
+        minutes = (minutes<10 ? '0' : '') + minutes;
+
+        var today = loanDateTime.getFullYear()+"-"+(month)+"-"+(day) ;
+        $("#return-loanDate").val(today);
+        $("#return-loanTime").val(hours+":"+minutes);
+        
+        var now = new Date();
+        day = ("0" + now.getDate()).slice(-2);
+        month = ("0" + (now.getMonth() + 1)).slice(-2);
+        hours = now.getHours();
+        minutes = now.getMinutes();
+        minutes = (minutes<10 ? '0' : '') + minutes;
+
+        today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+        $("#returnDate").val(today);
+        $("#returnTime").val(hours+":"+minutes);
+        var cost = currentCar['cost'] * (now-loanDateTime)/TO_HOURS;
+        $("#return-cost").val(cost.toFixed(2));
+        
     }
     function myMap(position) {
         var coords  = position.coords
@@ -477,7 +531,7 @@
                     <div class='form-group'>
                         <label for='address'>Location Address</label>
                         <input type='text' class='form-control' id='book-address' name='book-address' readonly>
-                        <input type='text' class='form-control' id='book-locationId' name='book-locationId' readonly>
+                        <input type='hidden' class='form-control' id='book-locationId' name='book-locationId' readonly>
                     </div>
                     <button type='submit' class='btn btn-primary btn-lg'>Book Return</button>
                 </form>
@@ -498,48 +552,38 @@
                 <form name='loan' action='return-loan' method='post'>
                     <div class='form-group'>
                         <label for='address'>Location Address</label>
-                        <input type='text' class='form-control' id='address' name='address' readonly>
-                        <input type='hidden' class='form-control' id='lat' name='lat' readonly>
-                        <input type='hidden' class='form-control' id='long' name='long' readonly>
-                        <input type='hidden' class='form-control' id='locationId' name='locationId' readonly>
+                        <input type='text' class='form-control' id='return-address' name='return-address' readonly>
+                        <input type='hidden' class='form-control' id='return-locationId' name='return-locationId' readonly>
                     </div>
                     <div class='row'>
                         <div class='col-sm-6 form-group'>
                             <label for='car'>Car</label>
-                            <input type='text' class='form-control' id='car' name='car' readonly>
+                            <input type='text' class='form-control' id='return-car' name='return-car' readonly>
                         </div>
                         <div class='col-sm-6 form-group'>
                             <label for='rego'>Registration</label>
-                            <input type='text' class='form-control' id='rego' name='rego' readonly>
+                            <input type='text' class='form-control' id='return-rego' name='return-rego' readonly>
                         </div>
                     </div>
                     <div class='form-group'>
                         <label for='cost'>Cost</label>
-                        <input type='text' class='form-control' id='cost' name='cost' readonly>
+                        <input type='text' class='form-control' id='return-cost' name='return-cost' readonly>
                     </div>
                     <div class='form-group'>
                         <label for='loanDate'>Start Date</label>
-                        <input type='date' class='form-control' id='loanDate' name='loanDate'>
+                        <input type='date' class='form-control' id='return-loanDate' name='return-loanDate' readonly>
                     </div>
                     <div class='form-group'>
                         <label for='loanTime'>Start Time</label>
-                        <input type='time' class='form-control' id='loanTime' name='loanTime'>
-                    </div>
-                    <div class='form-group'>
-                        <label for='expectedReturnDate'>Expected Return Date</label>
-                        <input type='date' class='form-control' id='expectedReturnDate' name='expectedReturnDate'>
-                    </div>
-                    <div class='form-group'>
-                        <label for='expectedReturnTime'>Expected Return Time</label>
-                        <input type='time' class='form-control' id='expectedReturnTime' name='expectedReturnTime'>
+                        <input type='time' class='form-control' id='return-loanTime' name='return-loanTime' readonly>
                     </div>
                     <div class='form-group'>
                         <label for='returnDate'>Return Date</label>
-                        <input type='date' class='form-control' id='returnDate' name='returnDate'>
+                        <input type='date' class='form-control' id='returnDate' name='returnDate' readonly>
                     </div>
                     <div class='form-group'>
                         <label for='returnTime'>Return Time</label>
-                        <input type='time' class='form-control' id='returnTime' name='returnTime'>
+                        <input type='time' class='form-control' id='returnTime' name='returnTime' readonly>
                     </div>
                     <button type='submit' class='btn btn-primary btn-lg'>Return</button>
                 </form>

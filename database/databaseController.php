@@ -404,9 +404,20 @@
         }
         public function bookLocation($location, $loan)
         {
-            $sql = "UPDATE locations SET booked='$loan' AND bookedTime=NOW()
+            $sql = "UPDATE locations SET booked='$loan', bookedTime=NOW()
                     WHERE locationId='$location';";
-            echo $sql;
+            return $this->addToTable($sql);
+        }
+        public function addCarToLocation($car, $location)
+        {
+            $sql = "UPDATE locations SET car='$car' WHERE locationId='$location';";
+            return $this->addToTable($sql);
+        }
+        public function returnLoan($loan, $cost, $returnDate, $returnLocation, $paid=0)
+        {
+            $sql = "UPDATE loans SET cost='$cost', returnDate='$returnDate', 
+                returnLocation='$returnLocation', paid='$paid'
+                WHERE loanId='$loan';";
             return $this->addToTable($sql);
         }
     }                    
