@@ -208,6 +208,9 @@
                             +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>Available to Return Car</p>"
                             +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#returnModal' onclick='fillReturnForm("+locat['locationId']+")'>Return</button>";
                     }
+                    var currentLoanId = '<?php echo $loanController->getCurrentLoanId() ?>';
+                    if(locat['booked'] != null && locat['booked'] != currentLoanId)
+                        continue;
                     var markerPos = new google.maps.LatLng(locat['longtitude'],locat['latitude']);
                     var marker = new google.maps.Marker({position: markerPos});
                     var infoWindow = new google.maps.InfoWindow();
