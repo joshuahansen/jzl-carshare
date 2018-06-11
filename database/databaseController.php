@@ -420,5 +420,10 @@
                 WHERE loanId='$loan';";
             return $this->addToTable($sql);
         }
+        public function unbookLocation($location)
+        {
+            $sql = "UPDATE locations SET booked=NULL AND bookedTime=NULL WHERE locationId='$location';";
+            return $this->addToTable($sql);
+        }
     }                    
 ?>

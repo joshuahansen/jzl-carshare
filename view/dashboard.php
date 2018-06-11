@@ -317,7 +317,7 @@
                 break;
             }
         }
-
+        console.log(currentLoan);
         var currentLocation;
         for(var i = 0; i < locations.length; ++i)
         {
@@ -327,6 +327,7 @@
                 break;
             }
         }
+        console.log(currentLocation);
         var currentCar;
         for(var i = 0; i < cars.length; ++i)
         {
@@ -336,7 +337,7 @@
                 break;
             }
         }
-
+        console.log(currentCar);
         $("#return-address").val(currentLocation['address']+", " + currentLocation['city'] + ", " +
                         currentLocation['postcode']);
         $("#return-locationId").val(currentLocation['locationId']);
