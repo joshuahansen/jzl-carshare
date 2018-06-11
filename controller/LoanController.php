@@ -52,11 +52,16 @@ class LoanController
     public function returnLoan($returnDateTime, $returnLocation)
     {
         $loan = $this->getCurrentLoan();
-        $returnLocation->setCar($loan->getCar());
-        $loan->setReturnDate($returnDateTime);
-        $loan->setReturnLocation($returnLocation);
-        //pay loan, call getDiscountRate and car->getCost
-        $loan->setPaid(True);
+        $car = $loan->getCar();
+        $loanDateTime = $loan->getLoanDateTime();
+        $diff = $returnDateTime->diff($loanDateTime);
+        $loanPeriod = $diff->h + ($diff->d * 24) + ($diff->i / 60) + ($diff->s / 3600);
+        $cost = $car->getCost() * $loanPeriod;
+        echo "COST: ".number_format($cost,2);     
+        $this->dbController->returnLoan($loan->getLoanId(), $cost, 
+            $returnDateTime->format('Y-m-d H:i:s'), $returnLocation, 1);
+        $this->dbController->addCarToLocation($car->getRegistration(), $returnLocation);
+        $this->dbController->unbookLocation($returnLocation);
         if(isset($_SESSION["currentLoan"]))
             unset($_SESSION['currentLoan']);
         return TRUE;
@@ -76,6 +81,12 @@ class LoanController
     {
         if(isset($_SESSION["currentLoan"]))
             return unserialize($_SESSION["currentLoan"]);
+        return FALSE;
+    }
+    public function getCurrentLoanId()
+    {
+        if(isset($_SESSION["currentLoan"]))
+            return unserialize($_SESSION["currentLoan"])->getLoanId();
         return FALSE;
     }
 
@@ -98,5 +109,10 @@ class LoanController
             $mins = $diff->format('i');
             return ($loan->getCost()*$hours) +  ($loan->getCost()*($mins/60));
         }
+    }
+    public function getAllLoans()
+    {
+        $sql = "SELECT * FROM loans;";
+        return $this->dbController->getData($sql);
     }
 }
