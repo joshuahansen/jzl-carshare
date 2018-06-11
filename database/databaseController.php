@@ -425,5 +425,10 @@
             $sql = "UPDATE locations SET booked=NULL AND bookedTime=NULL WHERE locationId='$location';";
             return $this->addToTable($sql);
         }
+        public function getBookedLocations($loanId)
+        {
+            $sql = "SELECT locationId FROM locations WHERE booked='$loanId';";
+            return $this->getData($sql);
+        }
     }                    
 ?>
