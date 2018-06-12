@@ -11,9 +11,12 @@
 <div class='container-fluid'>
     <div class='row search-bar'>
         <div class='col-sm-2'>
-            <p class='text-center'>Welcome <?php echo $userController->getCurrentUser()->getFirstName()?></p>
+            <p class='text-left'>Welcome <?php echo $userController->getCurrentUser()->getFirstName()?>&emsp;Credit: $<?php echo number_format($userController->getCurrentUser()->getCredit(), 2)?></p>
         </div>
-        <div class='input-group col-sm-4'>
+        <div class='col-sm-2'>
+            <button type='button' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#creditModal'>Add Credit</button>
+        </div>
+        <div class='input-group col-sm-3'>
             <input type='text' class='form-control' id='textSearch' placeholder='Search Locations'>
                 <span class='input-group-btn'>
                     <button class='btn btn-primary' type='button'>
@@ -531,7 +534,7 @@
             </div>
             <div class="modal-body">
             <p>Location booking lasts 1 hour. After that time the location becomes free for other users to book and return</p>
-                <form name='loan' action='book-location' method='post'>
+                <form name='book-location' action='book-location' method='post'>
                     <div class='form-group'>
                         <label for='address'>Location Address</label>
                         <input type='text' class='form-control' id='book-address' name='book-address' readonly>
@@ -553,7 +556,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form name='loan' action='return-loan' method='post'>
+                <form name='return' action='return-loan' method='post'>
                     <div class='form-group'>
                         <label for='address'>Location Address</label>
                         <input type='text' class='form-control' id='return-address' name='return-address' readonly>
@@ -590,6 +593,68 @@
                         <input type='time' class='form-control' id='returnTime' name='returnTime' readonly>
                     </div>
                     <button type='submit' class='btn btn-primary btn-lg'>Return</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="creditModal" tabindex="-1" role="dialog" aria-labelledby="creditModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                 <h2 class="text-center">Add Credit</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="close">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <p>Add credit to your account to book a vehicle</p>
+                <form class='form-horizontal' name='credit' action='add-credit' method='post'>
+                    <div class='form-group'>
+                        <label for='amount'>Amount $</label>
+                        <input type='text' class='form-control' id='amount' name='amount'>
+                    </div>
+                    <div class='form-group'>
+                        <label for='creditCard'>Credit Card Number</label>
+                        <input type='text' class='form-control' id='creditCard' name='creditCard' readonly>
+                    </div>
+                    <div class='form-group'>
+                        <label for='expiry'>Card Expiry Date</label>
+                        <div class='row'>
+                            <div class='col-sm-6'>
+                                <select name='expireMM' id='expireMM' class='form-control' readonly>
+                                    <option value=''>Month</option>
+                                    <option value='01'>January</option>
+                                    <option value='02'>February</option>
+                                    <option value='03'>March</option>
+                                    <option value='04'>April</option>
+                                    <option value='05'>May</option>
+                                    <option value='06'>June</option>
+                                    <option value='07'>July</option>
+                                    <option value='08'>August</option>
+                                    <option value='09'>September</option>
+                                    <option value='10'>October</option>
+                                    <option value='11'>November</option>
+                                    <option value='12'>December</option>
+                                </select> 
+                            </div>
+                            <div class='col-sm-6'>
+                                <select name='expireYY' id='expireYY' class='form-control' readonly>
+                                    <option value=''>Year</option>
+                                    <option value='18'>2018</option>
+                                    <option value='19'>2019</option>
+                                    <option value='20'>2020</option>
+                                    <option value='21'>2021</option>
+                                    <option value='22'>2022</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <label for='cvc'>Card CVC</label>
+                        <input type='text' class='form-control' id='cvc' name='cvc' readonly>
+                    </div>
+                    <button type='submit' class='btn btn-primary btn-lg'>Confirm</button>
                 </form>
             </div>
         </div>

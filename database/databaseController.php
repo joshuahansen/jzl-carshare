@@ -422,12 +422,23 @@
         }
         public function unbookLocation($location)
         {
-            $sql = "UPDATE locations SET booked=NULL AND bookedTime=NULL WHERE locationId='$location';";
+            $sql = "UPDATE locations SET booked=NULL, bookedTime=NULL WHERE locationId='$location';";
             return $this->addToTable($sql);
         }
         public function getBookedLocations($loanId)
         {
             $sql = "SELECT locationId FROM locations WHERE booked='$loanId';";
+            return $this->getData($sql);
+        }
+        public function updateCredit($user, $credit)
+        {
+            $sql = "UPDATE users SET credit='$credit' WHERE userId='$user';";
+            return $this->addToTable($sql);
+        }
+        public function getUserCredit($user)
+        {
+            $sql = "SELECT credit FROM users WHERE userId='$user';";
+            echo $sql;
             return $this->getData($sql);
         }
     }                    

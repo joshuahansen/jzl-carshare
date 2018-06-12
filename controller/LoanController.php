@@ -51,19 +51,31 @@ class LoanController
 
     public function returnLoan($returnDateTime, $returnLocation)
     {
+        $currentUser = unserialize($_SESSION['currentUser']);
         $loan = $this->getCurrentLoan();
         $car = $loan->getCar();
         $loanDateTime = $loan->getLoanDateTime();
         $diff = $returnDateTime->diff($loanDateTime);
+        
         $loanPeriod = $diff->h + ($diff->d * 24) + ($diff->i / 60) + ($diff->s / 3600);
         $cost = $car->getCost() * $loanPeriod;
-        echo "COST: ".number_format($cost,2);     
+        
+        //subtract cost from user credit
+        $userCredit = $this->dbController->getUserCredit($loan->getUser());
+        $totalCredit = $this->dbController->getUserCredit($loan->getUser())[0]['credit'] - $cost;
+        $currentUser->setCredit($totalCredit);
+        
+        $this->dbController->updateCredit($loan->getUser(), $totalCredit);  
         $this->dbController->returnLoan($loan->getLoanId(), $cost, 
             $returnDateTime->format('Y-m-d H:i:s'), $returnLocation, 1);
         $this->dbController->addCarToLocation($car->getRegistration(), $returnLocation);
         $this->dbController->unbookLocation($returnLocation);
+        
         if(isset($_SESSION["currentLoan"]))
             unset($_SESSION['currentLoan']);
+        
+        $_SESSION['currentUser'] = serialize($currentUser);
+        
         return TRUE;
     }
 

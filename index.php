@@ -70,6 +70,10 @@
             $page = new Template("view/return-loan.php");
             $page->display();
             break;
+        case $parentDir."add-credit":
+            $page = new Template("view/add-credit.php");
+            $page->display();
+            break;
 		case $parentDir."loaddb":
             echo "LOAD DATABASE\n";
 			require_once('database/defaultdb.php');
