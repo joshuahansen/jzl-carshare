@@ -110,6 +110,7 @@ class LoanController
     public function getEstimatedCost()
     {
         $loan = $this->getCurrentLoan();
+        $car = $loan->getCar();
         if( $loan->getExpectedDateTime() === Null)
         {
             return 0;
@@ -117,9 +118,13 @@ class LoanController
         else
         {
             $diff = $loan->getLoanDateTime()->diff($loan->getExpectedDateTime());
-            $hours = $diff->format('H');
-            $mins = $diff->format('i');
-            return ($loan->getCost()*$hours) +  ($loan->getCost()*($mins/60));
+            $days = $diff->d;
+            $hours = $diff->h + ($days * 24);
+            $mins = $diff->i;
+            $hours = $hours + ($mins/60);
+            $cost = $car->getCost();
+            $totalCost = $hours * $cost;
+            return $totalCost;
         }
     }
     public function getAllLoans()

@@ -99,7 +99,8 @@
                         <p><?php echo $loanController->getCurrentLoan()->getLockbox() ?></p>
                     </div>
                     <div class="totalcost">
-                        <p>Total cost calculation</p>
+                        <p>Estimated cost calculation</p>
+                        <p>$<?php echo number_format($loanController->getEstimatedCost(), 2)?></p>
                     </div>
                 </div>
                 <div class="col-lg-1"></div>
@@ -660,3 +661,14 @@
         </div>
     </div>
 </div>
+<script>
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var hours = now.getHours();
+    var minutes = now.getMinutes();
+    minutes = (minutes<10 ? '0' : '') + minutes;
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    $("#loanDate").attr('min', today);
+    $("#expectedReturnDate").attr('min', today);
+</script>
