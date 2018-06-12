@@ -115,4 +115,9 @@ class LoanController
         $sql = "SELECT * FROM loans;";
         return $this->dbController->getData($sql);
     }
+    public function getPastLoans($user)
+    {
+        $sql = "SELECT * FROM loans WHERE user='$user';";
+        return $this->dbController->getData($sql);
+    }
 }

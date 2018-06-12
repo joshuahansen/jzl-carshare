@@ -161,7 +161,7 @@
         public function loansTable()
         {
             $sql = "CREATE TABLE loans (
-                    loanId VARCHAR(10) NOT NULL,
+                    loanId VARCHAR(50) NOT NULL,
                     user VARCHAR(50) NOT NULL,
                     car VARCHAR(10) NOT NULL,
                     cost DOUBLE(5,2) NOT NULL,
