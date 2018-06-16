@@ -175,7 +175,7 @@
                     var infoContent = "<h5>"+locat['address']+"</h5>"
                         +"<img src='"+carImg+"' style='max-width:95px;max-height:100px;float:right;margin:0px;'>"
                         +"<p>"+locat['city']+", "+locat['postcode'] +"</p><p>"+carInfo['make']+"</p>"
-                        +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#loanModal' onclick='fillForm("
+                        +"<button type='button' class='btn btn-primary'"/* data-toggle='modal' data-target='#loanModal'*/+" onclick='fillForm("
                         +locat['locationId']+")'>Loan</button>";
                 var markerPos = new google.maps.LatLng(locat['longtitude'],locat['latitude']);
                 var marker = new google.maps.Marker({position: markerPos});
@@ -237,6 +237,13 @@
     }
     function fillForm(locat)
     {
+        var minCredit = 50.00;
+        var credit = <?php echo $userController->getCurrentUser()->getCredit();?>;
+        if(credit < minCredit)
+        {
+            $('#insufficientCreditModal').modal('show');
+            return;
+        }
         var currentLocation;
         var currentCar;
         for(var i = 0; i < locations.length; ++i)
@@ -288,6 +295,7 @@
         $("#loanDate").val(today);
         $("#loanTime").val(hours+":"+minutes);
         $("#returnDate").attr('min', today);
+        $('#loanModal').modal('show');
     }
     function fillBookForm(locat)
     {
@@ -475,7 +483,7 @@
         <div class="modal-content">
             <div class="modal-header">
                  <h2 class="text-center">Loan</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" id='loanClose' data-dismiss="modal" aria-label="Close">
                     <span class="close">X</span>
                 </button>
             </div>
@@ -520,6 +528,22 @@
                     </div>
                     <button type='submit' class='btn btn-primary btn-lg'>Loan</button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="insufficientCreditModal" tabindex="-1" role="dialog" aria-labelledby="insufficientCreditModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                 <h2 class="text-center">Insufficient Credit</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="close">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Please make sure you have sufficient credit in your account to loan the car. Minimum required balance is $50.00</p>
+                <button type='button' class='btn btn-primary btn-lg close' data-dismiss='modal'>Close</button>
             </div>
         </div>
     </div>
@@ -652,8 +676,8 @@
                         </div>
                     </div>
                     <div class='form-group'>
-                        <label for='cvc'>Card CVC</label>
-                        <input type='text' class='form-control' id='cvc' name='cvc' readonly>
+                        <label for='cvv'>Card CVV</label>
+                        <input type='text' class='form-control' id='cvv' name='cvv' readonly>
                     </div>
                     <button type='submit' class='btn btn-primary btn-lg'>Confirm</button>
                 </form>

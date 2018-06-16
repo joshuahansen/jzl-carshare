@@ -22,3 +22,14 @@
         echo "Credit was not added";
 ?>
     
+<section class='bg-primary'>
+
+    <div class='container'>
+        <div class='row'>
+            <div class='col-lg-1'></div>
+            <div class='col-lg-10 text-left'>
+                <a class='btn btn-primary' href='dashboard'>Return to Dashboard</a>
+            </div>
+        <div class='col-lg-1'></div>
+    </div>
+</section>
