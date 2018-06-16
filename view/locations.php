@@ -9,7 +9,7 @@
         <?php
             require_once('controller/LocationController.php');
             $locationController = LocationController::getInstance();
-            $locations = $locationController->getLocations("Melbourne");
+            $locations = $locationController->getAllLocations();
             $count = 0;
             echo "<div class='row'>";
             foreach($locations as $location)

@@ -49,8 +49,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 form-group">
-                                            <label>Username</label>
-                                            <input type="text" name='email' placeholder="Enter Username Here.." class="form-control" required>
+                                            <label>Email</label>
+                                            <input type="text" name='email' placeholder="Enter Email Here.." class="form-control" required>
                                         </div>		
                                         <div class="col-sm-6 form-group">
                                             <label>License Number</label>
@@ -72,4 +72,3 @@
         
     </div>
 </div>
-
