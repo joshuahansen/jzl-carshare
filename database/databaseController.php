@@ -438,7 +438,6 @@
         public function getUserCredit($user)
         {
             $sql = "SELECT credit FROM users WHERE userId='$user';";
-            echo $sql;
             return $this->getData($sql);
         }
     }                    

@@ -44,7 +44,11 @@ class LocationController
         $sql = "SELECT * FROM locations;";
         return $this->dbController->getData($sql);
     }
-    
+    public function getLocation($locationId)
+    {
+        $sql = "SELECT * FROM locations WHERE locationId='$locationId';";
+        return $this->dbController->getData($sql)[0];
+    }    
     public function generateLocationID()
     {
         return md5(uniqid(rand(), false));

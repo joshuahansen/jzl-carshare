@@ -61,19 +61,19 @@ class LoanController
         $cost = $car->getCost() * $loanPeriod;
         
         //subtract cost from user credit
-        $userCredit = $this->dbController->getUserCredit($loan->getUser());
-        $totalCredit = $this->dbController->getUserCredit($loan->getUser())[0]['credit'] - $cost;
+        $userCredit = $this->dbController->getUserCredit($loan->getUser()->getUsername())[0]['credit'];
+        $totalCredit = $userCredit - $cost;
         $currentUser->setCredit($totalCredit);
         
-        $this->dbController->updateCredit($loan->getUser(), $totalCredit);  
+        $this->dbController->updateCredit($loan->getUser()->getUsername(), $totalCredit);  
         $this->dbController->returnLoan($loan->getLoanId(), $cost, 
             $returnDateTime->format('Y-m-d H:i:s'), $returnLocation, 1);
         $this->dbController->addCarToLocation($car->getRegistration(), $returnLocation);
         $this->dbController->unbookLocation($returnLocation);
-        
+
         if(isset($_SESSION["currentLoan"]))
-            unset($_SESSION['currentLoan']);
-        
+            unset($_SESSION['currentLoan']);      
+
         $_SESSION['currentUser'] = serialize($currentUser);
         
         return TRUE;
@@ -136,5 +136,10 @@ class LoanController
     {
         $sql = "SELECT * FROM loans WHERE user='$user';";
         return $this->dbController->getData($sql);
+    }
+    public function getLoan($loanId)
+    {
+        $sql = "SELECT * FROM loans WHERE loanId='$loanId';";
+        return $this->dbController->getData($sql)[0];
     }
 }
