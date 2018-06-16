@@ -637,7 +637,7 @@
                 <form class='form-horizontal' name='credit' action='add-credit' method='post'>
                     <div class='form-group'>
                         <label for='amount'>Amount $</label>
-                        <input type='text' class='form-control' id='amount' name='amount'>
+                        <input type='number' class='form-control' id='amount' name='amount' min='1' max='10000' required>
                     </div>
                     <div class='form-group'>
                         <label for='creditCard'>Credit Card Number</label>
