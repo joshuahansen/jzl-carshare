@@ -54,7 +54,7 @@
                 <div class="col-lg-1"></div>
                 <div class="col-lg-6">
 
-                    <h2>Current Loan</h2>
+                    <h2>Current Loan | <a href="history">Loan History</a></h2>
                     <br>
                     <h4 class="myh4">Car Details</h4>
                     <table class="table table-striped">
