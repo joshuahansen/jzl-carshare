@@ -300,12 +300,13 @@
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
         var hours = now.getHours();
         var minutes = now.getMinutes();
+        hours = (hours<10 ? '0' : '') + hours;
         minutes = (minutes<10 ? '0' : '') + minutes;
 
         var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
         $("#loanDate").val(today);
         $("#loanTime").val(hours+":"+minutes);
-        $("#returnDate").attr('min', today);
+        $("#expectedReturnDate").attr('min', today);
         $('#loanModal').modal('show');
     }
     function fillBookForm(locat)
@@ -378,6 +379,7 @@
         var month = ("0" + (loanDateTime.getMonth() + 1)).slice(-2);
         var hours = loanDateTime.getHours();
         var minutes = loanDateTime.getMinutes();
+        hours = (hours<10 ? '0' : '') + hours;
         minutes = (minutes<10 ? '0' : '') + minutes;
 
         var today = loanDateTime.getFullYear()+"-"+(month)+"-"+(day) ;
@@ -389,6 +391,7 @@
         month = ("0" + (now.getMonth() + 1)).slice(-2);
         hours = now.getHours();
         minutes = now.getMinutes();
+        hours = (hours<10 ? '0' : '') + hours;
         minutes = (minutes<10 ? '0' : '') + minutes;
 
         today = now.getFullYear()+"-"+(month)+"-"+(day) ;
