@@ -28,7 +28,6 @@
                             <th scope="col">User</th>
                             <th scope="col">Registration</th>
                             <th scope="col">Cost</th>
-                            <th scope="col">Paid</th>
                             <th scope="col">Loan Date</th>
                             <th scope="col">Return Date</th>
                             <th scope="col">Loan Location</th>
@@ -39,7 +38,6 @@
                     <tbody>
                 
                 <?php 
-/*                
                     foreach($loanController->getPastLoans($userController->getCurrentUser()->getUsername()) as $loan)
                     {
                         echo "<tr>";
@@ -50,7 +48,7 @@
                         }
                         
                         echo "</tr>";
-                    }*/?>
+                    }?>
                     </tbody>
                 </table>
                                           
