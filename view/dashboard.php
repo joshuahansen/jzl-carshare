@@ -44,6 +44,17 @@
 <div class='container-fluid' id="googleMap" style="height:700px; width:100%">
             <div id='info' style='display:none;'>Info Box</div>
 </div>
+    
+<br>
+<br>
+<div class="container">
+    <div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-6">
+    <h3> <a href="history">View Your Loan History</a> </h3>
+        </div>
+    </div>
+</div>
 
 <?php 
     if(isset($_SESSION['currentLoan'])){ ?>
@@ -54,7 +65,7 @@
                 <div class="col-lg-1"></div>
                 <div class="col-lg-6">
 
-                    <h2>Current Loan | <a href="history">Loan History</a></h2>
+                    <h2>Current Loan</h2>
                     <br>
                     <h4 class="myh4">Car Details</h4>
                     <table class="table table-striped">
@@ -289,13 +300,12 @@
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
         var hours = now.getHours();
         var minutes = now.getMinutes();
-        hours = (hours<10 ? '0' : '') + hours;
         minutes = (minutes<10 ? '0' : '') + minutes;
 
         var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
         $("#loanDate").val(today);
         $("#loanTime").val(hours+":"+minutes);
-        $("#expectedReturnDate").attr('min', today);
+        $("#returnDate").attr('min', today);
         $('#loanModal').modal('show');
     }
     function fillBookForm(locat)
@@ -368,7 +378,6 @@
         var month = ("0" + (loanDateTime.getMonth() + 1)).slice(-2);
         var hours = loanDateTime.getHours();
         var minutes = loanDateTime.getMinutes();
-        hours = (hours<10 ? '0' : '') + hours;
         minutes = (minutes<10 ? '0' : '') + minutes;
 
         var today = loanDateTime.getFullYear()+"-"+(month)+"-"+(day) ;
@@ -380,7 +389,6 @@
         month = ("0" + (now.getMonth() + 1)).slice(-2);
         hours = now.getHours();
         minutes = now.getMinutes();
-        hours = (hours<10 ? '0' : '') + hours;
         minutes = (minutes<10 ? '0' : '') + minutes;
 
         today = now.getFullYear()+"-"+(month)+"-"+(day) ;
@@ -609,7 +617,7 @@
                         <input type='date' class='form-control' id='return-loanDate' name='return-loanDate' readonly>
                     </div>
                     <div class='form-group'>
-                        <label for='return-loanTime'>Start Time</label>
+                        <label for='loanTime'>Start Time</label>
                         <input type='time' class='form-control' id='return-loanTime' name='return-loanTime' readonly>
                     </div>
                     <div class='form-group'>
