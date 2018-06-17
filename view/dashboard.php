@@ -380,6 +380,7 @@
         month = ("0" + (now.getMonth() + 1)).slice(-2);
         hours = now.getHours();
         minutes = now.getMinutes();
+        hours = (hours<10 ? '0' : '') + hours;
         minutes = (minutes<10 ? '0' : '') + minutes;
 
         today = now.getFullYear()+"-"+(month)+"-"+(day) ;
