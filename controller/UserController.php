@@ -84,7 +84,7 @@ class UserController extends AgentController
                     else
                         $expectedDate = NULL;
                     
-                     $currentLoan = new Loan($loan['loanId'], $loan['user'], $car, 
+                     $currentLoan = new Loan($loan['loanId'], $user, $car, 
                         $loan['cost'], $loan['paid'], $loanDate, $returnDate, 
                         $location, $expectedDate, $loan['promotion']);
                     $_SESSION["currentLoan"] = serialize($currentLoan);
