@@ -3,7 +3,10 @@
     $userController = UserController::getInstance();
     if($userController->login($_POST['email'], $_POST['password']))
     {
-        header('Location: /JZL-carshare/dashboard');
+        if($_POST['email'] == "admin")
+            header('Location: /JZL-carshare/admindb');
+        else
+            header('Location: /JZL-carshare/dashboard');
     }
     else
     {

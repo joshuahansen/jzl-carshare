@@ -2,11 +2,13 @@
     require_once('controller/LocationController.php');
     require_once('controller/CarController.php');
     require_once('controller/LoanController.php');
+    require_once('database/databaseController.php');
     require_once('model/User.php');
     $userController = UserController::getInstance();
     $locationController = LocationController::getInstance();
     $carController = CarController::getInstance();
     $loanController = LoanController::getInstance();
+    $dbController = DatabaseController::getInstance();
 ?>
      
 <section class="bg-primary admin-sec">
@@ -41,47 +43,37 @@
                         <tbody>
                             <tr>
                                 <th scope="row">Cars on Loan:</th>
-                                <td></td>
+                                <td><?php echo $dbController->activeLoans();?></td>
                             </tr>
 
                             <tr>
                                 <th scope="row">Cars Availiable:</th>
-                                <td></td>
+                                <td><?php echo $dbController->carsAvailiable();?></td>
                             </tr>
                             
                             <tr>
                                 <th scope="row">Locations Full:</th>
-                                <td></td>
+                                <td><?php echo $dbController->locationsFull();?></td>
                             </tr>
                             
                             <tr>
                                 <th scope="row">Locations Availiable:</th>
-                                <td></td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">Outstanding Loans:</th>
-                                <td></td>
-                            </tr> 
-                            
-                            <tr>
-                                <th scope="row">Total Paid Loans:</th>
-                                <td></td>
+                                <td><?php echo $dbController->locationsAvailiable();?></td>
                             </tr>
                             
                             <tr>
-                                <th scope="row">Active Users:</th>
-                                <td></td>
-                            </tr> 
+                                <th scope="row">Total Loans:</th>
+                                <td><?php echo $dbController->totalLoans();?></td>
+                            </tr>
                             
                             <tr>
                                 <th scope="row">Total Users:</th>
-                                <td></td>
+                                <td><?php echo $dbController->totalUsers();?></td>
                             </tr> 
                             
                             <tr>
-                                <th scope="row">One More:</th>
-                                <td></td>
+                                <th scope="row">Active Loans:</th>
+                                <td><?php echo $dbController->activeLoans();?></td>
                             </tr> 
                             
                         </tbody>     

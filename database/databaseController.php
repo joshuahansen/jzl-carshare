@@ -440,5 +440,35 @@
             $sql = "SELECT credit FROM users WHERE userId='$user';";
             return $this->getData($sql);
         }
+        public function totalLoans()
+        {
+            $sql = "SELECT COUNT(*) FROM loans;";
+            return $this->getData($sql)[0]['COUNT(*)'];
+        }
+        public function carsAvailiable()
+        {
+            $sql = "SELECT COUNT(*) FROM locations WHERE car IS NOT NULL;";
+            return $this->getData($sql)[0]['COUNT(*)'];
+        }
+        public function locationsFull()
+        {
+            $sql = "SELECT COUNT(*) FROM locations WHERE car IS NOT NULL;";
+            return $this->getData($sql)[0]['COUNT(*)'];
+        }
+        public function locationsAvailiable()
+        {
+            $sql = "SELECT COUNT(*) FROM locations WHERE car IS NULL;";
+            return $this->getData($sql)[0]['COUNT(*)'];
+        }
+        public function totalUsers()
+        {
+            $sql = "SELECT COUNT(*) FROM users;";
+            return $this->getData($sql)[0]['COUNT(*)'];
+        }
+        public function activeLoans()
+        {
+            $sql = "SELECT COUNT(*) FROM loans WHERE returnDate IS NULL;";
+            return $this->getData($sql)[0]['COUNT(*)'];
+        }
     }                    
 ?>

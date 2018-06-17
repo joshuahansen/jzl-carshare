@@ -13,7 +13,8 @@
                 '13 Batman Avenue', 'Melbourne', 3000, 50);
     $create->addUser('s3601235@student.rmit.edu.au', 'lohgan', 'Lohgan', 'Nash', '97881246',
                 '56 Second Street', 'Melbourne', 3000);
-    
+    $create->addUser('admin', 'admin', 'Josh', 'Hansen', '0', '1 High Street', 'Melbourne', 3000, 0);
+
     //Add Cars
     //(rego, make, cost, borrowed[boolean default false])
     $create->addCar('1db1a2', 'Model 3', 10);
