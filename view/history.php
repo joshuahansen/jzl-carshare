@@ -39,7 +39,7 @@
                     <tbody>
                 
                 <?php 
-                
+/*                
                     foreach($loanController->getPastLoans($userController->getCurrentUser()->getUsername()) as $loan)
                     {
                         echo "<tr>";
@@ -50,7 +50,7 @@
                         }
                         
                         echo "</tr>";
-                    }?>
+                    }*/?>
                     </tbody>
                 </table>
                                           

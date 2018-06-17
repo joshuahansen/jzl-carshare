@@ -8,6 +8,7 @@
 		case $parentDir:
             $page = new Template("view/homePage.php");
             $page->display(); 
+    echo "DEBUG";
 	    	break;
         case $parentDir."story":
             $page = new Template("view/story.php");
