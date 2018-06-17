@@ -29,7 +29,7 @@ class AdminController
     public function login($username, $password)
     {
         $data = $this->db->getAdmin($username);
-        print_r($data);
+//        print_r($data);
         if ($data != FALSE) {
             $correct = $this->db->verifyUser($username, $password);
             if ($correct)

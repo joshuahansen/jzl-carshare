@@ -43,11 +43,11 @@
 			$dbConn = $this->db->getConnection();
 			if($dbConn->query($sql) === TRUE)
 			{
-				echo "All tables dropped successfully";
+//				echo "All tables dropped successfully";
 			}
 			else
 			{
-				echo "Error dropping tables: " .$dbConn->error;
+//				echo "Error dropping tables: " .$dbConn->error;
 			}
 		}
         /**
@@ -59,11 +59,11 @@
             $dbConn = $this->db->getConnection();
             if($dbConn->query($sql) === TRUE)
             {
-                echo "Table created successfully</br>";
+//                echo "Table created successfully</br>";
             }
             else
             {
-               echo "Error creating table: " .$dbConn->error ."</br>";
+//               echo "Error creating table: " .$dbConn->error ."</br>";
             }
         }
         /**
@@ -76,12 +76,12 @@
             $dbConn = $this->db->getConnection();
             if($dbConn->query($sql) === TRUE)
             {
-                echo "Table updated successfully</br>";
+//                echo "Table updated successfully</br>";
                 return TRUE;
             }
             else
             {
-                echo "Error updating table: " .$dbConn->error ."</br>";
+//                echo "Error updating table: " .$dbConn->error ."</br>";
                 return FALSE;
             }
             

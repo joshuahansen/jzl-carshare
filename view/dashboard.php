@@ -153,9 +153,9 @@
                 var currentLoan = <?php if(isset($_SESSION['currentLoan'])){ echo "true";} else {echo "false";};?>;
                 if(locat['car'] != null)
                 {
-                    console.log("NO LOAN SEARCH CARS FOR LOACATION");
+                    //console.log("NO LOAN SEARCH CARS FOR LOACATION");
                     rego = locat['car'];
-                    console.log("REGO: " + rego);
+                    //console.log("REGO: " + rego);
                     carInfo = searchCars(rego);
                 }
                 if(carInfo && !currentLoan)
@@ -321,8 +321,8 @@
         const TO_HOURS = 3600000;
         var loans = <?php echo json_encode($loanController->getAllLoans());?>;
         var currentLoanId = <?php echo json_encode($loanController->getCurrentLoanId());?>;
-        console.log(currentLoanId);
-        console.log(loans);
+        //console.log(currentLoanId);
+        //console.log(loans);
         var currentLoan;
         for(var i = 0; i < loans.length; ++i)
         {
@@ -332,7 +332,7 @@
                 break;
             }
         }
-        console.log(currentLoan);
+        //console.log(currentLoan);
         var currentLocation;
         for(var i = 0; i < locations.length; ++i)
         {
@@ -342,7 +342,7 @@
                 break;
             }
         }
-        console.log(currentLocation);
+        //console.log(currentLocation);
         var currentCar;
         for(var i = 0; i < cars.length; ++i)
         {
@@ -352,7 +352,7 @@
                 break;
             }
         }
-        console.log(currentCar);
+        //console.log(currentCar);
         $("#return-address").val(currentLocation['address']+", " + currentLocation['city'] + ", " +
                         currentLocation['postcode']);
         $("#return-locationId").val(currentLocation['locationId']);
@@ -362,7 +362,7 @@
         
         var loanDateTime = new Date(currentLoan["loanDate"]);
 
-        console.log(loanDateTime);
+        //console.log(loanDateTime);
         var day = ("0" + loanDateTime.getDate()).slice(-2);
         var month = ("0" + (loanDateTime.getMonth() + 1)).slice(-2);
         var hours = loanDateTime.getHours();
