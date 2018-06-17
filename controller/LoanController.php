@@ -134,7 +134,7 @@ class LoanController
     }
     public function getPastLoans($user)
     {
-        $sql = "SELECT * FROM loans WHERE user='$user' AND returnDate IS NOT NULL;";
+        $sql = "SELECT loanId, user, car, cost, loanDate, returnDate, loanLocation, returnLocation, expectedDate, promotion FROM loans WHERE user='$user' AND returnDate IS NOT NULL;";
         return $this->dbController->getData($sql);
     }
     public function getLoan($loanId)
