@@ -22,8 +22,12 @@
                </li>
                  <li class="nav-item">
                      <?php
-                         if(isset($_SESSION['currentUser']))
+                         if(isset($_SESSION['currentUser'])):
                      ?>
+                        <a class="nav-link" href="logout">Logout</a>
+                     <?php else: ?>
+                        <a class="nav-link" href="login">Login</a>
+                     <? endif; ?>
                  </li>
              </ul>
 

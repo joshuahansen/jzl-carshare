@@ -82,6 +82,10 @@
             $page = new Template("view/admindb.php");
             $page->display();
             break;
+        case $parentDir."history":
+            $page = new Template("view/history.php");
+            $page->display();
+            break;
 		default:
             echo "NO PAGE";
     }
