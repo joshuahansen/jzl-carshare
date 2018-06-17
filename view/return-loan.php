@@ -5,7 +5,6 @@
             <div class='col-lg-6 text-center'>
                 <?php
                     require_once('controller/LoanController.php');
-                
                     $loanController = LoanController::getInstance();
 
                     $returnLocation = $_POST['return-locationId'];

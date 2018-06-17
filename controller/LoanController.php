@@ -56,7 +56,6 @@ class LoanController
         $car = $loan->getCar();
         $loanDateTime = $loan->getLoanDateTime();
         $diff = $returnDateTime->diff($loanDateTime);
-        
         $loanPeriod = $diff->h + ($diff->d * 24) + ($diff->i / 60) + ($diff->s / 3600);
         $cost = $car->getCost() * $loanPeriod;
         

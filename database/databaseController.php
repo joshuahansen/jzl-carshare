@@ -389,7 +389,7 @@
         }
         public function getCurrentLoan($user)
         {
-            $sql = "SELECT * FROM loans WHERE user='$user'";
+            $sql = "SELECT * FROM loans WHERE user='$user' AND returnDate IS NULL";
             return $this->getData($sql)[0];
         }
         public function getLocation($locationId)
